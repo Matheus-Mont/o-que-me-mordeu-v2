@@ -1,0 +1,201 @@
+// Schema do "O que me mordeu?"
+// Fundação de dados: modelos de conteúdo (Animal, DicaPrevencao), governança
+// editorial (status, histórico, fonte/consultor) e usuário administrador,
+// já preparado para múltiplos usuários no futuro.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Enums
+// ---------------------------------------------------------------------------
+
+/// Categoria taxonômica/popular do animal, usada em filtros do catálogo.
+enum Categoria {
+  COBRA
+  ARANHA
+  ESCORPIAO
+  TATURANA
+  AGUA_VIVA
+}
+
+/// Gravidade do acidente, usada para badges de urgência na UI.
+enum NivelUrgencia {
+  ALTA
+  MEDIA
+  BAIXA
+}
+
+/// Ambiente de ocorrência, usado para organizar dicas de prevenção.
+enum Ambiente {
+  CASA
+  MATA_TRILHA
+  RIOS_LAGOS
+  PRAIA
+}
+
+/// Fluxo de publicação editorial: nada vai ao ar direto do "salvar".
+/// Transições esperadas: RASCUNHO -> REVISADO -> PUBLICADO,
+/// com possibilidade de retornar a REVISADO (despublicar) ou a
+/// RASCUNHO (reabrir para edição) quando uma correção for necessária.
+enum StatusConteudo {
+  RASCUNHO
+  REVISADO
+  PUBLICADO
+}
+
+/// Identifica a que tipo de ficha um registro de histórico se refere.
+enum TipoEntidade {
+  ANIMAL
+  PREVENCAO
+}
+
+// ---------------------------------------------------------------------------
+// Usuário administrador
+// ---------------------------------------------------------------------------
+
+/// Nesta fase existe um único usuário administrador, sem papéis/permissões.
+/// O modelo já fica pronto para múltiplos usuários no futuro (basta deixar
+/// de restringir a criação a um único registro na camada de aplicação).
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  nome         String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  animaisCriados         Animal[]          @relation("AnimalCriadoPor")
+  animaisAtualizados     Animal[]          @relation("AnimalAtualizadoPor")
+  dicasCriadas           DicaPrevencao[]   @relation("DicaCriadaPor")
+  dicasAtualizadas       DicaPrevencao[]   @relation("DicaAtualizadaPor")
+  alteracoesRegistradas  HistoricoAlteracao[] @relation("AlteracaoPor")
+
+  @@map("users")
+}
+
+// ---------------------------------------------------------------------------
+// Animal
+// ---------------------------------------------------------------------------
+
+model Animal {
+  id       String @id @default(cuid())
+  /// Identificador amigável para a URL pública (/animal/[slug]).
+  slug     String @unique
+
+  // --- Campos de conteúdo (seção "Modelo de dados — animal" da spec) ---
+  nomePopular              String
+  nomeCientifico           String
+  categoria                Categoria
+  nivelUrgencia            NivelUrgencia
+  regioes                  String[]
+  /// Várias fotos/ângulos da mesma espécie (carrossel na ficha do animal).
+  /// Ordem da lista = ordem de exibição no carrossel.
+  imagens                  String[]
+  identificacao            String[]
+  sintomas                 String
+  tempoSintomas            String
+  primeirosSocorrosFazer   String[]
+  primeirosSocorrosNaoFazer String[]
+  soroIndicado             String
+
+  // --- Governança de conteúdo ---
+  /// rascunho -> revisado -> publicado. Ver enum StatusConteudo.
+  status          StatusConteudo @default(RASCUNHO)
+  /// Fonte ou consultor responsável pela revisão (campo interno,
+  /// não necessariamente exibido ao usuário final).
+  fonteConsultor  String?
+  revisadoPor     String?
+  revisadoEm      DateTime?
+  publicadoEm     DateTime?
+
+  criadoPorId     String?
+  criadoPor       User?    @relation("AnimalCriadoPor", fields: [criadoPorId], references: [id], onDelete: SetNull)
+  atualizadoPorId String?
+  atualizadoPor   User?    @relation("AnimalAtualizadoPor", fields: [atualizadoPorId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  historico HistoricoAlteracao[]
+
+  @@index([status])
+  @@index([categoria])
+  @@map("animais")
+}
+
+// ---------------------------------------------------------------------------
+// Dica de prevenção
+// ---------------------------------------------------------------------------
+
+model DicaPrevencao {
+  id String @id @default(cuid())
+
+  // --- Campos de conteúdo (seção "Modelo de dados — dica de prevenção") ---
+  ambiente Ambiente
+  icone    String
+  dicas    String[]
+
+  // --- Governança de conteúdo (mesmo fluxo do Animal) ---
+  status         StatusConteudo @default(RASCUNHO)
+  fonteConsultor String?
+  revisadoPor    String?
+  revisadoEm     DateTime?
+  publicadoEm    DateTime?
+
+  criadoPorId     String?
+  criadoPor       User?    @relation("DicaCriadaPor", fields: [criadoPorId], references: [id], onDelete: SetNull)
+  atualizadoPorId String?
+  atualizadoPor   User?    @relation("DicaAtualizadaPor", fields: [atualizadoPorId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  historico HistoricoAlteracao[]
+
+  @@index([status])
+  @@index([ambiente])
+  @@map("dicas_prevencao")
+}
+
+// ---------------------------------------------------------------------------
+// Histórico de alterações (rastreabilidade de conteúdo)
+// ---------------------------------------------------------------------------
+
+/// Um registro por alteração relevante em uma ficha (conteúdo e/ou status),
+/// para permitir reconstruir "o que mudou, quando" caso uma informação
+/// seja questionada.
+model HistoricoAlteracao {
+  id String @id @default(cuid())
+
+  tipoEntidade TipoEntidade
+
+  animalId String?
+  animal   Animal? @relation(fields: [animalId], references: [id], onDelete: Cascade)
+
+  dicaPrevencaoId String?
+  dicaPrevencao   DicaPrevencao? @relation(fields: [dicaPrevencaoId], references: [id], onDelete: Cascade)
+
+  statusAnterior StatusConteudo?
+  statusNovo     StatusConteudo?
+
+  /// Snapshot/diff dos campos alterados nesta revisão (JSON livre),
+  /// por exemplo: { "sintomas": { "de": "...", "para": "..." } }
+  camposAlterados Json?
+  observacao      String?
+
+  alteradoPorId String?
+  alteradoPor   User?   @relation("AlteracaoPor", fields: [alteradoPorId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+
+  @@index([animalId])
+  @@index([dicaPrevencaoId])
+  @@map("historico_alteracoes")
+}
