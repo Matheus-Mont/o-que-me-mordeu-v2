@@ -1,8 +1,7 @@
+import { Box } from "@chakra-ui/react";
 import BotaoSOS from "@/components/emergencia/BotaoSOS";
-
-// Route group (public) — telas do usuário final. O botão SOS flutuante
-// fica aqui para aparecer sobre todas essas telas, isolado do painel
-// administrativo (app/admin).
+import Footer from "@/components/layout/Footer";
+import TopBar from "@/components/layout/TopBar";
 
 export default function PublicLayout({
   children,
@@ -11,7 +10,11 @@ export default function PublicLayout({
 }) {
   return (
     <>
-      {children}
+      <TopBar />
+      <Box as="main" flex="1">
+        {children}
+      </Box>
+      <Footer />
       <BotaoSOS />
     </>
   );

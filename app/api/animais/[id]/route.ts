@@ -12,7 +12,6 @@ interface Params {
   params: { id: string };
 }
 
-// GET /api/animais/:id — visitante só enxerga fichas publicadas.
 export async function GET(_request: NextRequest, { params }: Params) {
   const userId = await getSessionUserId();
   const animal = await db.animal.findUnique({ where: { id: params.id } });
@@ -27,12 +26,6 @@ export async function GET(_request: NextRequest, { params }: Params) {
   return NextResponse.json(animal);
 }
 
-// PATCH /api/animais/:id
-// Dois modos, conforme o corpo enviado:
-//  - { status, revisadoPor?, observacao? } -> transição de status, validando
-//    o fluxo rascunho -> revisado -> publicado.
-//  - campos de conteúdo (parcial) -> edição de conteúdo, mantendo o status,
-//    com registro de diff no histórico.
 export async function PATCH(request: NextRequest, { params }: Params) {
   const userId = await getSessionUserId();
   if (!userId) {
@@ -49,7 +42,6 @@ export async function PATCH(request: NextRequest, { params }: Params) {
     return NextResponse.json({ error: "Corpo inválido." }, { status: 400 });
   }
 
-  // --- Transição de status ---
   if (typeof (body as Record<string, unknown>).status === "string") {
     const parsed = statusTransitionSchema.safeParse(body);
     if (!parsed.success) {
@@ -103,7 +95,6 @@ export async function PATCH(request: NextRequest, { params }: Params) {
     return NextResponse.json(atualizado);
   }
 
-  // --- Edição de conteúdo ---
   const parsed = animalUpdateSchema.safeParse(body);
   if (!parsed.success) {
     return NextResponse.json(
@@ -136,7 +127,6 @@ export async function PATCH(request: NextRequest, { params }: Params) {
   return NextResponse.json(atualizado);
 }
 
-// DELETE /api/animais/:id
 export async function DELETE(_request: NextRequest, { params }: Params) {
   const userId = await getSessionUserId();
   if (!userId) {

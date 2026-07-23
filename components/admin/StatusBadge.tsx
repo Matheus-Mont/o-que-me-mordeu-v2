@@ -13,10 +13,6 @@ const SCHEME: Record<StatusConteudo, string> = {
   PUBLICADO: "safe",
 };
 
-// Usa os colorSchemes semânticos "safe"/"warning" definidos em app/theme.ts
-// quando fazem sentido; RASCUNHO fica neutro (gray) por não ter conotação
-// de sucesso/atenção ainda.
-
 export default function StatusBadge({ status }: { status: StatusConteudo }) {
   const scheme = SCHEME[status];
   const isSemantic = scheme === "safe" || scheme === "warning";

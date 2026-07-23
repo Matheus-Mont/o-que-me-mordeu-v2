@@ -5,14 +5,6 @@ import NextImage from "next/image";
 import { AspectRatio, Box, HStack, IconButton } from "@chakra-ui/react";
 import { TbChevronLeft, TbChevronRight, TbPhoto } from "react-icons/tb";
 
-// Galeria de fotos da ficha do animal — mostra a espécie em vários ângulos
-// (corpo todo, cabeça, padrão de cor etc.), úteis para identificação.
-//
-// Mobile: uma foto por vez, setas sobre a imagem, pontinhos de posição.
-// Desktop (md+): a imagem principal ganha uma fileira de miniaturas
-// clicáveis logo abaixo, aproveitando o espaço extra em vez de repetir
-// o carrossel de toque — os pontinhos somem nesse breakpoint.
-
 interface Props {
   imagens: string[];
   alt: string;
@@ -35,7 +27,7 @@ export default function CarrosselImagens({ imagens, alt }: Props) {
           gap={2}
         >
           <Box as={TbPhoto} fontSize="1.4rem" />
-          sem foto
+          Sem foto
         </Box>
       </AspectRatio>
     );
