@@ -3,6 +3,8 @@ import { db } from "@/lib/db";
 import { StatusConteudo } from "@prisma/client";
 import { Badge, Box, Button, Flex, Heading, Text, VStack } from "@chakra-ui/react";
 import CarrosselImagens from "@/components/animal/CarrosselImagens";
+import AvisoFotografar from "@/components/animal/AvisoFotografar";
+import AvisoLeiCobra from "@/components/animal/AvisoLeiCobra";
 import PageHeader from "@/components/layout/PageHeader";
 import PageShell from "@/components/layout/PageShell";
 import { capitalizar } from "@/lib/texto";
@@ -196,6 +198,10 @@ export default async function FichaAnimalPage({ params }: Props) {
                 A aplicação do soro é exclusiva de profissional de saúde, em ambiente hospitalar.
               </Text>
             </Box>
+
+            <AvisoFotografar />
+
+            {animal.categoria === "COBRA" && <AvisoLeiCobra />}
 
             <Button as="a" href={linkSoroJa} target="_blank" rel="noopener noreferrer" w="full" size="lg">
               Encontrar hospital com soro

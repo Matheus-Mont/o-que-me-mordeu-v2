@@ -22,6 +22,7 @@ import {
   CARACTERISTICAS,
   FERIDAS,
   SINTOMAS,
+  TRAIT_IMAGENS,
   type CategoriaId,
   type GrupoTriagem,
 } from "@/lib/identificacao/conhecimento";
@@ -365,7 +366,7 @@ export default function IdentificarPage() {
                 key={card.id}
                 label={card.label}
                 descricao={card.descricao}
-                imagem={card.imagem}
+                imagem={TRAIT_IMAGENS[card.id]}
                 selecionado={visuais.includes(card.id)}
                 onToggle={() => alternar(visuais, setVisuais, card.id)}
               />
@@ -391,7 +392,7 @@ export default function IdentificarPage() {
                 key={card.id}
                 label={card.label}
                 descricao={card.descricao}
-                imagem={card.imagem}
+                imagem={TRAIT_IMAGENS[card.id]}
                 selecionado={feridas.includes(card.id)}
                 onToggle={() => alternar(feridas, setFeridas, card.id)}
               />

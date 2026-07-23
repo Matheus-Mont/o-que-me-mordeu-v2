@@ -448,6 +448,55 @@ export const FERIDAS: Record<GrupoTriagem, OpcaoCard[]> = {
   ],
 };
 
+export const TRAIT_IMAGENS: Record<string, string> = {
+  cobra_cabeca_triangular: "/guia/serpentes-crotalineas-caracteristicas.jpg",
+  cobra_chocalho: "/guia/crotalus-durissus-chocalho.jpg",
+  cobra_aneis_coral: "/guia/coral-padrao-monadal-triadal.jpg",
+  cobra_capuz_preto: "/guia/micrurus-corallinus.jpg",
+  cobra_losango_v: "/guia/jararacas-caracteristica-corporal.jpg",
+  cobra_corpo_grosso_sela: "/guia/jiboia-caracteristica-manchas-sela.png",
+  cobra_xadrez: "/guia/caninana-padrao-xadrez.jpg",
+  cobra_gigante: "/guia/jiboia-tamanho-grande.jpeg",
+  cobra_cauda_abacaxi: "/guia/cauda-espinhosa.png",
+
+  aranha_postura_armada: "/guia/phoneutria-posicao-defensiva.jpg",
+  aranha_violino_marrom: "/guia/loxosceles-caracteristicas.jpg",
+  aranha_preta_ampulheta: "/guia/latrodectus-curacaviensis-femea.jpg",
+  aranha_marrom_geometrica: "/guia/latrodectus-geometricus-femea.jpg",
+  aranha_grande_peluda: "/guia/vitalius-longisternalis.jpg",
+  aranha_prateada_teia: "/guia/argiope-1.jpg",
+  aranha_robusta_chao: "/guia/lycosa-1.jpg",
+  aranha_pequena: "/guia/aranha-pequena.webp",
+
+  esc_amarelo: "/guia/tityus-serrulatus.jpg",
+  esc_marrom: "/guia/tityus-bahiensis-1.jpg",
+  esc_preto: "/guia/tityus-obscurus.jpg",
+  esc_serrilha: "/guia/tityus-serrulatus-cauda-detalhe.jpg",
+  esc_triangulo_dorso: "/guia/tityus-stigmurus-femea.jpg",
+  esc_espinho_ferrao: "/guia/tityus-ferrao-espinho-subaculear.jpg",
+  esc_sem_espinho: "/guia/bothriurus-sp-1.jpg",
+  esc_grande: "/guia/tityus-obscurus-variacao-1.jpg",
+  esc_pequeno: "/guia/ananteris-sp.jpg",
+
+  tat_cerdas_verdes_tronco: "/guia/lonomia-obliqua-colonia.jpg",
+  tat_pelos_algodao: "/guia/megalopyge-lanata-lagarta.jpg",
+  tat_verde_espinhos_ramif: "/guia/automeris-sp-lagarta.jpg",
+  tat_escura_espinhos_rigidos: "/guia/dirphia-sp-lagarta.jpg",
+  tat_pelos_finos_tufos: "/guia/hylesia-sp-lagarta.jpg",
+  tat_seringal: "/guia/premolis-semirufa-pararama.jpg",
+
+  av_flutuador_azul: "/guia/caravela-portuguesa.jpg",
+  av_cubo: "/guia/cubomedusa-chiropsalmus.jpg",
+  av_sino_listrado: "/guia/chrysaora-lactea.jpg",
+  av_pequena_pontas_vermelhas: "/guia/olindias-sambaquiensis.jpg",
+  av_prato_branco: "/guia/lychnorhiza-1.jpg",
+  av_fixa_rocha: "/guia/anemona-do-mar.jpg",
+
+  fer_dois_furos: "/guia/mordida-cobra-vibora-dois-pontos.jpg",
+  fer_fileira_dentes: "/guia/mordida-cobra-marquinhas-diversas.jpg",
+  fer_marcas_discretas: "/guia/mordida-cobra-discreta-coral.avif",
+};
+
 export const SINTOMAS: Record<GrupoTriagem, OpcaoSintoma[]> = {
   COBRA: [
     { id: "s_dor_forte", label: "dor e inchaço fortes no local" },
