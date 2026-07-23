@@ -68,7 +68,7 @@ function TituloColuna({ children }: { children: React.ReactNode }) {
 
 export default function Footer() {
   return (
-    <Box as="footer" borderTop="1px solid" borderColor="border" mt={4}>
+    <Box as="footer" borderTop="1px solid" borderColor="border">
       <Box maxW="1040px" mx="auto" px={{ base: 5, md: 6 }} py={{ base: 8, md: 10 }}>
         <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 8, md: 10 }} mb={8}>
           <Box>

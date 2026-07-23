@@ -24,6 +24,7 @@ const semanticTokens = {
   colors: {
     "bg.page": { default: "#eae6da", _dark: "#0b1713" },
     "bg.canvas": { default: "#f7f4ea", _dark: "#132821" },
+    "bg.main": { default: "#f1ecdd", _dark: "#0f2119" },
     "bg.surface": { default: "#fffdf6", _dark: "#1d3226" },
     "bg.surfaceHover": { default: "#f1ecdd", _dark: "#22392b" },
     border: { default: "rgba(19,40,33,0.12)", _dark: "rgba(244,241,232,0.10)" },

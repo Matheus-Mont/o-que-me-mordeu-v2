@@ -1,132 +1,49 @@
 import { PrismaClient, StatusConteudo } from "@prisma/client";
 import bcrypt from "bcryptjs";
-import fs from "node:fs/promises";
-import path from "node:path";
 
 const AVISO_EXEMPLO =
   "[EXEMPLO/FICTÍCIO] conteúdo gerado pelo seed de desenvolvimento — substituir por revisão real (biólogo/CIATox) antes de publicar de verdade.";
 
 const prisma = new PrismaClient();
 
-const WIKIPEDIA_USER_AGENT = "o-que-me-mordeu-seed/0.1 (script de seed local)";
-const MAX_IMAGENS_POR_ANIMAL = 4;
-
-const PASTA_IMAGENS_WIKIPEDIA = path.join(process.cwd(), "public", "animais-wikipedia");
-
-const FOTOS_GUIA_MS: Record<string, string> = {
-  "jararaca-exemplo": "/animais-guia-ms/jararaca-exemplo.jpg",
-  "cascavel-exemplo": "/animais-guia-ms/cascavel-exemplo.jpg",
-  "surucucu-exemplo": "/animais-guia-ms/surucucu-exemplo.jpg",
-  "coral-verdadeira-exemplo": "/animais-guia-ms/coral-verdadeira-exemplo.jpg",
-  "jararacucu-exemplo": "/animais-guia-ms/jararacucu-exemplo.jpg",
-  "armadeira-exemplo": "/animais-guia-ms/armadeira-exemplo.jpg",
-  "aranha-marrom-exemplo": "/animais-guia-ms/aranha-marrom-exemplo.jpg",
-  "viuva-marrom-exemplo": "/animais-guia-ms/viuva-marrom-exemplo.jpg",
-  "aranha-de-jardim-exemplo": "/animais-guia-ms/aranha-de-jardim-exemplo.jpg",
-  "aranha-lobo-exemplo": "/animais-guia-ms/aranha-lobo-exemplo.jpg",
-  "escorpiao-amarelo-exemplo": "/animais-guia-ms/escorpiao-amarelo-exemplo.jpg",
-  "escorpiao-marrom-exemplo": "/animais-guia-ms/escorpiao-marrom-exemplo.jpg",
-  "escorpiao-do-nordeste-exemplo": "/animais-guia-ms/escorpiao-do-nordeste-exemplo.jpg",
-  "escorpiao-preto-amazonia-exemplo": "/animais-guia-ms/escorpiao-preto-amazonia-exemplo.jpg",
-  "escorpiao-preto-exemplo": "/animais-guia-ms/escorpiao-preto-exemplo.jpg",
-  "escorpiao-amarelo-amazonia-exemplo": "/animais-guia-ms/escorpiao-amarelo-amazonia-exemplo.jpg",
-  "escorpiao-ananteris-exemplo": "/animais-guia-ms/escorpiao-ananteris-exemplo.jpg",
-  "taturana-lonomia-exemplo": "/animais-guia-ms/taturana-lonomia-exemplo.jpg",
-  "lonomia-achelous-exemplo": "/animais-guia-ms/lonomia-achelous-exemplo.jpg",
-  "taturana-de-fogo-exemplo": "/animais-guia-ms/taturana-de-fogo-exemplo.jpg",
-  "taturana-coruja-exemplo": "/animais-guia-ms/taturana-coruja-exemplo.jpg",
-  "taturana-da-seringueira-exemplo": "/animais-guia-ms/taturana-da-seringueira-exemplo.jpg",
-  "taturana-hylesia-exemplo": "/animais-guia-ms/taturana-hylesia-exemplo.jpg",
-  "taturana-dirphia-exemplo": "/animais-guia-ms/taturana-dirphia-exemplo.jpg",
-  "caravela-exemplo": "/animais-guia-ms/caravela-exemplo.jpg",
-  "agua-viva-chrysaora-exemplo": "/animais-guia-ms/agua-viva-chrysaora-exemplo.jpg",
-  "agua-viva-olindias-exemplo": "/animais-guia-ms/agua-viva-olindias-exemplo.jpg",
-  "agua-viva-vespa-do-mar-exemplo": "/animais-guia-ms/agua-viva-vespa-do-mar-exemplo.jpg",
+const IMAGENS_GUIA: Record<string, string[]> = {
+  "jararaca-exemplo": ["/guia/bothrops-jararaca.jpg", "/guia/jararacas-caracteristica-corporal.jpg", "/guia/serpentes-crotalineas-caracteristicas.jpg"],
+  "cascavel-exemplo": ["/guia/serpentes-crotalineas-caracteristicas.jpg", "/guia/crotalus-durissus-subespecies.jpg", "/guia/crotalus-durissus-chocalho.jpg"],
+  "surucucu-exemplo": ["/guia/lachesis-muta-caracteristicas.jpg", "/guia/lachesis-muta.jpg"],
+  "coral-verdadeira-exemplo": ["/guia/micrurus-corallinus.jpg", "/guia/coral-padrao-monadal-triadal.jpg", "/guia/coral-padroes-prancha.jpg"],
+  "jararacucu-exemplo": ["/guia/bothrops-jararacussu.jpg", "/guia/jararacas-caracteristica-corporal.jpg"],
+  "jiboia-exemplo": ["/guia/jiboia-1.jpg", "/guia/jiboia-2.jpg", "/guia/jiboia-3.jpg", "/guia/jiboia-caracteristica-manchas-sela.png"],
+  "caninana-exemplo": ["/guia/caninana-1.jpg", "/guia/caninana-2.jpg", "/guia/caninana-3.jpg", "/guia/caninana-4.jpg"],
+  "falsa-coral-exemplo": ["/guia/coral-falsa-1.jpg", "/guia/coral-falsa-2.jpg", "/guia/coral-falsa-3.jpg", "/guia/coral-falsa-4.jpg"],
+  "armadeira-exemplo": ["/guia/phoneutria-posicao-defensiva-1.jpg", "/guia/phoneutria-posicao-defensiva-2.jpg", "/guia/phoneutria-caracteristicas.jpg"],
+  "aranha-marrom-exemplo": ["/guia/loxosceles-caracteristicas.jpg", "/guia/loxosceles-caracteristicas-2.jpg"],
+  "viuva-negra-exemplo": ["/guia/latrodectus-curacaviensis-femea.jpg", "/guia/latrodectus-curacaviensis-habitat.jpg", "/guia/latrodectus-disposicao-olhos.jpg"],
+  "viuva-marrom-exemplo": ["/guia/latrodectus-geometricus-femea.jpg", "/guia/latrodectus-geometricus-macho-femea.jpg"],
+  "caranguejeira-exemplo": ["/guia/caranguejeira.png", "/guia/pelos-caranguejeira.png", "/guia/caranguejeira-quelice-ras.jpg"],
+  "aranha-de-jardim-exemplo": ["/guia/argiope-1.jpg", "/guia/argiope-2.jpg", "/guia/argiope-3.jpg"],
+  "aranha-lobo-exemplo": ["/guia/lycosa-1.jpg", "/guia/lycosa-2.png", "/guia/lycosa-3.jpg"],
+  "escorpiao-amarelo-exemplo": ["/guia/tityus-serrulatus.jpg", "/guia/tityus-serrulatus-femea.jpg", "/guia/tityus-serrulatus-cauda-detalhe.jpg"],
+  "escorpiao-marrom-exemplo": ["/guia/tityus-bahiensis-1.jpg", "/guia/tityus-bahiensis-macho.jpg", "/guia/tityus-bahiensis-dedo-detalhe.jpg"],
+  "escorpiao-do-nordeste-exemplo": ["/guia/tityus-stigmurus.jpg", "/guia/tityus-stigmurus-femea.jpg", "/guia/tityus-stigmurus-cauda-detalhe.jpg"],
+  "escorpiao-preto-amazonia-exemplo": ["/guia/tityus-obscurus.jpg", "/guia/tityus-obscurus-variacao-1.jpg", "/guia/tityus-obscurus-variacao-2.jpg"],
+  "escorpiao-preto-exemplo": ["/guia/bothriurus-sp-2.jpg"],
+  "escorpiao-amarelo-amazonia-exemplo": ["/guia/tityus-metuendus.jpg", "/guia/tityus-ferrao-espinho-subaculear.jpg"],
+  "escorpiao-ananteris-exemplo": ["/guia/ananteris-sp.jpg", "/guia/escorpiao-morfologia-externa.jpg"],
+  "taturana-lonomia-exemplo": ["/guia/lonomia-obliqua-lagarta.jpg", "/guia/lonomia-obliqua-colonia.jpg", "/guia/lonomia-obliqua-manchas-u-v.jpg"],
+  "lonomia-achelous-exemplo": ["/guia/lonomia-achelous-lagarta.jpg", "/guia/lonomia-sp-lagarta-1.jpg"],
+  "taturana-de-fogo-exemplo": ["/guia/megalopyge-lanata-lagarta.jpg", "/guia/megalopyge-albicollis.jpg"],
+  "taturana-coruja-exemplo": ["/guia/automeris-sp-lagarta.jpg"],
+  "taturana-da-seringueira-exemplo": ["/guia/premolis-semirufa-pararama.jpg"],
+  "taturana-hylesia-exemplo": ["/guia/hylesia-sp-lagarta.jpg", "/guia/hylesia-sp-cerdas.jpg", "/guia/hylesia-mariposa.jpg"],
+  "taturana-dirphia-exemplo": ["/guia/dirphia-sp-lagarta.jpg"],
+  "caravela-exemplo": ["/guia/caravela-portuguesa.jpg"],
+  "agua-viva-chrysaora-exemplo": ["/guia/chrysaora-lactea.jpg"],
+  "agua-viva-olindias-exemplo": ["/guia/olindias-sambaquiensis.jpg"],
+  "agua-viva-vespa-do-mar-exemplo": ["/guia/cubomedusa-chiropsalmus.jpg"],
+  "agua-viva-prato-exemplo": ["/guia/lychnorhiza-1.jpg", "/guia/lychnorhiza-2.jpg"],
+  "agua-viva-tamoya-exemplo": ["/guia/tamoya-1.jpg"],
+  "anemona-do-mar-exemplo": ["/guia/anemona-do-mar.jpg"],
 };
-
-const FOTOS_EXTRA_LOCAIS: Record<string, string> = {
-  "viuva-negra-exemplo": "/animais-guia-ms/viuva-negra-exemplo.jpg",
-  "jiboia-exemplo": "/animais-guia-ms/jiboia-exemplo.jpg",
-  "caninana-exemplo": "/animais-guia-ms/caninana-exemplo.jpg",
-  "falsa-coral-exemplo": "/animais-guia-ms/falsa-coral-exemplo.jpg",
-  "caranguejeira-exemplo": "/animais-guia-ms/caranguejeira-exemplo.jpg",
-  "agua-viva-prato-exemplo": "/animais-guia-ms/agua-viva-prato-exemplo.jpg",
-  "agua-viva-tamoya-exemplo": "/animais-guia-ms/agua-viva-tamoya-exemplo.jpg",
-  "anemona-do-mar-exemplo": "/animais-guia-ms/anemona-do-mar-exemplo.jpg",
-};
-
-async function baixarImagem(url: string, nomeArquivo: string): Promise<string | null> {
-  try {
-    const res = await fetch(url, { headers: { "User-Agent": WIKIPEDIA_USER_AGENT } });
-    if (!res.ok) return null;
-
-    await fs.mkdir(PASTA_IMAGENS_WIKIPEDIA, { recursive: true });
-    const buffer = Buffer.from(await res.arrayBuffer());
-    await fs.writeFile(path.join(PASTA_IMAGENS_WIKIPEDIA, nomeArquivo), buffer);
-    return `/animais-wikipedia/${nomeArquivo}`;
-  } catch {
-    return null;
-  }
-}
-
-async function buscarImagensWikipedia(titulo: string, slug: string): Promise<string[]> {
-  const candidatas: string[] = [];
-
-  try {
-    const resResumo = await fetch(
-      `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(titulo)}`,
-      { headers: { "User-Agent": WIKIPEDIA_USER_AGENT } }
-    );
-    if (resResumo.ok) {
-      const dataResumo = (await resResumo.json()) as { thumbnail?: { source?: string } };
-      if (dataResumo.thumbnail?.source) {
-        candidatas.push(dataResumo.thumbnail.source);
-      }
-    }
-  } catch {
-  }
-
-  try {
-    const resMedia = await fetch(
-      `https://en.wikipedia.org/api/rest_v1/page/media-list/${encodeURIComponent(titulo)}`,
-      { headers: { "User-Agent": WIKIPEDIA_USER_AGENT } }
-    );
-    if (resMedia.ok) {
-      const dataMedia = (await resMedia.json()) as {
-        items?: { type?: string; srcset?: { src?: string }[] }[];
-      };
-
-      for (const item of dataMedia.items ?? []) {
-        if (candidatas.length >= MAX_IMAGENS_POR_ANIMAL) break;
-        if (item.type !== "image") continue;
-
-        const menorFonte = item.srcset?.[0]?.src;
-        if (!menorFonte) continue;
-
-        if (/\.svg($|\?)/i.test(menorFonte) || /map|distribution|locator/i.test(menorFonte)) {
-          continue;
-        }
-
-        const url = menorFonte.startsWith("//") ? `https:${menorFonte}` : menorFonte;
-        if (!candidatas.includes(url)) {
-          candidatas.push(url);
-        }
-      }
-    }
-  } catch {
-  }
-
-  const baixadas: string[] = [];
-  for (let i = 0; i < candidatas.length; i++) {
-    const url = candidatas[i];
-    const extensao = url.split("?")[0].split(".").pop()?.toLowerCase();
-    const ext = extensao && /^(jpe?g|png|webp|gif)$/.test(extensao) ? extensao : "jpg";
-    const caminhoLocal = await baixarImagem(url, `${slug}-wiki-${i}.${ext}`);
-    if (caminhoLocal) baixadas.push(caminhoLocal);
-  }
-
-  return baixadas.slice(0, MAX_IMAGENS_POR_ANIMAL);
-}
 
 async function seedAdmin() {
   const email = process.env.ADMIN_EMAIL;
@@ -581,11 +498,12 @@ async function seedAnimais(userId: string) {
       regioes: ["nordeste", "norte", "sudeste"],
       identificacao: [
         "grande e peluda, pode passar de 20 cm de envergadura",
+        "quelíceras projetadas para a frente, bem visíveis quando a aranha é vista de cima — diferencia das demais aranhas",
         "aparência assustadora, mas costuma ser dócil e evita o confronto",
-        "quando ameaçada, pode lançar pelos urticantes do abdômen no ar",
+        "defesa típica (veja a foto): quando ameaçada, raspa com as pernas traseiras e lança no ar as cerdas urticantes do dorso do abdômen; elas penetram na pele causando coceira e podem irritar os olhos",
       ],
       sintomas:
-        "a picada (rara) causa dor local leve, comparável a uma picada de abelha; o maior incômodo costuma vir dos pelos urticantes, que causam coceira e irritação na pele e nos olhos.",
+        "a picada (rara) causa dor local leve, comparável a uma picada de abelha; o maior incômodo costuma vir dos pelos urticantes lançados em defesa, que causam coceira e irritação na pele e nos olhos.",
       tempoSintomas: "imediato, geralmente leve e passageiro",
       primeirosSocorrosFazer: [
         "lavar bem o local com água e sabão para remover pelos urticantes",
@@ -1170,14 +1088,10 @@ async function seedAnimais(userId: string) {
     },
   ];
 
-  for (const { wikipedia, ...dados } of animais) {
-    const fotoGuiaMS = FOTOS_GUIA_MS[dados.slug];
-    const fotoExtraLocal = FOTOS_EXTRA_LOCAIS[dados.slug];
-    const imagensWikipedia = await buscarImagensWikipedia(wikipedia, dados.slug);
-    const imagens = [
-      ...(fotoGuiaMS ? [fotoGuiaMS] : fotoExtraLocal ? [fotoExtraLocal] : []),
-      ...imagensWikipedia,
-    ].slice(0, MAX_IMAGENS_POR_ANIMAL);
+  for (const animalDef of animais) {
+    const { wikipedia, ...dados } = animalDef;
+    void wikipedia;
+    const imagens = IMAGENS_GUIA[dados.slug] ?? [];
 
     const animal = await prisma.animal.upsert({
       where: { slug: dados.slug },

@@ -1,5 +1,6 @@
 import NextLink from "next/link";
 import { Box, Button, Flex, Heading, Text, VStack } from "@chakra-ui/react";
+import AvisoFotografar from "@/components/animal/AvisoFotografar";
 import PageHeader from "@/components/layout/PageHeader";
 import PageShell from "@/components/layout/PageShell";
 
@@ -92,11 +93,14 @@ export default function EmergenciaPage() {
             borderColor="danger.border"
             borderRadius="card"
             p={4}
+            mb="14px"
           >
             <Text color="danger.text" fontSize="13px">
               ⛔ Nunca faça torniquete, corte ou tente sugar o veneno.
             </Text>
           </Box>
+
+          <AvisoFotografar />
         </Box>
       </Flex>
 

@@ -2,8 +2,8 @@
 
 import NextLink from "next/link";
 import { Box, Flex, HStack, Link, Text } from "@chakra-ui/react";
-import { TbPaw } from "react-icons/tb";
 import ColorModeToggle from "./ColorModeToggle";
+import LogoMark from "./LogoMark";
 
 const LINKS = [
   { href: "/identificar", label: "Identificar" },
@@ -38,15 +38,13 @@ export default function TopBar() {
           w="36px"
           h="36px"
           borderRadius="control"
-          bg="bg.surface"
-          color="accent.text"
+          overflow="hidden"
           align="center"
           justify="center"
           flexShrink={0}
-          fontSize="1.1rem"
           aria-label="início"
         >
-          <TbPaw aria-hidden />
+          <LogoMark size={36} />
         </Flex>
         <Box as={NextLink} href="/" _hover={{ textDecoration: "none" }}>
           <Text fontFamily="heading" fontWeight={700} fontSize="md" lineHeight={1.1}>

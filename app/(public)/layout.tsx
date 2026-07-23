@@ -11,7 +11,14 @@ export default function PublicLayout({
   return (
     <>
       <TopBar />
-      <Box as="main" flex="1">
+      <Box
+        as="main"
+        flex="1"
+        minH={{ base: "70vh", md: "78vh" }}
+        bg="bg.main"
+        display="flex"
+        flexDirection="column"
+      >
         {children}
       </Box>
       <Footer />
