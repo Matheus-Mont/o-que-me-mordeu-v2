@@ -2,7 +2,6 @@ import { z } from "zod";
 
 export const ambienteEnum = z.enum(["CASA", "MATA_TRILHA", "RIOS_LAGOS", "PRAIA"]);
 
-/** Campos de conteúdo da dica (seção "Modelo de dados — dica de prevenção"). */
 export const dicaContentSchema = z.object({
   ambiente: ambienteEnum,
   icone: z.string().min(1),

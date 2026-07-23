@@ -6,8 +6,6 @@ import { Box, Button, HStack, Text } from "@chakra-ui/react";
 import type { StatusConteudo } from "@prisma/client";
 import StatusBadge from "./StatusBadge";
 
-// Ações de transição de status (rascunho -> revisado -> publicado),
-// espelhando as regras de lib/historico.ts (transicaoValida) no servidor.
 const PROXIMAS: Record<
   StatusConteudo,
   { status: StatusConteudo; label: string; pedeRevisor?: boolean }[]

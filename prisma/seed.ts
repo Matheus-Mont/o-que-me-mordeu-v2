@@ -3,32 +3,6 @@ import bcrypt from "bcryptjs";
 import fs from "node:fs/promises";
 import path from "node:path";
 
-// Seed de desenvolvimento:
-//  1) cria (ou atualiza a senha de) o único usuário administrador, a partir
-//     de ADMIN_EMAIL / ADMIN_PASSWORD no .env;
-//  2) cria alguns animais e dicas de prevenção de EXEMPLO, já em status
-//     PUBLICADO, só para exercitar as telas públicas de ponta a ponta —
-//     incluindo até algumas imagens ilustrativas por animal (carrossel): a
-//     primeira, quando disponível, é uma foto extraída do "Guia de Animais
-//     Peçonhentos do Brasil" (Ministério da Saúde, 2024 — ver FOTOS_GUIA_MS),
-//     e as demais são baixadas da Wikipédia em tempo de execução para
-//     public/animais-wikipedia/ (ver buscarImagensWikipedia) — nunca
-//     hotlinkadas, tudo servido localmente pelo próprio Next.js.
-//
-// Cobertura de conteúdo: os 4 gêneros de serpentes de importância médica no
-// Brasil (Bothrops/jararaca, Crotalus/cascavel, Lachesis/surucucu,
-// Micrurus/coral-verdadeira — cada um exige um soro diferente), as 3 aranhas
-// de importância médica (Phoneutria/armadeira, Loxosceles/aranha-marrom,
-// Latrodectus/viúva-negra) e mais alguns artrópodes (dois escorpiões e a
-// lagarta Lonomia/taturana).
-//
-// IMPORTANTE: o conteúdo abaixo é ilustrativo/fictício para fins de teste —
-// não é orientação médica validada, mesmo que baseado em características
-// gerais reais de cada espécie. Antes de um lançamento real, revise (ou
-// substitua) cada ficha com um especialista, como previsto no fluxo
-// rascunho -> revisado -> publicado, e nunca confie neste seed como fonte
-// de conteúdo de produção. Rodar com `pnpm db:seed`.
-
 const AVISO_EXEMPLO =
   "[EXEMPLO/FICTÍCIO] conteúdo gerado pelo seed de desenvolvimento — substituir por revisão real (biólogo/CIATox) antes de publicar de verdade.";
 
@@ -37,27 +11,8 @@ const prisma = new PrismaClient();
 const WIKIPEDIA_USER_AGENT = "o-que-me-mordeu-seed/0.1 (script de seed local)";
 const MAX_IMAGENS_POR_ANIMAL = 4;
 
-// Pasta pública onde as fotos buscadas da Wikipédia são salvas (baixadas em
-// tempo de seed, não servidas por hotlink — ver buscarImagensWikipedia).
 const PASTA_IMAGENS_WIKIPEDIA = path.join(process.cwd(), "public", "animais-wikipedia");
 
-/**
- * Fotos extraídas do "Guia de Animais Peçonhentos do Brasil" (Ministério da
- * Saúde / Secretaria de Vigilância em Saúde e Ambiente, 2024 — obra oficial,
- * domínio público), usadas como a PRIMEIRA imagem do carrossel de cada animal
- * quando o guia traz uma foto identificada da espécie (ou do gênero, quando
- * o guia só ilustra em nível de gênero — ex.: Phoneutria sp., Loxosceles sp.,
- * Ananteris balzani via Ananteris spp.). O restante do carrossel (até
- * MAX_IMAGENS_POR_ANIMAL) continua vindo da Wikipédia via
- * buscarImagensWikipedia. Espécies sem foto própria no guia (ex.: as
- * serpentes/aranhas não-peçonhentas de comparação e algumas água-vivas) não
- * entram neste mapa e seguem só com Wikipédia, como antes.
- *
- * Arquivos em public/animais-guia-ms/<slug>.jpg — servidos estaticamente pelo
- * Next.js. Créditos de foto de cada figura conforme legenda do guia (autores
- * variados: Marcus A. Buononato, Giuseppe Puorto, Rogério Bertani, Denise
- * Candido, R. Moraes, Vidal Haddad Jr., entre outros).
- */
 const FOTOS_GUIA_MS: Record<string, string> = {
   "jararaca-exemplo": "/animais-guia-ms/jararaca-exemplo.jpg",
   "cascavel-exemplo": "/animais-guia-ms/cascavel-exemplo.jpg",
@@ -89,37 +44,6 @@ const FOTOS_GUIA_MS: Record<string, string> = {
   "agua-viva-vespa-do-mar-exemplo": "/animais-guia-ms/agua-viva-vespa-do-mar-exemplo.jpg",
 };
 
-/**
- * Fotos das 8 espécies que o guia do Ministério da Saúde não cobre com foto
- * própria (comparações não-peçonhentas e algumas águas-vivas/cnidários).
- * Diferente de FOTOS_GUIA_MS, vêm do Wikimedia Commons (terceiros) — cada uma
- * com sua própria licença CC, exigindo atribuição ao fotógrafo — e foram
- * baixadas manualmente (não em tempo de execução) exatamente para GARANTIR
- * que toda ficha tenha ao menos uma imagem local, sem depender da Wikipédia
- * responder no momento do seed.
- *
- * Créditos (Wikimedia Commons):
- * - viuva-negra-exemplo: Latrodectus curacaviensis, foto de Alexandre S.
- *   Michelotto (Jacobina-BA), CC BY-SA 4.0.
- * - jiboia-exemplo: Boa constrictor constrictor, Parque Nacional Serra da
- *   Capivara (PI), foto de Manugirard.
- * - caninana-exemplo: Spilotes pullatus, foto de Salomão Janderson Ferreira
- *   Bispo, CC BY-SA 2.0.
- * - falsa-coral-exemplo: Erythrolamprus aesculapii, foto de Wallembergsousa,
- *   CC BY-SA 3.0.
- * - caranguejeira-exemplo: Lasiodora parahybana, foto de George Chernilevsky,
- *   domínio público.
- * - agua-viva-prato-exemplo: Lychnorhiza lucerna, Enoshima Aquarium, foto de
- *   Syced, CC0.
- * - agua-viva-tamoya-exemplo: Tamoya haplonema, Smithsonian Environmental
- *   Research Center (Chesapeake Bay), CC BY 2.0.
- * - anemona-do-mar-exemplo: nenhuma foto de Bunodosoma caissarum com licença
- *   livre foi encontrada em busca extensiva (Commons, Flickr); usada foto de
- *   Bunodosoma californicum (mesmo gênero, morfologia externa muito
- *   semelhante — coluna verrucosa e tentáculos curtos cônicos) como
- *   referência visual provisória. Trocar pela espécie exata antes de
- *   publicar de verdade.
- */
 const FOTOS_EXTRA_LOCAIS: Record<string, string> = {
   "viuva-negra-exemplo": "/animais-guia-ms/viuva-negra-exemplo.jpg",
   "jiboia-exemplo": "/animais-guia-ms/jiboia-exemplo.jpg",
@@ -131,12 +55,6 @@ const FOTOS_EXTRA_LOCAIS: Record<string, string> = {
   "anemona-do-mar-exemplo": "/animais-guia-ms/anemona-do-mar-exemplo.jpg",
 };
 
-/**
- * Baixa uma imagem de `url` para public/animais-wikipedia/<nomeArquivo> e
- * devolve o path público local (ex.: "/animais-wikipedia/jararaca-wiki-0.jpg"),
- * ou null se o download falhar (rede fora do ar, 404, etc. — o carrossel
- * simplesmente fica sem essa foto extra, sem quebrar o seed).
- */
 async function baixarImagem(url: string, nomeArquivo: string): Promise<string | null> {
   try {
     const res = await fetch(url, { headers: { "User-Agent": WIKIPEDIA_USER_AGENT } });
@@ -151,23 +69,6 @@ async function baixarImagem(url: string, nomeArquivo: string): Promise<string | 
   }
 }
 
-/**
- * Busca várias imagens ilustrativas na Wikipédia para o título dado (o
- * thumbnail da infobox + fotos adicionais do artigo) e BAIXA cada uma para
- * public/animais-wikipedia/, devolvendo paths locais (não URLs remotas) —
- * assim a ficha do animal nunca depende da Wikipédia estar no ar nem faz
- * hotlink em produção, e o navegador carrega tudo do próprio domínio.
- *
- * Prefere sempre a menor variante disponível no srcset (não a maior/original,
- * que pode ter vários MB) — o carrossel só precisa de uma foto de
- * identificação, não de resolução de impressão.
- *
- * Aviso de licenciamento: cada imagem baixada tem sua própria licença (em
- * geral CC BY-SA ou domínio público) e exige atribuição ao autor — o
- * conteúdo aqui é só para desenvolvimento/teste (ver AVISO_EXEMPLO). Antes de
- * um lançamento real, confirme a licença de cada imagem e considere servir
- * pelo storage próprio do projeto (S3-compatible), como previsto na spec.
- */
 async function buscarImagensWikipedia(titulo: string, slug: string): Promise<string[]> {
   const candidatas: string[] = [];
 
@@ -183,7 +84,6 @@ async function buscarImagensWikipedia(titulo: string, slug: string): Promise<str
       }
     }
   } catch {
-    // segue sem o thumbnail principal — tenta as fotos adicionais abaixo
   }
 
   try {
@@ -200,12 +100,9 @@ async function buscarImagensWikipedia(titulo: string, slug: string): Promise<str
         if (candidatas.length >= MAX_IMAGENS_POR_ANIMAL) break;
         if (item.type !== "image") continue;
 
-        // menor variante do srcset (não .at(-1), que seria a maior/original)
         const menorFonte = item.srcset?.[0]?.src;
         if (!menorFonte) continue;
 
-        // exclui ícones/diagramas comuns em infoboxes de taxonomia (mapas de
-        // distribuição, brasões, etc.) que não são fotos do próprio animal
         if (/\.svg($|\?)/i.test(menorFonte) || /map|distribution|locator/i.test(menorFonte)) {
           continue;
         }
@@ -217,7 +114,6 @@ async function buscarImagensWikipedia(titulo: string, slug: string): Promise<str
       }
     }
   } catch {
-    // segue só com o que já tiver encontrado (ou vazio)
   }
 
   const baixadas: string[] = [];
@@ -562,7 +458,6 @@ async function seedAnimais(userId: string) {
       ],
       soroIndicado: "soro antilonômico",
     },
-    // --- espécies adicionais (cobras) ---
     {
       slug: "jiboia-exemplo",
       nomePopular: "jiboia (exemplo)",
@@ -676,7 +571,6 @@ async function seedAnimais(userId: string) {
       ],
       soroIndicado: "soro antibotrópico (em maior quantidade, pela gravidade típica do acidente)",
     },
-    // --- espécies adicionais (aranhas) ---
     {
       slug: "caranguejeira-exemplo",
       nomePopular: "caranguejeira (exemplo)",
@@ -786,7 +680,6 @@ async function seedAnimais(userId: string) {
       ],
       soroIndicado: "raramente necessário — tratamento geralmente de suporte para a dor.",
     },
-    // --- espécies adicionais (escorpiões) ---
     {
       slug: "escorpiao-do-nordeste-exemplo",
       nomePopular: "escorpião-amarelo-do-nordeste (exemplo)",
@@ -932,7 +825,6 @@ async function seedAnimais(userId: string) {
       primeirosSocorrosNaoFazer: ["não é preciso soro"],
       soroIndicado: "não se aplica — sem importância médica.",
     },
-    // --- espécies adicionais (taturanas) ---
     {
       slug: "lonomia-achelous-exemplo",
       nomePopular: "taturana-da-amazônia (exemplo)",
@@ -1091,7 +983,6 @@ async function seedAnimais(userId: string) {
       primeirosSocorrosNaoFazer: ["não esfregar o local do contato"],
       soroIndicado: "não há soro específico — tratamento de suporte para a dor.",
     },
-    // --- espécies adicionais (águas-vivas) ---
     {
       slug: "caravela-exemplo",
       nomePopular: "caravela (exemplo)",
@@ -1282,15 +1173,7 @@ async function seedAnimais(userId: string) {
   for (const { wikipedia, ...dados } of animais) {
     const fotoGuiaMS = FOTOS_GUIA_MS[dados.slug];
     const fotoExtraLocal = FOTOS_EXTRA_LOCAIS[dados.slug];
-    // Sempre busca (mesmo se o animal já existir) — do contrário, o `update`
-    // do upsert abaixo nunca aplicaria fotos novas/corrigidas em quem já
-    // rodou o seed antes, deixando a ficha presa nas imagens da 1ª execução.
     const imagensWikipedia = await buscarImagensWikipedia(wikipedia, dados.slug);
-    // Foto do guia oficial primeiro (quando disponível); se o guia não cobrir
-    // a espécie, usa a foto local garantida de FOTOS_EXTRA_LOCAIS. Em ambos os
-    // casos, a Wikipédia completa o resto do carrossel até o limite de
-    // MAX_IMAGENS_POR_ANIMAL — mas toda espécie sempre tem ao menos 1 imagem
-    // local garantida, independente da Wikipédia responder ou não.
     const imagens = [
       ...(fotoGuiaMS ? [fotoGuiaMS] : fotoExtraLocal ? [fotoExtraLocal] : []),
       ...imagensWikipedia,
@@ -1298,9 +1181,6 @@ async function seedAnimais(userId: string) {
 
     const animal = await prisma.animal.upsert({
       where: { slug: dados.slug },
-      // IMPORTANTE: atualiza todo o conteúdo (inclusive `imagens`) mesmo se o
-      // animal já existir — senão re-rodar `pnpm db:seed` depois de corrigir
-      // texto/fotos no seed.ts não teria efeito nenhum no banco já populado.
       update: {
         ...dados,
         imagens,

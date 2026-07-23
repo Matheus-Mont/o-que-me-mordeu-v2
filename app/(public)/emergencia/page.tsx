@@ -1,59 +1,108 @@
 import NextLink from "next/link";
-import { Box, Button, Divider, SimpleGrid, Text } from "@chakra-ui/react";
-import { TbPhone } from "react-icons/tb";
+import { Box, Button, Flex, Heading, Text, VStack } from "@chakra-ui/react";
 import PageHeader from "@/components/layout/PageHeader";
 import PageShell from "@/components/layout/PageShell";
 
-// Tela de emergência — acessada pelo botão SOS ou pelo botão "preciso de
-// ajuda agora" da abertura. Conteúdo 100% estático (sem fetch ao banco),
-// para funcionar offline, por ser a parte mais crítica em uso real.
-
 export const metadata = {
-  title: "emergência | o que me mordeu?",
+  title: "Emergência | O que me mordeu?",
 };
+
+const TELEFONES = [
+  { nome: "SAMU", numero: "192" },
+  { nome: "Bombeiros", numero: "193" },
+];
 
 export default function EmergenciaPage() {
   return (
-    <PageShell maxW={{ base: "480px", md: "560px" }}>
-      <PageHeader title="emergência" href="/" />
+    <PageShell maxW={{ base: "100%", md: "860px" }}>
+      <PageHeader href="/" />
 
-      <SimpleGrid columns={2} spacing={3} mb={3}>
-        <Button as="a" href="tel:192" bg="danger.solid" color="white" size="lg" leftIcon={<TbPhone />} _hover={{ opacity: 0.9 }}>
-          samu 192
-        </Button>
-        <Button as="a" href="tel:193" bg="danger.solid" color="white" size="lg" leftIcon={<TbPhone />} _hover={{ opacity: 0.9 }}>
-          bombeiros 193
-        </Button>
-      </SimpleGrid>
-
-      <Button as="a" href="https://soroja.com.br/" target="_blank" rel="noopener noreferrer" w="full" size="lg" mb={6}>
-        encontrar hospital com soro
-      </Button>
-
-      <Divider borderColor="border" mb={6} />
-
-      <Text fontWeight={600} mb={1}>
-        enquanto isso
-      </Text>
-      <Text color="text.secondary" fontSize="sm" mb={4}>
-        primeiros socorros gerais, independem do tipo de animal:
+      <Heading as="h1" fontSize="22px" fontWeight={800} color="danger.text" mb={2}>
+        Emergência
+      </Heading>
+      <Text color="text.secondary" fontSize="sm" mb={5}>
+        Fique calmo. Ligue para o socorro e siga os cuidados abaixo enquanto a
+        ajuda chega.
       </Text>
 
-      <Box bg="safe.bg" border="1px solid" borderColor="safe.border" borderRadius="card" p={4} mb={3}>
-        <Text color="safe.text" fontSize="sm">
-          ✓ lave o local com água e sabão, mantenha o membro afetado elevado e em repouso
-        </Text>
-      </Box>
+      <Flex direction={{ base: "column", md: "row" }} gap={{ base: 6, md: 10 }} align="start">
+        <Box flex="1" minW={0} w="full">
+          <VStack align="stretch" spacing={2} mb={3}>
+            {TELEFONES.map((t) => (
+              <Flex
+                key={t.numero}
+                as="a"
+                href={`tel:${t.numero}`}
+                justify="space-between"
+                align="center"
+                bg="bg.surface"
+                border="1px solid"
+                borderColor="border"
+                borderRadius="control"
+                p="14px 16px"
+                fontSize="sm"
+                transition="background 0.15s ease"
+                _hover={{ bg: "bg.surfaceHover" }}
+              >
+                {t.nome}
+                <Text as="span" fontWeight={700} color="accent.text">
+                  {t.numero}
+                </Text>
+              </Flex>
+            ))}
+          </VStack>
 
-      <Box bg="danger.bg" border="1px solid" borderColor="danger.border" borderRadius="card" p={4} mb={6}>
-        <Text color="danger.text" fontSize="sm">
-          ⛔ nunca faça torniquete, corte ou tente sugar o veneno
-        </Text>
-      </Box>
+          <Button
+            as="a"
+            href="https://soroja.com.br/"
+            target="_blank"
+            rel="noopener noreferrer"
+            w="full"
+            size="lg"
+          >
+            Encontrar hospital com soro
+          </Button>
+        </Box>
 
-      <Box textAlign="center">
-        <Button as={NextLink} href="/identificar" variant="link" color="text.secondary">
-          sei que tipo de animal foi
+        <Box flex="1" minW={0} w="full">
+          <Text fontFamily="heading" fontWeight={700} fontSize="13.5px" color="accent.text" mb={1}>
+            Enquanto isso
+          </Text>
+          <Text color="text.secondary" fontSize="13px" mb={4}>
+            Primeiros socorros gerais, que independem do tipo de animal:
+          </Text>
+
+          <Box
+            bg="safe.bg"
+            border="1px solid"
+            borderColor="safe.border"
+            borderRadius="card"
+            p={4}
+            mb="14px"
+          >
+            <Text color="safe.text" fontSize="13px">
+              ✓ Lave o local com água e sabão e mantenha o membro afetado elevado
+              e em repouso.
+            </Text>
+          </Box>
+
+          <Box
+            bg="danger.bg"
+            border="1px solid"
+            borderColor="danger.border"
+            borderRadius="card"
+            p={4}
+          >
+            <Text color="danger.text" fontSize="13px">
+              ⛔ Nunca faça torniquete, corte ou tente sugar o veneno.
+            </Text>
+          </Box>
+        </Box>
+      </Flex>
+
+      <Box textAlign="center" mt={8}>
+        <Button as={NextLink} href="/identificar" variant="link" color="text.secondary" fontSize="13px">
+          Sei que tipo de animal foi
         </Button>
       </Box>
     </PageShell>

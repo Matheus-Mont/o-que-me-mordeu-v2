@@ -1,22 +1,20 @@
 import { memo } from "react";
-import { Badge, Box, LinkBox, LinkOverlay, Text, VStack } from "@chakra-ui/react";
+import { Badge, Box, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 import NextImage from "next/image";
-import { TbChevronRight, TbPhoto } from "react-icons/tb";
+import { TbPhoto } from "react-icons/tb";
 import type { Animal } from "@prisma/client";
+import { capitalizar } from "@/lib/texto";
 
-// Só os campos que o card realmente usa — assim tanto o objeto enxuto vindo
-// do catálogo (select parcial no servidor) quanto um Animal completo (usado
-// pelo wizard "identificar") satisfazem a prop.
 export type AnimalCardData = Pick<
   Animal,
   "slug" | "nomePopular" | "nivelUrgencia" | "imagens"
 >;
 
 const URGENCIA_LABEL: Record<Animal["nivelUrgencia"], string> = {
-  ALTA: "urgência alta",
-  MEDIA: "urgência média",
-  BAIXA: "urgência baixa",
+  ALTA: "Urgência alta",
+  MEDIA: "Urgência média",
+  BAIXA: "Urgência baixa",
 };
 
 const URGENCIA_SCHEME: Record<Animal["nivelUrgencia"], "danger" | "warning" | "safe"> = {
@@ -25,72 +23,64 @@ const URGENCIA_SCHEME: Record<Animal["nivelUrgencia"], "danger" | "warning" | "s
   BAIXA: "safe",
 };
 
-// Card usado no catálogo e nas sugestões do wizard "identificar". A
-// miniatura usa só a primeira foto — o carrossel completo fica na ficha
-// do animal (app/(public)/animal/[slug]).
-//
-// Memoizado: no catálogo, digitar no filtro re-renderiza a lista inteira; sem
-// o memo, cada um dos ~9 cards (com vários componentes estilizados do Chakra)
-// recalcularia estilos a cada tecla. Com o memo, só re-renderiza o card cujo
-// `animal` de fato mudou.
-
 function AnimalCard({ animal }: { animal: AnimalCardData }) {
   const scheme = URGENCIA_SCHEME[animal.nivelUrgencia];
 
   return (
-    <LinkBox
-      as="article"
+    <Box
+      as={NextLink}
+      href={`/animal/${animal.slug}`}
       display="flex"
-      alignItems="center"
-      gap={4}
+      flexDirection="column"
       bg="bg.surface"
       border="1px solid"
       borderColor="border"
-      borderRadius="card"
-      p={4}
+      borderRadius="12px"
+      overflow="hidden"
       transition="background 0.15s ease, border-color 0.15s ease"
-      _hover={{ bg: "bg.surfaceHover", borderColor: "borderStrong" }}
+      _hover={{ textDecoration: "none", bg: "bg.surfaceHover", borderColor: "borderStrong" }}
     >
-      <Box
-        width="48px"
-        height="48px"
-        borderRadius="10px"
-        bg="bg.canvas"
-        border="1px dashed"
-        borderColor="border"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        flexShrink={0}
-        overflow="hidden"
-        position="relative"
-      >
+      <Box height="96px" position="relative" bg="bg.canvas">
         {animal.imagens[0] ? (
           <NextImage
             src={animal.imagens[0]}
             alt={animal.nomePopular}
             fill
-            sizes="48px"
+            sizes="(max-width: 768px) 50vw, 200px"
             style={{ objectFit: "cover" }}
           />
         ) : (
-          <Box as={TbPhoto} color="text.muted" fontSize="1.1rem" />
+          <Box
+            position="absolute"
+            inset={0}
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            color="text.muted"
+            borderBottom="1px dashed"
+            borderColor="border"
+          >
+            <TbPhoto aria-hidden />
+          </Box>
         )}
       </Box>
 
-      <VStack align="start" spacing={0.5} flex={1} minW={0}>
-        <LinkOverlay as={NextLink} href={`/animal/${animal.slug}`}>
-          <Text fontWeight={600} noOfLines={1}>
-            {animal.nomePopular}
-          </Text>
-        </LinkOverlay>
-        <Badge bg={`${scheme}.bg`} color={`${scheme}.text`} fontSize="0.68rem">
+      <Box p="10px">
+        <Text fontFamily="heading" fontWeight={700} fontSize="13px" mb={1.5} noOfLines={2}>
+          {capitalizar(animal.nomePopular)}
+        </Text>
+        <Badge
+          bg={`${scheme}.bg`}
+          color={`${scheme}.text`}
+          fontSize="10.5px"
+          borderRadius="6px"
+          px="7px"
+          py="2px"
+        >
           {URGENCIA_LABEL[animal.nivelUrgencia]}
         </Badge>
-      </VStack>
-
-      <Box as={TbChevronRight} color="text.secondary" fontSize="1.1rem" flexShrink={0} />
-    </LinkBox>
+      </Box>
+    </Box>
   );
 }
 

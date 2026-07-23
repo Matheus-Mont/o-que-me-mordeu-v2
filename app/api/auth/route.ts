@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { loginSchema } from "@/lib/validations/auth";
 import { verifyCredentials, createSession, destroySession } from "@/lib/auth";
 
-// POST /api/auth — login do administrador (email + senha)
 export async function POST(request: NextRequest) {
   const body = await request.json().catch(() => null);
   const parsed = loginSchema.safeParse(body);
@@ -27,7 +26,6 @@ export async function POST(request: NextRequest) {
   return NextResponse.json({ id: user.id, email: user.email });
 }
 
-// DELETE /api/auth — logout
 export async function DELETE() {
   await destroySession();
   return NextResponse.json({ ok: true });

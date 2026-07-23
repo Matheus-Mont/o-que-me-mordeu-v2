@@ -4,8 +4,6 @@ import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Box, Button, FormControl, FormLabel, Heading, Input, Text, VStack } from "@chakra-ui/react";
 
-// Tela de login do admin. Único usuário administrador, sem cadastro público.
-
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();

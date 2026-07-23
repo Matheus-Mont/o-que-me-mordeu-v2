@@ -2,9 +2,6 @@ import NextLink from "next/link";
 import { db } from "@/lib/db";
 import { Box, Button, Heading, SimpleGrid, Text } from "@chakra-ui/react";
 
-// Dashboard do painel — visão geral de quantas fichas existem em cada
-// etapa do fluxo de publicação (rascunho / revisado / publicado).
-
 const STATUS_LABEL: Record<string, string> = {
   RASCUNHO: "rascunho",
   REVISADO: "revisado",

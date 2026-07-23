@@ -1,10 +1,20 @@
 import type { Metadata } from "next";
+import { Sora, IBM_Plex_Sans } from "next/font/google";
 import Providers from "./providers";
 
-// Layout raiz — shell HTML exigido pelo App Router. As telas em si
-// vivem em app/(public)/** (usuário final) e app/admin/** (painel).
-// Todo o estilo vem do Chakra UI (app/theme.ts); não há mais globals.css
-// com classes utilitárias manuais.
+const sora = Sora({
+  subsets: ["latin"],
+  weight: ["600", "700", "800"],
+  variable: "--font-sora",
+  display: "swap",
+});
+
+const plex = IBM_Plex_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-plex",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "O que me mordeu?",
@@ -18,9 +28,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR" suppressHydrationWarning>
+    <html lang="pt-BR" suppressHydrationWarning className={`${sora.variable} ${plex.variable}`}>
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          <div className="app-frame">{children}</div>
+        </Providers>
       </body>
     </html>
   );

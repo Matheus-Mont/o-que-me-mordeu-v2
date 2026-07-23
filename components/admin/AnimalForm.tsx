@@ -16,10 +16,6 @@ import {
 } from "@chakra-ui/react";
 import type { Animal } from "@prisma/client";
 
-// Editor de ficha de animal. Campos de lista (regiões, identificação,
-// primeiros socorros) são editados como texto com um item por linha,
-// por simplicidade nesta fase.
-
 function arrayParaTexto(valores: string[]) {
   return valores.join("\n");
 }

@@ -5,7 +5,6 @@ import { registrarHistorico } from "@/lib/historico";
 import { dicaContentSchema } from "@/lib/validations/prevencao";
 import { Prisma, StatusConteudo } from "@prisma/client";
 
-// GET /api/prevencao?status=&ambiente=
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const userId = await getSessionUserId();
@@ -31,7 +30,6 @@ export async function GET(request: NextRequest) {
   return NextResponse.json(dicas);
 }
 
-// POST /api/prevencao — cria uma nova dica, sempre como RASCUNHO.
 export async function POST(request: NextRequest) {
   const userId = await getSessionUserId();
   if (!userId) {

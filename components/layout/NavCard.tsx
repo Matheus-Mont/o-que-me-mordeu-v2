@@ -1,50 +1,45 @@
-import { Box, HStack, LinkBox, LinkOverlay, Text, VStack } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
-import type { IconType } from "react-icons";
-import { TbChevronRight } from "react-icons/tb";
 
 interface Props {
   href: string;
-  icon: IconType;
   title: string;
   subtitle: string;
+  variant?: "default" | "primary";
 }
 
-// Card de navegação usado na tela inicial (identificar / catálogo /
-// prevenção) — ícone, título, subtítulo discreto e seta, com área de
-// toque generosa para uso confortável em celular.
+export default function NavCard({ href, title, subtitle, variant = "default" }: Props) {
+  const primary = variant === "primary";
 
-export default function NavCard({ href, icon: Icon, title, subtitle }: Props) {
   return (
-    <LinkBox
-      as="article"
-      display="flex"
-      alignItems="center"
-      gap={4}
-      bg="bg.surface"
+    <Box
+      as={NextLink}
+      href={href}
+      display="block"
+      bg={primary ? "accent.solid" : "bg.surface"}
+      color={primary ? "accent.onSolid" : "text.primary"}
       border="1px solid"
-      borderColor="border"
+      borderColor={primary ? "accent.solid" : "border"}
       borderRadius="card"
-      p={4}
+      p="18px"
       transition="background 0.15s ease, border-color 0.15s ease"
-      _hover={{ bg: "bg.surfaceHover", borderColor: "borderStrong" }}
+      _hover={{
+        textDecoration: "none",
+        ...(primary
+          ? { bg: "accent.solidHover", borderColor: "accent.solidHover" }
+          : { bg: "bg.surfaceHover", borderColor: "borderStrong" }),
+      }}
     >
-      <Box
-        as={Icon}
-        fontSize="1.4rem"
-        color="accent.text"
-        flexShrink={0}
-        aria-hidden
-      />
-      <VStack align="start" spacing={0} flex={1}>
-        <LinkOverlay as={NextLink} href={href}>
-          <Text fontWeight={600}>{title}</Text>
-        </LinkOverlay>
-        <Text fontSize="sm" color="text.secondary">
-          {subtitle}
-        </Text>
-      </VStack>
-      <Box as={TbChevronRight} color="text.secondary" fontSize="1.1rem" flexShrink={0} />
-    </LinkBox>
+      <Text fontFamily="heading" fontWeight={700} fontSize="md" mb={1}>
+        {title}
+      </Text>
+      <Text
+        fontSize="12.5px"
+        color={primary ? "accent.onSolid" : "text.secondary"}
+        opacity={primary ? 0.75 : 1}
+      >
+        {subtitle}
+      </Text>
+    </Box>
   );
 }

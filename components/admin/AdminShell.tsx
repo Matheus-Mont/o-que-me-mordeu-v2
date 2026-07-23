@@ -26,10 +26,6 @@ const NAV: { href: string; label: string; icon: IconType }[] = [
   { href: "/admin/prevencao", label: "prevenção", icon: TbShieldCheck },
 ];
 
-// Casca do painel administrativo: sidebar fixa em telas médias/grandes,
-// vira menu em Drawer (hambúrguer) no mobile — só a navegação muda de
-// apresentação, a lógica de rotas é a mesma nos dois casos.
-
 function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
 

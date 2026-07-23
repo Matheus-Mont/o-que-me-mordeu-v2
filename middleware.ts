@@ -1,11 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { jwtVerify } from "jose";
 
-// Protege todo o painel administrativo (app/admin/**), exceto a própria
-// página de login. Implementado no middleware (Edge runtime) em vez de
-// reutilizar lib/auth.ts para não puxar o Prisma Client para o Edge —
-// aqui só validamos a assinatura do cookie de sessão.
-
 const COOKIE_NAME = "admin_session";
 
 async function hasValidSession(request: NextRequest) {

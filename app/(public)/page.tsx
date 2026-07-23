@@ -1,125 +1,78 @@
-"use client";
-
-import { useState } from "react";
 import NextLink from "next/link";
-import {
-  Alert,
-  AlertIcon,
-  Box,
-  Button,
-  Flex,
-  HStack,
-  Heading,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
-import { TbMapPin, TbPaw, TbSearch, TbList, TbShieldCheck } from "react-icons/tb";
-import ColorModeToggle from "@/components/layout/ColorModeToggle";
+import { Box, Button, Flex, Heading, Text, VStack } from "@chakra-ui/react";
 import NavCard from "@/components/layout/NavCard";
 import PageShell from "@/components/layout/PageShell";
 
-// Tela de abertura (aviso de responsabilidade) + tela inicial (ramificação
-// para os três caminhos principais). As duas vivem na mesma rota raiz: o
-// aviso é um "gate" antes do conteúdo.
-
 export default function PaginaInicial() {
-  const [etapa, setEtapa] = useState<"aviso" | "inicio">("aviso");
-
-  if (etapa === "aviso") {
-    return (
-      <PageShell>
-        <Flex justify="flex-end" mb={2}>
-          <ColorModeToggle />
-        </Flex>
-        <Flex direction="column" justify="center" minH="calc(100vh - 120px)" gap={5}>
-          <VStack spacing={3} textAlign="center">
-            <Flex
-              w="64px"
-              h="64px"
-              borderRadius="16px"
-              bg="accent.bg"
-              color="accent.text"
-              align="center"
-              justify="center"
-              fontSize="1.6rem"
-            >
-              <TbPaw aria-hidden />
-            </Flex>
-            <Heading as="h1" size="md">
-              o que me mordeu?
-            </Heading>
-            <Text color="text.secondary" fontSize="sm">
-              identificação de animais peçonhentos e orientação de primeiros socorros
-            </Text>
-          </VStack>
-
-          <Alert status="warning" bg="warning.bg" borderColor="warning.border" borderWidth="1px" borderRadius="card" color="warning.text">
-            <AlertIcon color="warning.text" />
-            este app é informativo e não substitui atendimento médico. em emergência,
-            ligue 192 (samu) imediatamente.
-          </Alert>
-
-          <VStack spacing={2}>
-            <Button w="full" size="lg" onClick={() => setEtapa("inicio")}>
-              entendi, continuar
-            </Button>
-            <Button
-              as={NextLink}
-              href="/emergencia"
-              w="full"
-              size="lg"
-              variant="outline"
-              leftIcon={<TbMapPin aria-hidden />}
-            >
-              preciso de ajuda agora
-            </Button>
-          </VStack>
-        </Flex>
-      </PageShell>
-    );
-  }
-
   return (
-    <PageShell maxW={{ base: "480px", md: "640px" }}>
-      <Flex align="center" justify="space-between" mb={6}>
-        <HStack spacing={2}>
-          <Flex w="32px" h="32px" borderRadius="9px" bg="accent.bg" color="accent.text" align="center" justify="center">
-            <TbPaw aria-hidden />
-          </Flex>
-          <Text fontSize="sm" color="text.secondary">
-            o que me mordeu?
+    <PageShell maxW={{ base: "100%", md: "1040px" }}>
+      <Box
+        bg="danger.bg"
+        border="1px solid"
+        borderColor="danger.border"
+        borderRadius="card"
+        p={{ base: "14px 16px", md: "16px 20px" }}
+        mb={{ base: 6, md: 10 }}
+      >
+        <Flex
+          direction={{ base: "column", sm: "row" }}
+          align={{ base: "stretch", sm: "center" }}
+          justify="space-between"
+          gap={3}
+        >
+          <Text fontWeight={600} fontSize="13px" color="danger.text">
+            Sintomas graves agora? Falta de ar, desmaio ou sangramento intenso.
           </Text>
-        </HStack>
-        <ColorModeToggle />
+          <Button
+            as={NextLink}
+            href="/emergencia"
+            size="sm"
+            flexShrink={0}
+            bg="danger.solid"
+            color="white"
+            _hover={{ bg: "danger.solidHover" }}
+            borderRadius="8px"
+          >
+            Ver primeiros socorros e ligar 192 →
+          </Button>
+        </Flex>
+      </Box>
+
+      <Flex direction={{ base: "column", md: "row" }} gap={{ base: 6, md: 12 }} align="start">
+        <Box flex="1" pt={{ md: 3 }}>
+          <Heading as="h1" fontSize={{ base: "24px", md: "34px" }} lineHeight={1.2} mb={3}>
+            Respire. Vamos descobrir juntos o que aconteceu.
+          </Heading>
+          <Text fontSize={{ base: "sm", md: "md" }} color="text.secondary" maxW="400px">
+            Cobras, aranhas, escorpiões, lagartas e águas-vivas — triagem rápida,
+            com orientação segura.
+          </Text>
+        </Box>
+
+        <VStack flex="1" w="full" maxW={{ md: "480px" }} spacing={3} align="stretch">
+          <NavCard
+            href="/identificar"
+            title="Fazer triagem guiada"
+            subtitle="Algumas perguntas rápidas sobre local, sintomas e o animal."
+            variant="primary"
+          />
+          <NavCard
+            href="/catalogo"
+            title="Explorar o catálogo"
+            subtitle="Compare a aparência e as características das espécies."
+          />
+          <NavCard
+            href="/prevencao"
+            title="Cuidados de prevenção"
+            subtitle="Como evitar acidentes em cada ambiente."
+          />
+        </VStack>
       </Flex>
 
-      <Heading as="h2" size="md" mb={1}>
-        o que você precisa?
-      </Heading>
-      <Text color="text.secondary" fontSize="sm" mb={6}>
-        escolha uma opção para começar
+      <Text fontSize="12px" color="text.muted" mt={{ base: 8, md: 12 }} lineHeight={1.6}>
+        Este app é informativo e não substitui avaliação médica presencial. Em
+        emergência, ligue 192 (SAMU) imediatamente.
       </Text>
-
-      <VStack spacing={3} align="stretch">
-        <NavCard
-          href="/identificar"
-          icon={TbSearch}
-          title="identificar animal"
-          subtitle="responda perguntas guiadas sobre o que aconteceu"
-        />
-        <NavCard
-          href="/catalogo"
-          icon={TbList}
-          title="catálogo"
-          subtitle="navegue ou busque por nome e região"
-        />
-        <NavCard
-          href="/prevencao"
-          icon={TbShieldCheck}
-          title="prevenção"
-          subtitle="cuidados por ambiente para evitar acidentes"
-        />
-      </VStack>
     </PageShell>
   );
 }

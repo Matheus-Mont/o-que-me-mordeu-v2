@@ -5,10 +5,6 @@ import { registrarHistorico } from "@/lib/historico";
 import { animalContentSchema } from "@/lib/validations/animal";
 import { Prisma, StatusConteudo } from "@prisma/client";
 
-// GET /api/animais?status=&categoria=&regiao=&q=
-// Visitantes não autenticados só recebem fichas publicadas, independente
-// do filtro de status enviado. O admin autenticado pode ver qualquer status
-// (rascunho/revisado/publicado), para alimentar a lista do painel.
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const userId = await getSessionUserId();
@@ -38,8 +34,6 @@ export async function GET(request: NextRequest) {
   return NextResponse.json(animais);
 }
 
-// POST /api/animais — cria uma nova ficha, sempre como RASCUNHO
-// (governança: nada vai ao ar direto do "salvar"). Requer admin autenticado.
 export async function POST(request: NextRequest) {
   const userId = await getSessionUserId();
   if (!userId) {

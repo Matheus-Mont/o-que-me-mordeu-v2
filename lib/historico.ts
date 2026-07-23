@@ -12,7 +12,6 @@ interface RegistrarHistoricoParams {
   alteradoPorId?: string | null;
 }
 
-/** Registra uma entrada de histórico para uma ficha (animal ou prevenção). */
 export async function registrarHistorico(params: RegistrarHistoricoParams) {
   return db.historicoAlteracao.create({
     data: {
@@ -21,9 +20,6 @@ export async function registrarHistorico(params: RegistrarHistoricoParams) {
       dicaPrevencaoId: params.dicaPrevencaoId,
       statusAnterior: params.statusAnterior ?? undefined,
       statusNovo: params.statusNovo ?? undefined,
-      // Prisma tipa campos Json de forma recursiva/estrita (InputJsonValue);
-      // um Record<string, unknown> genérico não é atribuível estruturalmente
-      // mesmo contendo só dados serializáveis, então o cast é necessário aqui.
       camposAlterados: params.camposAlterados
         ? (params.camposAlterados as Prisma.InputJsonValue)
         : undefined,
@@ -33,7 +29,6 @@ export async function registrarHistorico(params: RegistrarHistoricoParams) {
   });
 }
 
-/** Diff raso { campo: { de, para } } entre o registro atual e os campos enviados. */
 export function calcularDiff(
   antes: Record<string, unknown>,
   camposEnviados: Record<string, unknown>
@@ -47,9 +42,6 @@ export function calcularDiff(
   return diff;
 }
 
-// Fluxo de publicação: rascunho -> revisado -> publicado.
-// Também permite corrigir/despublicar (voltar um passo), mas nunca pular
-// direto de rascunho para publicado.
 const TRANSICOES_VALIDAS: Record<StatusConteudo, StatusConteudo[]> = {
   RASCUNHO: ["REVISADO"],
   REVISADO: ["PUBLICADO", "RASCUNHO"],

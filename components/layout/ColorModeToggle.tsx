@@ -3,10 +3,6 @@
 import { IconButton, useColorMode } from "@chakra-ui/react";
 import { TbSun, TbMoon } from "react-icons/tb";
 
-// Alternador de tema — o app abre em modo escuro (app/theme.ts), mas o
-// usuário pode trocar para claro a qualquer momento; a escolha persiste
-// sozinha (Chakra grava em localStorage/cookie via ColorModeScript).
-
 interface Props {
   size?: "sm" | "md";
 }
