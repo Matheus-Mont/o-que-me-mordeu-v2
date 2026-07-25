@@ -33,6 +33,8 @@ export default function TraitCard({ label, descricao, imagem, selecionado, onTog
       overflow="hidden"
       transition="border-color 0.15s ease, background 0.15s ease"
       _hover={{ bg: "bg.surfaceHover", borderColor: selecionado ? "accent.solid" : "borderStrong" }}
+      h="full"
+      minH="220px"
     >
       <Box height="100px" position="relative" bg="bg.canvas">
         {imagem ? (
