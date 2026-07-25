@@ -51,6 +51,7 @@ export default async function PrevencaoPage() {
               borderColor="border"
               borderRadius="card"
               p={4}
+              minH={{ base: "auto", md: "340px" }}
             >
               <Flex align="center" gap={2.5} mb={2.5}>
                 <Box fontSize="1.2rem" color="accent.text" aria-hidden>
@@ -62,7 +63,7 @@ export default async function PrevencaoPage() {
               </Flex>
               {dica ? (
                 <VStack align="stretch" spacing={1.5}>
-                  {dica.dicas.slice(0, 2).map((item) => (
+                  {dica.dicas.map((item) => (
                     <Flex key={item} gap={2} fontSize="13px">
                       <Text as="span" color="accent.text" flexShrink={0}>
                         •

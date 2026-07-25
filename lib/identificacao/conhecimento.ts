@@ -1,5 +1,6 @@
 export type CategoriaId = "COBRA" | "ARANHA" | "ESCORPIAO" | "TATURANA" | "AGUA_VIVA";
 export type GrupoTriagem = CategoriaId | "GERAL";
+export type LocalId = "casa" | "terreno" | "trilha" | "floresta" | "mar";
 
 export interface TracoAnimal {
   categoria: CategoriaId;
@@ -7,6 +8,7 @@ export interface TracoAnimal {
   visuais: string[];
   feridas: string[];
   sintomas: string[];
+  locais?: string[];
 }
 
 export interface OpcaoCard {
@@ -69,7 +71,6 @@ export const PESOS: Record<string, number> = {
   fer_fileira_dentes: 3,
   fer_marcas_discretas: 2,
   fer_necrose_evolui: 3,
-  fer_pelos_urticantes: 2,
   fer_dois_pontos: 1,
   fer_ferroada_unica: 1,
   fer_pontos_ardencia: 1,
@@ -92,6 +93,29 @@ export const PESOS: Record<string, number> = {
 };
 
 export const PESO_REGIAO = 1;
+export const PESO_LOCAL = 2;
+
+export const LOCAIS: { id: LocalId; label: string; descricao: string }[] = [
+  { id: "casa", label: "casa", descricao: "dentro de casa ou em áreas próximas, como quintal ou garagem" },
+  { id: "terreno", label: "terreno / entulho", descricao: "terreno baldio, entulho, pilhas de material ou lenha" },
+  { id: "trilha", label: "trilha", descricao: "trilha ou caminho em área rural ou de mata" },
+  { id: "floresta", label: "floresta / mata", descricao: "dentro da mata ou floresta fechada" },
+  { id: "mar", label: "mar / praia", descricao: "no mar, na praia ou em contato com água salgada" },
+];
+
+export const LOCAIS_PADRAO: Record<CategoriaId, string[]> = {
+  COBRA: ["terreno", "trilha", "floresta"],
+  ARANHA: ["casa", "terreno", "trilha", "floresta"],
+  ESCORPIAO: ["casa", "terreno"],
+  TATURANA: ["terreno", "trilha", "floresta"],
+  AGUA_VIVA: ["mar"],
+};
+
+export function locaisDoAnimal(slug: string): string[] {
+  const tracos = TRACOS[slug];
+  if (!tracos) return [];
+  return tracos.locais ?? LOCAIS_PADRAO[tracos.categoria] ?? [];
+}
 
 export const TRACOS: Record<string, TracoAnimal> = {
   "jararaca-exemplo": {
@@ -114,6 +138,7 @@ export const TRACOS: Record<string, TracoAnimal> = {
     visuais: ["cobra_cabeca_triangular", "cobra_losango_v", "cobra_gigante", "cobra_cauda_abacaxi"],
     feridas: ["fer_dois_furos"],
     sintomas: ["s_dor_forte", "s_inchaco", "s_sistemico"],
+    locais: ["floresta"],
   },
   "coral-verdadeira-exemplo": {
     categoria: "COBRA",
@@ -157,6 +182,7 @@ export const TRACOS: Record<string, TracoAnimal> = {
     visuais: ["aranha_postura_armada"],
     feridas: ["fer_dois_pontos"],
     sintomas: ["s_dor_forte", "s_sistemico"],
+    locais: ["casa", "terreno", "floresta"],
   },
   "aranha-marrom-exemplo": {
     categoria: "ARANHA",
@@ -183,8 +209,9 @@ export const TRACOS: Record<string, TracoAnimal> = {
     categoria: "ARANHA",
     regioes: ["nordeste", "norte", "sudeste"],
     visuais: ["aranha_grande_peluda"],
-    feridas: ["fer_pelos_urticantes"],
+    feridas: [],
     sintomas: ["s_dor_leve", "s_coceira"],
+    locais: ["floresta", "trilha", "terreno"],
   },
   "aranha-de-jardim-exemplo": {
     categoria: "ARANHA",
@@ -207,6 +234,7 @@ export const TRACOS: Record<string, TracoAnimal> = {
     visuais: ["esc_amarelo", "esc_serrilha", "esc_espinho_ferrao"],
     feridas: ["fer_ferroada_unica"],
     sintomas: ["s_dor_forte", "s_sistemico"],
+    locais: ["casa", "terreno"],
   },
   "escorpiao-marrom-exemplo": {
     categoria: "ESCORPIAO",
@@ -349,6 +377,7 @@ export const TRACOS: Record<string, TracoAnimal> = {
     visuais: ["av_fixa_rocha"],
     feridas: ["fer_area_irritada"],
     sintomas: ["s_inchaco"],
+    locais: ["mar"],
   },
 };
 
@@ -405,15 +434,30 @@ export const CARACTERISTICAS: Record<GrupoTriagem, OpcaoCard[]> = {
     { id: "cobra_chocalho", label: "chocalho na cauda", descricao: "guizo (chocalho) na ponta da cauda de uma cobra" },
     { id: "cobra_aneis_coral", label: "anéis coloridos", descricao: "cobra com anéis vermelhos, pretos e brancos" },
     { id: "cobra_cabeca_triangular", label: "cabeça triangular", descricao: "cobra de cabeça em triângulo, distinta do corpo" },
+    { id: "cobra_corpo_grosso_sela", label: "corpo grosso com selas", descricao: "cobra de corpo musculoso com manchas em forma de sela" },
+    { id: "cobra_xadrez", label: "padrão xadrez", descricao: "cobra em xadrez preto e amarelo" },
     { id: "aranha_postura_armada", label: "aranha em defesa", descricao: "aranha que ergue as pernas dianteiras" },
     { id: "aranha_preta_ampulheta", label: "aranha preta com ampulheta", descricao: "aranha preta com mancha vermelha na barriga" },
     { id: "aranha_violino_marrom", label: "aranha marrom com violino", descricao: "aranha marrom com desenho de violino" },
+    { id: "aranha_marrom_geometrica", label: "aranha marrom com manchas claras", descricao: "aranha marrom com manchas geométricas claras no abdômen" },
+    { id: "aranha_grande_peluda", label: "aranha grande e peluda", descricao: "aranha de corpo grande e peludo, vários centímetros" },
+    { id: "aranha_prateada_teia", label: "aranha prateada na teia", descricao: "abdômen prateado com listras, no centro de uma teia grande" },
+    { id: "aranha_robusta_chao", label: "aranha que anda pelo chão", descricao: "aranha robusta e peluda, caça no chão, não faz teia" },
     { id: "esc_amarelo", label: "escorpião amarelo", descricao: "escorpião de corpo amarelo" },
     { id: "esc_preto", label: "escorpião escuro", descricao: "escorpião de corpo escuro, quase preto" },
+    { id: "esc_marrom", label: "escorpião marrom", descricao: "escorpião de corpo marrom-avermelhado" },
     { id: "tat_cerdas_verdes_tronco", label: "lagarta verde em tronco", descricao: "lagarta verde agrupada em tronco de árvore" },
     { id: "tat_pelos_algodao", label: "lagarta felpuda", descricao: "lagarta coberta de pelos macios, como algodão" },
+    { id: "tat_verde_espinhos_ramif", label: "lagarta verde com espinhos", descricao: "lagarta verde com tufos de espinhos ramificados" },
+    { id: "tat_escura_espinhos_rigidos", label: "lagarta escura com espinhos", descricao: "lagarta de corpo escuro com espinhos rígidos em fileiras" },
+    { id: "tat_pelos_finos_tufos", label: "lagarta de pelos finos escuros", descricao: "lagarta com pelos finos e escuros dispostos em tufos" },
+    { id: "tat_seringal", label: "lagarta de seringal (Amazônia)", descricao: "lagarta encontrada em seringais da região amazônica" },
     { id: "av_flutuador_azul", label: "flutuador azul no mar", descricao: "bexiga azulada boiando na água" },
     { id: "av_cubo", label: "água-viva em cubo", descricao: "água-viva de corpo em formato de cubo" },
+    { id: "av_sino_listrado", label: "água-viva com sino listrado", descricao: "guarda-chuva translúcido com listras ou pontos escuros" },
+    { id: "av_pequena_pontas_vermelhas", label: "água-viva pequena, pontas vermelhas", descricao: "água-viva pequena e transparente, tentáculos de ponta avermelhada" },
+    { id: "av_prato_branco", label: "água-viva prato esbranquiçado", descricao: "guarda-chuva grande e branco, em forma de prato" },
+    { id: "av_fixa_rocha", label: "presa na rocha", descricao: "presa em rochas, como uma flor — não boia" },
   ],
 };
 
@@ -424,9 +468,8 @@ export const FERIDAS: Record<GrupoTriagem, OpcaoCard[]> = {
     { id: "fer_marcas_discretas", label: "marcas discretas", descricao: "marcas pequenas e pouco visíveis" },
   ],
   ARANHA: [
-    { id: "fer_dois_pontos", label: "dois pontinhos juntos", descricao: "dois pontinhos bem próximos, quase colados" },
+    { id: "fer_dois_pontos", label: "um ou dois pontinhos", descricao: "um ou dois pontinhos próximos, às vezes quase colados" },
     { id: "fer_necrose_evolui", label: "ferida que escurece", descricao: "mancha que vira ferida escura ao longo dos dias" },
-    { id: "fer_pelos_urticantes", label: "irritação por pelos", descricao: "vermelhidão e coceira por pelos, sem furos" },
   ],
   ESCORPIAO: [
     { id: "fer_ferroada_unica", label: "uma ferroada só", descricao: "um único ponto de ferroada, muito dolorido" },
@@ -441,9 +484,12 @@ export const FERIDAS: Record<GrupoTriagem, OpcaoCard[]> = {
   GERAL: [
     { id: "fer_dois_furos", label: "dois furinhos", descricao: "duas marcas separadas (típico de cobra peçonhenta)" },
     { id: "fer_fileira_dentes", label: "fileiras de marquinhas", descricao: "várias marcas em fileira (típico de cobra não peçonhenta)" },
+    { id: "fer_marcas_discretas", label: "marcas discretas de cobra", descricao: "marcas pequenas e pouco visíveis, de cobra" },
+    { id: "fer_dois_pontos", label: "um ou dois pontinhos de aranha", descricao: "um ou dois pontinhos próximos, de aranha" },
     { id: "fer_necrose_evolui", label: "ferida que escurece", descricao: "mancha que vira ferida escura com os dias" },
     { id: "fer_ferroada_unica", label: "uma ferroada só", descricao: "um único ponto muito dolorido (escorpião)" },
     { id: "fer_linhas_chicote", label: "marcas em chicote", descricao: "riscos avermelhados em linha (água-viva)" },
+    { id: "fer_area_irritada", label: "área avermelhada difusa", descricao: "mancha avermelhada difusa, sem linhas (água-viva)" },
     { id: "fer_pontos_ardencia", label: "vários pontos ardendo", descricao: "vários pontinhos de ardência (lagarta)" },
   ],
 };
@@ -495,11 +541,18 @@ export const TRAIT_IMAGENS: Record<string, string> = {
   fer_dois_furos: "/guia/mordida-cobra-vibora-dois-pontos.jpg",
   fer_fileira_dentes: "/guia/mordida-cobra-marquinhas-diversas.jpg",
   fer_marcas_discretas: "/guia/mordida-cobra-discreta-coral.avif",
+  fer_dois_pontos: "/guia/ferida-aranha-um-ou-dois-pontos.jpg",
+  fer_necrose_evolui: "/guia/ferida-aranha-necrose-evolui.png",
+  fer_ferroada_unica: "/guia/ferida-escorpiao-ferroada-unica.webp",
+  fer_pontos_ardencia: "/guia/ferida-taturana-pontos-ardencia.jpg",
+  fer_linhas_chicote: "/guia/ferida-agua-viva-linhas-chicote.webp",
+  fer_area_irritada: "/guia/ferida-agua-viva-area-irritada.png",
 };
 
 export const SINTOMAS: Record<GrupoTriagem, OpcaoSintoma[]> = {
   COBRA: [
-    { id: "s_dor_forte", label: "dor e inchaço fortes no local" },
+    { id: "s_dor_forte", label: "dor forte e imediata no local" },
+    { id: "s_inchaco", label: "inchaço importante no local" },
     { id: "s_sangramento", label: "sangramento que não para (local, gengiva ou urina)" },
     { id: "s_mancha_roxa", label: "manchas roxas, bolhas ou ferida escura" },
     { id: "s_neuro", label: "pálpebra caída, visão dupla ou dificuldade de engolir" },
@@ -509,6 +562,7 @@ export const SINTOMAS: Record<GrupoTriagem, OpcaoSintoma[]> = {
   ],
   ARANHA: [
     { id: "s_dor_forte", label: "dor local muito intensa" },
+    { id: "s_inchaco", label: "inchaço no local da picada" },
     { id: "s_caimbra", label: "cãibras, rigidez muscular ou dor que se espalha" },
     { id: "s_ferida_progressiva", label: "ferida que piora ao longo de horas ou dias" },
     { id: "s_mancha_roxa", label: "vermelhidão que vira mancha roxa" },
@@ -540,12 +594,14 @@ export const SINTOMAS: Record<GrupoTriagem, OpcaoSintoma[]> = {
     { id: "s_dor_leve", label: "pouca dor no local" },
     { id: "s_inchaco", label: "inchaço e vermelhidão no local" },
     { id: "s_sangramento", label: "sangramento que não para" },
-    { id: "s_mancha_roxa", label: "manchas roxas ou ferida que piora" },
+    { id: "s_mancha_roxa", label: "manchas roxas, bolhas ou pele escurecendo" },
+    { id: "s_ferida_progressiva", label: "ferida que piora ao longo de horas ou dias" },
     { id: "s_neuro", label: "pálpebra caída, visão dupla ou fraqueza" },
     { id: "s_sistemico", label: "suor, vômito ou mal-estar geral" },
     { id: "s_caimbra", label: "cãibras ou rigidez muscular" },
     { id: "s_queimadura", label: "dor em queimação" },
     { id: "s_coceira", label: "coceira e irritação na pele" },
+    { id: "s_dor_articular", label: "dor ou inchaço nas juntas após contatos repetidos" },
     { id: "s_so_marca", label: "só a marca, sem outros sintomas" },
   ],
 };

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Sora, IBM_Plex_Sans } from "next/font/google";
 import Providers from "./providers";
+import ScrollToTop from "@/components/layout/ScrollToTop";
 
 const sora = Sora({
   subsets: ["latin"],
@@ -31,6 +32,7 @@ export default function RootLayout({
     <html lang="pt-BR" suppressHydrationWarning className={`${sora.variable} ${plex.variable}`}>
       <body>
         <Providers>
+          <ScrollToTop />
           <div className="app-frame">{children}</div>
         </Providers>
       </body>

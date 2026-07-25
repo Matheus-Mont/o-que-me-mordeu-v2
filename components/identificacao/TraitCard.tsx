@@ -34,13 +34,13 @@ export default function TraitCard({ label, descricao, imagem, selecionado, onTog
       transition="border-color 0.15s ease, background 0.15s ease"
       _hover={{ bg: "bg.surfaceHover", borderColor: selecionado ? "accent.solid" : "borderStrong" }}
     >
-      <Box height="80px" position="relative" bg="bg.canvas">
+      <Box height="100px" position="relative" bg="bg.canvas">
         {imagem ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={imagem}
             alt={label}
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            style={{ width: "100%", height: "100%", objectFit: "contain", padding: "6px" }}
           />
         ) : (
           <Flex position="absolute" inset={0} align="center" justify="center" color="text.muted">

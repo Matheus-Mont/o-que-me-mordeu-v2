@@ -224,6 +224,21 @@ const theme = extendTheme({
         borderColor: "border",
       },
     },
+    Menu: {
+      baseStyle: {
+        list: {
+          bg: "bg.surface",
+          borderColor: "border",
+          borderRadius: "control",
+          boxShadow: "lg",
+        },
+        item: {
+          bg: "transparent",
+          _hover: { bg: "bg.surfaceHover" },
+          _focus: { bg: "bg.surfaceHover" },
+        },
+      },
+    },
   },
 });
 

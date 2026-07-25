@@ -3,25 +3,24 @@
 import { useMemo, useState } from "react";
 import {
   Box,
-  Button,
   Flex,
   HStack,
   IconButton,
   Input,
   InputGroup,
   InputLeftElement,
-  Select,
-  SimpleGrid,
   Text,
-  VStack,
   Wrap,
   WrapItem,
 } from "@chakra-ui/react";
 import { TbChevronLeft, TbChevronRight, TbSearch } from "react-icons/tb";
 import type { Animal } from "@prisma/client";
 import AnimalCard from "@/components/animal/AnimalCard";
+import FiltroSelect from "@/components/animal/FiltroSelect";
 import PageHeader from "@/components/layout/PageHeader";
 import PageShell from "@/components/layout/PageShell";
+import { compararNomes, normalizarTexto } from "@/lib/texto";
+import { URGENCIA_LABEL, URGENCIA_ORDEM } from "@/lib/urgencia";
 
 export type AnimalCatalogo = Pick<
   Animal,
@@ -46,172 +45,178 @@ const CATEGORIAS = [
   { valor: "AGUA_VIVA", label: "Águas-vivas" },
 ];
 
-const ITENS_POR_PAGINA = 12;
+const URGENCIAS = [
+  { valor: "", label: "Todas" },
+  { valor: "ALTA", label: URGENCIA_LABEL.ALTA },
+  { valor: "MEDIA", label: URGENCIA_LABEL.MEDIA },
+  { valor: "BAIXA", label: URGENCIA_LABEL.BAIXA },
+];
+
+const ORDENACOES = [
+  { valor: "nome", label: "Nome (A–Z)" },
+  { valor: "gravidade", label: "Gravidade (mais grave primeiro)" },
+];
+
+const ITENS_POR_PAGINA = 15;
+
+function irParaTopo() {
+  window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+}
 
 export default function CatalogoClient({ animais }: { animais: AnimalCatalogo[] }) {
   const [busca, setBusca] = useState("");
   const [regiao, setRegiao] = useState("");
   const [categoria, setCategoria] = useState("");
+  const [urgencia, setUrgencia] = useState("");
+  const [ordem, setOrdem] = useState<"nome" | "gravidade">("nome");
   const [pagina, setPagina] = useState(1);
 
   const animaisFiltrados = useMemo(() => {
-    const buscaNormalizada = busca.trim().toLowerCase();
+    const buscaNormalizada = normalizarTexto(busca.trim());
     return animais.filter((animal) => {
-      if (buscaNormalizada && !animal.nomePopular.toLowerCase().includes(buscaNormalizada)) {
+      if (buscaNormalizada && !normalizarTexto(animal.nomePopular).includes(buscaNormalizada)) {
         return false;
       }
       if (regiao && !animal.regioes.includes(regiao)) return false;
       if (categoria && animal.categoria !== categoria) return false;
+      if (urgencia && animal.nivelUrgencia !== urgencia) return false;
       return true;
     });
-  }, [animais, busca, regiao, categoria]);
+  }, [animais, busca, regiao, categoria, urgencia]);
 
-  const totalPaginas = Math.max(1, Math.ceil(animaisFiltrados.length / ITENS_POR_PAGINA));
+  const animaisOrdenados = useMemo(() => {
+    const lista = [...animaisFiltrados];
+    lista.sort((a, b) => {
+      if (ordem === "gravidade") {
+        const diff = URGENCIA_ORDEM[a.nivelUrgencia] - URGENCIA_ORDEM[b.nivelUrgencia];
+        if (diff !== 0) return diff;
+      }
+      return compararNomes(a.nomePopular, b.nomePopular);
+    });
+    return lista;
+  }, [animaisFiltrados, ordem]);
+
+  const totalPaginas = Math.max(1, Math.ceil(animaisOrdenados.length / ITENS_POR_PAGINA));
   const paginaAtual = Math.min(pagina, totalPaginas);
 
   const animaisDaPagina = useMemo(() => {
     const inicio = (paginaAtual - 1) * ITENS_POR_PAGINA;
-    return animaisFiltrados.slice(inicio, inicio + ITENS_POR_PAGINA);
-  }, [animaisFiltrados, paginaAtual]);
+    return animaisOrdenados.slice(inicio, inicio + ITENS_POR_PAGINA);
+  }, [animaisOrdenados, paginaAtual]);
 
   function trocarFiltro<T>(setter: (v: T) => void, valor: T) {
     setter(valor);
     setPagina(1);
+    irParaTopo();
+  }
+
+  function trocarPagina(valor: number) {
+    setPagina(valor);
+    irParaTopo();
   }
 
   return (
     <PageShell maxW={{ base: "100%", md: "1040px" }}>
       <PageHeader title="Catálogo" href="/" />
 
-      <Flex direction={{ base: "column", md: "row" }} gap={{ base: 5, md: 8 }} align="start">
-        <Box
-          w={{ base: "full", md: "240px" }}
-          flexShrink={0}
-          position={{ md: "sticky" }}
-          top={{ md: "96px" }}
-        >
-          <InputGroup mb={3}>
-            <InputLeftElement pointerEvents="none" color="text.muted">
-              <TbSearch />
-            </InputLeftElement>
-            <Input
-              placeholder="Buscar por nome"
-              value={busca}
-              onChange={(e) => trocarFiltro(setBusca, e.target.value)}
-            />
-          </InputGroup>
+      <InputGroup mb={3}>
+        <InputLeftElement pointerEvents="none" color="text.muted">
+          <TbSearch />
+        </InputLeftElement>
+        <Input
+          placeholder="Buscar por nome"
+          value={busca}
+          onChange={(e) => trocarFiltro(setBusca, e.target.value)}
+        />
+      </InputGroup>
 
-          <Select
-            display={{ base: "block", md: "none" }}
-            value={regiao}
-            onChange={(e) => trocarFiltro(setRegiao, e.target.value)}
-            mb={3}
+      <Wrap spacing={2} mb={4}>
+        <WrapItem>
+          <FiltroSelect
+            rotulo="Animal"
+            valor={categoria}
+            opcoes={CATEGORIAS}
+            onChange={(v) => trocarFiltro(setCategoria, v)}
+          />
+        </WrapItem>
+        <WrapItem>
+          <FiltroSelect
+            rotulo="Região"
+            valor={regiao}
+            opcoes={REGIOES}
+            onChange={(v) => trocarFiltro(setRegiao, v)}
+          />
+        </WrapItem>
+        <WrapItem>
+          <FiltroSelect
+            rotulo="Gravidade"
+            valor={urgencia}
+            opcoes={URGENCIAS}
+            onChange={(v) => trocarFiltro(setUrgencia, v)}
+          />
+        </WrapItem>
+        <WrapItem>
+          <FiltroSelect
+            rotulo="Ordenar"
+            valor={ordem}
+            opcoes={ORDENACOES}
+            onChange={(v) => trocarFiltro(setOrdem, v as "nome" | "gravidade")}
+          />
+        </WrapItem>
+      </Wrap>
+
+      <Text color="text.secondary" fontSize="sm" mb={4}>
+        {`${animaisOrdenados.length} ${animaisOrdenados.length === 1 ? "animal encontrado" : "animais encontrados"}`}
+      </Text>
+
+      <Flex wrap="wrap" justify="center" gap={{ base: 3, md: 4 }}>
+        {animaisDaPagina.map((animal) => (
+          <Box
+            key={animal.id}
+            flex={{
+              base: "0 0 calc((100% - 12px) / 2)",
+              sm: "0 0 calc((100% - 24px) / 3)",
+              md: "0 0 calc((100% - 48px) / 4)",
+              lg: "0 0 calc((100% - 64px) / 5)",
+            }}
+            minW={0}
           >
-            {REGIOES.map((r) => (
-              <option key={r.valor} value={r.valor}>
-                {r.label}
-              </option>
-            ))}
-          </Select>
-
-          <Box display={{ base: "none", md: "block" }} mb={5}>
-            <Text fontSize="xs" color="text.secondary" fontWeight={600} textTransform="uppercase" letterSpacing="0.04em" mb={2}>
-              região
-            </Text>
-            <VStack align="stretch" spacing={0.5}>
-              {REGIOES.map((r) => (
-                <Button
-                  key={r.valor}
-                  size="sm"
-                  variant={regiao === r.valor ? "solid" : "ghost"}
-                  justifyContent="start"
-                  fontWeight={regiao === r.valor ? 600 : 500}
-                  color={regiao === r.valor ? undefined : "text.secondary"}
-                  onClick={() => trocarFiltro(setRegiao, r.valor)}
-                >
-                  {r.label}
-                </Button>
-              ))}
-            </VStack>
+            <AnimalCard animal={animal} />
           </Box>
-
-          <Box>
-            <Text
-              display={{ base: "none", md: "block" }}
-              fontSize="xs"
-              color="text.secondary"
-              fontWeight={600}
-              textTransform="uppercase"
-              letterSpacing="0.04em"
-              mb={2}
-            >
-              categoria
-            </Text>
-            <Wrap spacing={2}>
-              {CATEGORIAS.map((c) => (
-                <WrapItem key={c.valor}>
-                  <Button
-                    size="sm"
-                    borderRadius="full"
-                    px="14px"
-                    variant={categoria === c.valor ? "solid" : "outline"}
-                    bg={categoria === c.valor ? undefined : "bg.surface"}
-                    color={categoria === c.valor ? undefined : "text.secondary"}
-                    fontWeight={500}
-                    onClick={() => trocarFiltro(setCategoria, c.valor)}
-                  >
-                    {c.label}
-                  </Button>
-                </WrapItem>
-              ))}
-            </Wrap>
-          </Box>
-        </Box>
-
-        <Box flex="1" minW={0} w="full">
-          <Text color="text.secondary" fontSize="sm" mb={4}>
-            {`${animaisFiltrados.length} ${animaisFiltrados.length === 1 ? "animal encontrado" : "animais encontrados"}`}
-          </Text>
-
-          <SimpleGrid columns={{ base: 2, sm: 3, lg: 4 }} spacing={{ base: 3, md: 4 }}>
-            {animaisDaPagina.map((animal) => (
-              <AnimalCard key={animal.id} animal={animal} />
-            ))}
-          </SimpleGrid>
-
-          {animaisFiltrados.length === 0 && (
-            <Box textAlign="center" py={10}>
-              <Text color="text.secondary" fontSize="sm">
-                Nenhum animal encontrado com esses filtros.
-              </Text>
-            </Box>
-          )}
-
-          {animaisFiltrados.length > ITENS_POR_PAGINA && (
-            <HStack justify="center" spacing={2} mt={6}>
-              <IconButton
-                aria-label="página anterior"
-                icon={<TbChevronLeft />}
-                size="sm"
-                variant="outline"
-                isDisabled={paginaAtual === 1}
-                onClick={() => setPagina((p) => Math.max(1, p - 1))}
-              />
-              <Text fontSize="sm" color="text.secondary" minW="90px" textAlign="center">
-                Página {paginaAtual} de {totalPaginas}
-              </Text>
-              <IconButton
-                aria-label="próxima página"
-                icon={<TbChevronRight />}
-                size="sm"
-                variant="outline"
-                isDisabled={paginaAtual === totalPaginas}
-                onClick={() => setPagina((p) => Math.min(totalPaginas, p + 1))}
-              />
-            </HStack>
-          )}
-        </Box>
+        ))}
       </Flex>
+
+      {animaisOrdenados.length === 0 && (
+        <Box textAlign="center" py={10}>
+          <Text color="text.secondary" fontSize="sm">
+            Nenhum animal encontrado com esses filtros.
+          </Text>
+        </Box>
+      )}
+
+      {animaisOrdenados.length > ITENS_POR_PAGINA && (
+        <HStack justify="center" spacing={2} mt={6}>
+          <IconButton
+            aria-label="página anterior"
+            icon={<TbChevronLeft />}
+            size="sm"
+            variant="outline"
+            isDisabled={paginaAtual === 1}
+            onClick={() => trocarPagina(Math.max(1, paginaAtual - 1))}
+          />
+          <Text fontSize="sm" color="text.secondary" minW="90px" textAlign="center">
+            Página {paginaAtual} de {totalPaginas}
+          </Text>
+          <IconButton
+            aria-label="próxima página"
+            icon={<TbChevronRight />}
+            size="sm"
+            variant="outline"
+            isDisabled={paginaAtual === totalPaginas}
+            onClick={() => trocarPagina(Math.min(totalPaginas, paginaAtual + 1))}
+          />
+        </HStack>
+      )}
     </PageShell>
   );
 }

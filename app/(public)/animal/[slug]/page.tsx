@@ -8,18 +8,7 @@ import AvisoLeiCobra from "@/components/animal/AvisoLeiCobra";
 import PageHeader from "@/components/layout/PageHeader";
 import PageShell from "@/components/layout/PageShell";
 import { capitalizar } from "@/lib/texto";
-
-const URGENCIA_LABEL: Record<string, string> = {
-  ALTA: "Urgência alta",
-  MEDIA: "Urgência média",
-  BAIXA: "Urgência baixa",
-};
-
-const URGENCIA_SCHEME: Record<string, "danger" | "warning" | "safe"> = {
-  ALTA: "danger",
-  MEDIA: "warning",
-  BAIXA: "safe",
-};
+import { URGENCIA_LABEL, URGENCIA_SCHEME } from "@/lib/urgencia";
 
 interface Props {
   params: { slug: string };
@@ -39,9 +28,10 @@ export async function generateMetadata({ params }: Props) {
   const animal = await db.animal.findUnique({ where: { slug: params.slug } });
   if (!animal || animal.status !== StatusConteudo.PUBLICADO) return {};
 
+  const nome = capitalizar(animal.nomePopular);
   return {
-    title: `${animal.nomePopular} — o que fazer | o que me mordeu?`,
-    description: `Como identificar ${animal.nomePopular.toLowerCase()}, sintomas e primeiros socorros. ${animal.sintomas}`,
+    title: `${nome} — o que fazer | o que me mordeu?`,
+    description: `Como identificar ${nome.toLowerCase()}, sintomas e primeiros socorros. ${animal.sintomas}`,
   };
 }
 
@@ -61,7 +51,7 @@ export default async function FichaAnimalPage({ params }: Props) {
 
       <Flex direction={{ base: "column", lg: "row" }} gap={{ base: 6, lg: 12 }} align="start">
         <Box flex={{ lg: "1.15" }} minW={0} w="full">
-          <CarrosselImagens imagens={animal.imagens} alt={animal.nomePopular} />
+          <CarrosselImagens imagens={animal.imagens} alt={capitalizar(animal.nomePopular)} />
 
           <Flex justify="space-between" align="flex-start" gap={2.5} mt={5} mb={1}>
             <Heading as="h1" fontSize={{ base: "22px", md: "26px" }} fontWeight={800}>

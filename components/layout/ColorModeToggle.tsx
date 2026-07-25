@@ -1,13 +1,11 @@
 "use client";
 
-import { IconButton, useColorMode } from "@chakra-ui/react";
+import { IconButton, useColorMode, type IconButtonProps } from "@chakra-ui/react";
 import { TbSun, TbMoon } from "react-icons/tb";
 
-interface Props {
-  size?: "sm" | "md";
-}
+type Props = Omit<IconButtonProps, "aria-label" | "icon"> & { size?: "sm" | "md" };
 
-export default function ColorModeToggle({ size = "sm" }: Props) {
+export default function ColorModeToggle({ size = "sm", ...rest }: Props) {
   const { colorMode, toggleColorMode } = useColorMode();
   const isDark = colorMode === "dark";
 
@@ -20,6 +18,7 @@ export default function ColorModeToggle({ size = "sm" }: Props) {
       size={size}
       borderRadius="full"
       color="text.secondary"
+      {...rest}
     />
   );
 }

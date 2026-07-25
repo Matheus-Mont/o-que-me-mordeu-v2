@@ -23,38 +23,41 @@ export default function TopBar() {
       borderColor="border"
     >
       <Flex
-        align="center"
+        direction={{ base: "column", md: "row" }}
+        align={{ md: "center" }}
         gap={2.5}
-        flexWrap="wrap"
         px={{ base: 5, md: 6 }}
         pt="18px"
         pb="14px"
         maxW="1040px"
         mx="auto"
       >
-        <Flex
-          as={NextLink}
-          href="/"
-          w="36px"
-          h="36px"
-          borderRadius="control"
-          overflow="hidden"
-          align="center"
-          justify="center"
-          flexShrink={0}
-          aria-label="início"
-        >
-          <LogoMark size={36} />
+        <Flex align="center" gap={2.5} w={{ base: "full", md: "auto" }}>
+          <Flex
+            as={NextLink}
+            href="/"
+            w="36px"
+            h="36px"
+            borderRadius="control"
+            overflow="hidden"
+            align="center"
+            justify="center"
+            flexShrink={0}
+            aria-label="início"
+          >
+            <LogoMark size={36} />
+          </Flex>
+          <Box as={NextLink} href="/" _hover={{ textDecoration: "none" }}>
+            <Text fontFamily="heading" fontWeight={700} fontSize="md" lineHeight={1.1}>
+              O que me mordeu?
+            </Text>
+            <Text fontSize="11px" color="text.secondary" display={{ base: "none", sm: "block" }}>
+              Identificação de animais peçonhentos e orientação de primeiros socorros
+            </Text>
+          </Box>
+          <ColorModeToggle ml="auto" display={{ base: "inline-flex", md: "none" }} />
         </Flex>
-        <Box as={NextLink} href="/" _hover={{ textDecoration: "none" }}>
-          <Text fontFamily="heading" fontWeight={700} fontSize="md" lineHeight={1.1}>
-            O que me mordeu?
-          </Text>
-          <Text fontSize="11px" color="text.secondary" display={{ base: "none", sm: "block" }}>
-            Identificação de animais peçonhentos e orientação de primeiros socorros
-          </Text>
-        </Box>
-        <HStack spacing="18px" ml="auto" flexWrap="wrap">
+        <HStack spacing="18px" ml={{ md: "auto" }} flexWrap="wrap">
           {LINKS.map((link) => (
             <Link
               key={link.href}
@@ -76,7 +79,7 @@ export default function TopBar() {
           >
             Emergência
           </Link>
-          <ColorModeToggle />
+          <ColorModeToggle display={{ base: "none", md: "inline-flex" }} />
         </HStack>
       </Flex>
     </Box>

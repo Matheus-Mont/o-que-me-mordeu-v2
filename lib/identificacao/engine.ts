@@ -1,13 +1,18 @@
 import {
   PESOS,
   PESO_REGIAO,
+  PESO_LOCAL,
   TRACOS,
+  locaisDoAnimal,
   type CategoriaId,
 } from "./conhecimento";
+import { compararNomes } from "@/lib/texto";
+import { URGENCIA_ORDEM } from "@/lib/urgencia";
 
 export interface Observacao {
   categoria: CategoriaId | null;
   regiao: string | null;
+  local: string | null;
   visuais: string[];
   feridas: string[];
   sintomas: string[];
@@ -33,8 +38,6 @@ export interface Resultado {
   criteriosEmComum: number;
 }
 
-const URGENCIA_ORDEM: Record<string, number> = { ALTA: 0, MEDIA: 1, BAIXA: 2 };
-
 function peso(tag: string): number {
   return PESOS[tag] ?? 1;
 }
@@ -53,6 +56,15 @@ export function pontuar(obs: Observacao, animal: CandidatoAnimal): Resultado {
     pontosMax += PESO_REGIAO;
     if (animal.regioes.includes(obs.regiao)) {
       pontos += PESO_REGIAO;
+      criteriosEmComum += 1;
+    }
+  }
+
+  if (obs.local) {
+    pontosMax += PESO_LOCAL;
+    if (locaisDoAnimal(animal.slug).includes(obs.local)) {
+      pontos += PESO_LOCAL;
+      criteriosEmComum += 1;
     }
   }
 
@@ -103,7 +115,8 @@ export function identificar(
     obs.visuais.length > 0 ||
     obs.feridas.length > 0 ||
     obs.sintomas.length > 0 ||
-    obs.regiao !== null;
+    obs.regiao !== null ||
+    obs.local !== null;
 
   const pontuados = elegiveis.map((animal) => pontuar(obs, animal));
 
@@ -114,7 +127,7 @@ export function identificar(
     const ua = URGENCIA_ORDEM[a.animal.nivelUrgencia] ?? 3;
     const ub = URGENCIA_ORDEM[b.animal.nivelUrgencia] ?? 3;
     if (ua !== ub) return ua - ub;
-    return a.animal.nomePopular.localeCompare(b.animal.nomePopular);
+    return compararNomes(a.animal.nomePopular, b.animal.nomePopular);
   });
 
   const comPontos = pontuados.filter((r) => r.pontos > 0);

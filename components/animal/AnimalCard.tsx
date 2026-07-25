@@ -5,23 +5,12 @@ import NextImage from "next/image";
 import { TbPhoto } from "react-icons/tb";
 import type { Animal } from "@prisma/client";
 import { capitalizar } from "@/lib/texto";
+import { URGENCIA_LABEL, URGENCIA_SCHEME } from "@/lib/urgencia";
 
 export type AnimalCardData = Pick<
   Animal,
   "slug" | "nomePopular" | "nivelUrgencia" | "imagens"
 >;
-
-const URGENCIA_LABEL: Record<Animal["nivelUrgencia"], string> = {
-  ALTA: "Urgência alta",
-  MEDIA: "Urgência média",
-  BAIXA: "Urgência baixa",
-};
-
-const URGENCIA_SCHEME: Record<Animal["nivelUrgencia"], "danger" | "warning" | "safe"> = {
-  ALTA: "danger",
-  MEDIA: "warning",
-  BAIXA: "safe",
-};
 
 function AnimalCard({ animal }: { animal: AnimalCardData }) {
   const scheme = URGENCIA_SCHEME[animal.nivelUrgencia];
@@ -40,14 +29,14 @@ function AnimalCard({ animal }: { animal: AnimalCardData }) {
       transition="background 0.15s ease, border-color 0.15s ease"
       _hover={{ textDecoration: "none", bg: "bg.surfaceHover", borderColor: "borderStrong" }}
     >
-      <Box height="96px" position="relative" bg="bg.canvas">
+      <Box height="128px" position="relative" bg="bg.canvas">
         {animal.imagens[0] ? (
           <NextImage
             src={animal.imagens[0]}
-            alt={animal.nomePopular}
+            alt={capitalizar(animal.nomePopular)}
             fill
             sizes="(max-width: 768px) 50vw, 200px"
-            style={{ objectFit: "cover" }}
+            style={{ objectFit: "contain", padding: "8px" }}
           />
         ) : (
           <Box

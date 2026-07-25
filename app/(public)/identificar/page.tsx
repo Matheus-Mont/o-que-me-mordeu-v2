@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import NextLink from "next/link";
 import NextImage from "next/image";
@@ -21,6 +21,7 @@ import {
 import {
   CARACTERISTICAS,
   FERIDAS,
+  LOCAIS,
   SINTOMAS,
   TRAIT_IMAGENS,
   type CategoriaId,
@@ -32,6 +33,7 @@ import {
   type Observacao,
   type Resultado,
 } from "@/lib/identificacao/engine";
+import { URGENCIA_LABEL, URGENCIA_SCHEME } from "@/lib/urgencia";
 import PageHeader from "@/components/layout/PageHeader";
 import PageShell from "@/components/layout/PageShell";
 import TraitCard from "@/components/identificacao/TraitCard";
@@ -51,18 +53,6 @@ function capitalizar(texto: string) {
 
 const REGIOES = ["norte", "nordeste", "centro-oeste", "sudeste", "sul"];
 
-const URGENCIA_LABEL: Record<string, string> = {
-  ALTA: "Urgência alta",
-  MEDIA: "Urgência média",
-  BAIXA: "Urgência baixa",
-};
-
-const URGENCIA_SCHEME: Record<string, "danger" | "warning" | "safe"> = {
-  ALTA: "danger",
-  MEDIA: "warning",
-  BAIXA: "safe",
-};
-
 const CONFIANCA_SCHEME: Record<Resultado["confianca"], "safe" | "warning" | "danger"> = {
   alta: "safe",
   media: "warning",
@@ -75,16 +65,17 @@ const CONFIANCA_LABEL: Record<Resultado["confianca"], string> = {
   baixa: "baixa",
 };
 
-type Etapa = 0 | 1 | 2 | 3 | 4 | 5;
+type PassoId = "tipo" | "regiao" | "local" | "visuais" | "feridas" | "sintomas";
 
 const TOTAL_PERGUNTAS = 5;
 
 export default function IdentificarPage() {
   const router = useRouter();
-  const [etapa, setEtapa] = useState<Etapa>(0);
+  const [etapa, setEtapa] = useState(0);
   const [tipoDefinido, setTipoDefinido] = useState(false);
   const [categoria, setCategoria] = useState<CategoriaId | null>(null);
   const [regiao, setRegiao] = useState<string | null>(null);
+  const [local, setLocal] = useState<string | null>(null);
   const [visuais, setVisuais] = useState<string[]>([]);
   const [feridas, setFeridas] = useState<string[]>([]);
   const [sintomas, setSintomas] = useState<string[]>([]);
@@ -92,6 +83,19 @@ export default function IdentificarPage() {
   const [carregando, setCarregando] = useState(false);
   const [erro, setErro] = useState<string | null>(null);
   const [resultados, setResultados] = useState<Resultado[] | null>(null);
+
+  const passos: PassoId[] = useMemo(
+    () =>
+      categoria
+        ? ["tipo", "regiao", "visuais", "feridas", "sintomas"]
+        : ["tipo", "regiao", "local", "feridas", "sintomas"],
+    [categoria]
+  );
+  const passo = passos[Math.min(etapa, passos.length - 1)];
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [etapa]);
 
   const grupo: GrupoTriagem = categoria ?? "GERAL";
   const cardsCaracteristicas = CARACTERISTICAS[grupo];
@@ -105,6 +109,7 @@ export default function IdentificarPage() {
   function escolherTipo(valor: CategoriaId | null) {
     setCategoria(valor);
     setTipoDefinido(true);
+    setLocal(null);
     setVisuais([]);
     setFeridas([]);
     setSintomas([]);
@@ -112,7 +117,7 @@ export default function IdentificarPage() {
 
   function voltarEtapa() {
     if (etapa === 0) return router.push("/");
-    setEtapa((e) => (e - 1) as Etapa);
+    setEtapa((e) => e - 1);
   }
 
   async function buscarSugestoes() {
@@ -129,9 +134,9 @@ export default function IdentificarPage() {
       }
       const candidatos: CandidatoAnimal[] = await res.json();
 
-      const observacao: Observacao = { categoria, regiao, visuais, feridas, sintomas };
+      const observacao: Observacao = { categoria, regiao, local, visuais, feridas, sintomas };
       setResultados(identificar(observacao, candidatos, 5));
-      setEtapa(5);
+      setEtapa(passos.length);
     } catch {
       setErro("Não foi possível buscar sugestões agora.");
     } finally {
@@ -145,10 +150,10 @@ export default function IdentificarPage() {
     [perguntaAtual]
   );
 
-  if (etapa === 5) {
+  if (etapa === passos.length) {
     return (
       <PageShell maxW={{ base: "100%", md: "760px" }}>
-        <PageHeader title="Sugestão de espécies" onBack={() => setEtapa(4)} />
+        <PageHeader title="Sugestão de espécies" onBack={() => setEtapa(passos.length - 1)} />
 
         <Text color="text.secondary" fontSize="sm" mb={5}>
           Isto é só um ponto de partida. Nenhuma identificação aqui é uma certeza
@@ -165,7 +170,7 @@ export default function IdentificarPage() {
           <Text mb={3}>Nenhum animal correspondeu às respostas. Tente ajustar os filtros.</Text>
         )}
 
-        <SimpleGrid columns={{ base: 1, md: 2 }} spacing="14px">
+        <Flex wrap="wrap" justify="center" gap="14px">
           {resultados?.map(({ animal, confianca }) => {
             const scheme = URGENCIA_SCHEME[animal.nivelUrgencia];
             return (
@@ -176,6 +181,8 @@ export default function IdentificarPage() {
                 display="flex"
                 gap={3}
                 h="full"
+                flex={{ base: "0 0 100%", md: "0 0 calc((100% - 14px) / 2)" }}
+                minW={0}
                 bg="bg.surface"
                 border="1px solid"
                 borderColor="border"
@@ -199,7 +206,7 @@ export default function IdentificarPage() {
                       alt={capitalizar(animal.nomePopular)}
                       fill
                       sizes="80px"
-                      style={{ objectFit: "cover" }}
+                      style={{ objectFit: "contain", padding: "4px" }}
                     />
                   ) : (
                     <Flex position="absolute" inset={0} align="center" justify="center" color="text.muted">
@@ -245,19 +252,24 @@ export default function IdentificarPage() {
               </Box>
             );
           })}
-        </SimpleGrid>
+        </Flex>
       </PageShell>
     );
   }
 
-  const acaoEtapa: Record<number, { label: string; onClick: () => void; disabled?: boolean }> = {
-    0: { label: "Próximo", onClick: () => setEtapa(1), disabled: !tipoDefinido },
-    1: { label: "Próximo", onClick: () => setEtapa(2), disabled: regiao === null },
-    2: { label: "Próximo", onClick: () => setEtapa(3) },
-    3: { label: "Próximo", onClick: () => setEtapa(4) },
-    4: { label: "Ver sugestões", onClick: buscarSugestoes },
-  };
-  const acao = acaoEtapa[etapa];
+  const ehUltimaEtapa = etapa === passos.length - 1;
+  const disabled =
+    (passo === "tipo" && !tipoDefinido) ||
+    (passo === "regiao" && regiao === null) ||
+    (passo === "local" && local === null);
+
+  function avancar() {
+    if (ehUltimaEtapa) {
+      buscarSugestoes();
+    } else {
+      setEtapa((e) => e + 1);
+    }
+  }
 
   return (
     <PageShell maxW={{ base: "100%", md: "760px" }}>
@@ -272,7 +284,7 @@ export default function IdentificarPage() {
         Pergunta {perguntaAtual} de {TOTAL_PERGUNTAS}
       </Text>
 
-      {etapa === 0 && (
+      {passo === "tipo" && (
         <Stack spacing="18px">
           <Box>
             <Text fontFamily="heading" fontWeight={700} fontSize="xl" mb={1.5}>
@@ -282,7 +294,7 @@ export default function IdentificarPage() {
               Sem pressa. Responda o que conseguir — cada detalhe ajuda.
             </Text>
           </Box>
-          <Wrap spacing={2}>
+          <Wrap spacing={2} justify="center">
             {TIPOS.map((t) => {
               const ativo = tipoDefinido && categoria === t.valor;
               return (
@@ -309,12 +321,12 @@ export default function IdentificarPage() {
         </Stack>
       )}
 
-      {etapa === 1 && (
+      {passo === "regiao" && (
         <Stack spacing="18px">
           <Text fontFamily="heading" fontWeight={700} fontSize="xl">
             Em que região ocorreu?
           </Text>
-          <Wrap spacing={2}>
+          <Wrap spacing={2} justify="center">
             {REGIOES.map((r) => (
               <WrapItem key={r}>
                 <Button
@@ -342,7 +354,7 @@ export default function IdentificarPage() {
             alignSelf="start"
             onClick={() => {
               setRegiao(null);
-              setEtapa(2);
+              setEtapa((e) => e + 1);
             }}
           >
             Não sei / pular
@@ -350,7 +362,48 @@ export default function IdentificarPage() {
         </Stack>
       )}
 
-      {etapa === 2 && (
+      {passo === "local" && (
+        <Stack spacing="18px">
+          <Text fontFamily="heading" fontWeight={700} fontSize="xl">
+            Onde o acidente aconteceu?
+          </Text>
+          <Wrap spacing={2} justify="center">
+            {LOCAIS.map((l) => (
+              <WrapItem key={l.id}>
+                <Button
+                  size="sm"
+                  h="auto"
+                  py="10px"
+                  px="14px"
+                  borderRadius="20px"
+                  variant={local === l.id ? "solid" : "outline"}
+                  bg={local === l.id ? undefined : "bg.surface"}
+                  color={local === l.id ? undefined : "text.secondary"}
+                  fontWeight={500}
+                  fontSize="13px"
+                  onClick={() => setLocal(l.id)}
+                >
+                  {capitalizar(l.label)}
+                </Button>
+              </WrapItem>
+            ))}
+          </Wrap>
+          <Button
+            variant="ghost"
+            size="sm"
+            color="text.secondary"
+            alignSelf="start"
+            onClick={() => {
+              setLocal(null);
+              setEtapa((e) => e + 1);
+            }}
+          >
+            Não sei / pular
+          </Button>
+        </Stack>
+      )}
+
+      {passo === "visuais" && (
         <Stack spacing="18px">
           <Box>
             <Text fontFamily="heading" fontWeight={700} fontSize="xl" mb={1.5}>
@@ -360,22 +413,23 @@ export default function IdentificarPage() {
               Toque em todas as características que se aplicarem.
             </Text>
           </Box>
-          <SimpleGrid minChildWidth="150px" spacing={3}>
+          <Flex wrap="wrap" justify="center" gap={3}>
             {cardsCaracteristicas.map((card) => (
-              <TraitCard
-                key={card.id}
-                label={card.label}
-                descricao={card.descricao}
-                imagem={TRAIT_IMAGENS[card.id]}
-                selecionado={visuais.includes(card.id)}
-                onToggle={() => alternar(visuais, setVisuais, card.id)}
-              />
+              <Box key={card.id} flex="0 0 150px" maxW="150px">
+                <TraitCard
+                  label={card.label}
+                  descricao={card.descricao}
+                  imagem={TRAIT_IMAGENS[card.id]}
+                  selecionado={visuais.includes(card.id)}
+                  onToggle={() => alternar(visuais, setVisuais, card.id)}
+                />
+              </Box>
             ))}
-          </SimpleGrid>
+          </Flex>
         </Stack>
       )}
 
-      {etapa === 3 && (
+      {passo === "feridas" && (
         <Stack spacing="18px">
           <Box>
             <Text fontFamily="heading" fontWeight={700} fontSize="xl" mb={1.5}>
@@ -386,22 +440,23 @@ export default function IdentificarPage() {
               conseguiu ver bem, pode pular.
             </Text>
           </Box>
-          <SimpleGrid minChildWidth="150px" spacing={3}>
+          <Flex wrap="wrap" justify="center" gap={3}>
             {cardsFeridas.map((card) => (
-              <TraitCard
-                key={card.id}
-                label={card.label}
-                descricao={card.descricao}
-                imagem={TRAIT_IMAGENS[card.id]}
-                selecionado={feridas.includes(card.id)}
-                onToggle={() => alternar(feridas, setFeridas, card.id)}
-              />
+              <Box key={card.id} flex="0 0 150px" maxW="150px">
+                <TraitCard
+                  label={card.label}
+                  descricao={card.descricao}
+                  imagem={TRAIT_IMAGENS[card.id]}
+                  selecionado={feridas.includes(card.id)}
+                  onToggle={() => alternar(feridas, setFeridas, card.id)}
+                />
+              </Box>
             ))}
-          </SimpleGrid>
+          </Flex>
         </Stack>
       )}
 
-      {etapa === 4 && (
+      {passo === "sintomas" && (
         <Stack spacing="18px">
           <Box>
             <Text fontFamily="heading" fontWeight={700} fontSize="xl" mb={1.5}>
@@ -433,12 +488,12 @@ export default function IdentificarPage() {
         </Button>
         <Button
           flex={2}
-          onClick={acao.onClick}
-          isDisabled={acao.disabled}
-          isLoading={etapa === 4 && carregando}
+          onClick={avancar}
+          isDisabled={disabled}
+          isLoading={ehUltimaEtapa && carregando}
           loadingText="Buscando..."
         >
-          {acao.label}
+          {ehUltimaEtapa ? "Ver sugestões" : "Próximo"}
         </Button>
       </Flex>
     </PageShell>

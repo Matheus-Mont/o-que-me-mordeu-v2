@@ -71,7 +71,7 @@ async function seedAnimais(userId: string) {
   const animais = [
     {
       slug: "jararaca-exemplo",
-      nomePopular: "jararaca (exemplo)",
+      nomePopular: "jararaca",
       nomeCientifico: "Bothrops jararaca",
       wikipedia: "Bothrops jararaca",
       categoria: "COBRA" as const,
@@ -102,7 +102,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "cascavel-exemplo",
-      nomePopular: "cascavel (exemplo)",
+      nomePopular: "cascavel",
       nomeCientifico: "Crotalus durissus",
       wikipedia: "Crotalus durissus",
       categoria: "COBRA" as const,
@@ -133,7 +133,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "surucucu-exemplo",
-      nomePopular: "surucucu (exemplo)",
+      nomePopular: "surucucu",
       nomeCientifico: "Lachesis muta",
       wikipedia: "Lachesis muta",
       categoria: "COBRA" as const,
@@ -164,7 +164,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "coral-verdadeira-exemplo",
-      nomePopular: "coral-verdadeira (exemplo)",
+      nomePopular: "coral-verdadeira",
       nomeCientifico: "Micrurus corallinus",
       wikipedia: "Micrurus corallinus",
       categoria: "COBRA" as const,
@@ -196,7 +196,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "armadeira-exemplo",
-      nomePopular: "armadeira (exemplo)",
+      nomePopular: "armadeira",
       nomeCientifico: "Phoneutria sp.",
       wikipedia: "Phoneutria nigriventer",
       categoria: "ARANHA" as const,
@@ -226,7 +226,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "aranha-marrom-exemplo",
-      nomePopular: "aranha-marrom (exemplo)",
+      nomePopular: "aranha-marrom",
       nomeCientifico: "Loxosceles sp.",
       wikipedia: "Loxosceles",
       categoria: "ARANHA" as const,
@@ -257,7 +257,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "viuva-negra-exemplo",
-      nomePopular: "viúva-negra (exemplo)",
+      nomePopular: "viúva-negra",
       nomeCientifico: "Latrodectus sp.",
       wikipedia: "Latrodectus",
       categoria: "ARANHA" as const,
@@ -286,7 +286,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "escorpiao-amarelo-exemplo",
-      nomePopular: "escorpião-amarelo (exemplo)",
+      nomePopular: "escorpião-amarelo",
       nomeCientifico: "Tityus serrulatus",
       wikipedia: "Tityus serrulatus",
       categoria: "ESCORPIAO" as const,
@@ -317,7 +317,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "escorpiao-marrom-exemplo",
-      nomePopular: "escorpião-marrom (exemplo)",
+      nomePopular: "escorpião-marrom",
       nomeCientifico: "Tityus bahiensis",
       wikipedia: "Tityus bahiensis",
       categoria: "ESCORPIAO" as const,
@@ -349,7 +349,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "taturana-lonomia-exemplo",
-      nomePopular: "taturana (exemplo)",
+      nomePopular: "taturana",
       nomeCientifico: "Lonomia obliqua",
       wikipedia: "Lonomia obliqua",
       categoria: "TATURANA" as const,
@@ -377,7 +377,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "jiboia-exemplo",
-      nomePopular: "jiboia (exemplo)",
+      nomePopular: "jiboia",
       nomeCientifico: "Boa constrictor",
       wikipedia: "Boa constrictor",
       categoria: "COBRA" as const,
@@ -404,7 +404,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "caninana-exemplo",
-      nomePopular: "caninana (exemplo)",
+      nomePopular: "caninana",
       nomeCientifico: "Spilotes pullatus",
       wikipedia: "Spilotes pullatus",
       categoria: "COBRA" as const,
@@ -431,7 +431,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "falsa-coral-exemplo",
-      nomePopular: "falsa-coral (exemplo)",
+      nomePopular: "falsa-coral",
       nomeCientifico: "Erythrolamprus aesculapii",
       wikipedia: "Erythrolamprus aesculapii",
       categoria: "COBRA" as const,
@@ -459,7 +459,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "jararacucu-exemplo",
-      nomePopular: "jararacuçu (exemplo)",
+      nomePopular: "jararacuçu",
       nomeCientifico: "Bothrops jararacussu",
       wikipedia: "Bothrops jararacussu",
       categoria: "COBRA" as const,
@@ -490,7 +490,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "caranguejeira-exemplo",
-      nomePopular: "caranguejeira (exemplo)",
+      nomePopular: "caranguejeira",
       nomeCientifico: "Lasiodora parahybana",
       wikipedia: "Lasiodora parahybana",
       categoria: "ARANHA" as const,
@@ -518,7 +518,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "aranha-de-jardim-exemplo",
-      nomePopular: "aranha-de-jardim (exemplo)",
+      nomePopular: "aranha-de-jardim",
       nomeCientifico: "Argiope argentata",
       wikipedia: "Argiope argentata",
       categoria: "ARANHA" as const,
@@ -544,7 +544,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "viuva-marrom-exemplo",
-      nomePopular: "viúva-marrom (exemplo)",
+      nomePopular: "viúva-marrom",
       nomeCientifico: "Latrodectus geometricus",
       wikipedia: "Latrodectus geometricus",
       categoria: "ARANHA" as const,
@@ -573,7 +573,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "aranha-lobo-exemplo",
-      nomePopular: "aranha-lobo (exemplo)",
+      nomePopular: "aranha-lobo",
       nomeCientifico: "Lycosa erythrognatha",
       wikipedia: "Lycosa erythrognatha",
       categoria: "ARANHA" as const,
@@ -600,7 +600,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "escorpiao-do-nordeste-exemplo",
-      nomePopular: "escorpião-amarelo-do-nordeste (exemplo)",
+      nomePopular: "escorpião-amarelo-do-nordeste",
       nomeCientifico: "Tityus stigmurus",
       wikipedia: "Tityus stigmurus",
       categoria: "ESCORPIAO" as const,
@@ -631,7 +631,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "escorpiao-preto-amazonia-exemplo",
-      nomePopular: "escorpião-preto-da-amazônia (exemplo)",
+      nomePopular: "escorpião-preto-da-amazônia",
       nomeCientifico: "Tityus obscurus",
       wikipedia: "Tityus obscurus",
       categoria: "ESCORPIAO" as const,
@@ -662,7 +662,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "escorpiao-preto-exemplo",
-      nomePopular: "escorpião-preto (exemplo)",
+      nomePopular: "escorpião-preto",
       nomeCientifico: "Bothriurus bonariensis",
       wikipedia: "Bothriurus bonariensis",
       categoria: "ESCORPIAO" as const,
@@ -690,7 +690,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "escorpiao-amarelo-amazonia-exemplo",
-      nomePopular: "escorpião-vermelho-da-amazônia (exemplo)",
+      nomePopular: "escorpião-vermelho-da-amazônia",
       nomeCientifico: "Tityus metuendus",
       wikipedia: "Tityus metuendus",
       categoria: "ESCORPIAO" as const,
@@ -721,7 +721,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "escorpiao-ananteris-exemplo",
-      nomePopular: "escorpião-de-jardim (exemplo)",
+      nomePopular: "escorpião-de-jardim",
       nomeCientifico: "Ananteris balzani",
       wikipedia: "Ananteris balzani",
       categoria: "ESCORPIAO" as const,
@@ -745,7 +745,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "lonomia-achelous-exemplo",
-      nomePopular: "taturana-da-amazônia (exemplo)",
+      nomePopular: "taturana-da-amazônia",
       nomeCientifico: "Lonomia achelous",
       wikipedia: "Lonomia achelous",
       categoria: "TATURANA" as const,
@@ -772,7 +772,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "taturana-de-fogo-exemplo",
-      nomePopular: "taturana-de-fogo (exemplo)",
+      nomePopular: "taturana-de-fogo",
       nomeCientifico: "Megalopyge sp.",
       wikipedia: "Megalopyge opercularis",
       categoria: "TATURANA" as const,
@@ -800,7 +800,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "taturana-coruja-exemplo",
-      nomePopular: "taturana-coruja (exemplo)",
+      nomePopular: "taturana-coruja",
       nomeCientifico: "Automeris sp.",
       wikipedia: "Automeris io",
       categoria: "TATURANA" as const,
@@ -824,7 +824,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "taturana-da-seringueira-exemplo",
-      nomePopular: "taturana-da-seringueira (exemplo)",
+      nomePopular: "taturana-da-seringueira",
       nomeCientifico: "Premolis semirufa",
       wikipedia: "Premolis semirufa",
       categoria: "TATURANA" as const,
@@ -852,7 +852,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "taturana-hylesia-exemplo",
-      nomePopular: "taturana-arrepiada (exemplo)",
+      nomePopular: "taturana-arrepiada",
       nomeCientifico: "Hylesia sp.",
       wikipedia: "Hylesia metabus",
       categoria: "TATURANA" as const,
@@ -879,7 +879,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "taturana-dirphia-exemplo",
-      nomePopular: "taturana-de-espinho (exemplo)",
+      nomePopular: "taturana-de-espinho",
       nomeCientifico: "Dirphia sp.",
       wikipedia: "Dirphia",
       categoria: "TATURANA" as const,
@@ -903,7 +903,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "caravela-exemplo",
-      nomePopular: "caravela (exemplo)",
+      nomePopular: "caravela",
       nomeCientifico: "Physalia physalis",
       wikipedia: "Physalia physalis",
       categoria: "AGUA_VIVA" as const,
@@ -933,7 +933,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "agua-viva-chrysaora-exemplo",
-      nomePopular: "água-viva (exemplo)",
+      nomePopular: "água-viva",
       nomeCientifico: "Chrysaora lactea",
       wikipedia: "Chrysaora lactea",
       categoria: "AGUA_VIVA" as const,
@@ -960,7 +960,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "agua-viva-olindias-exemplo",
-      nomePopular: "água-viva-do-mar (exemplo)",
+      nomePopular: "água-viva-do-mar",
       nomeCientifico: "Olindias sambaquiensis",
       wikipedia: "Olindias sambaquiensis",
       categoria: "AGUA_VIVA" as const,
@@ -987,7 +987,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "agua-viva-vespa-do-mar-exemplo",
-      nomePopular: "vespa-do-mar (exemplo)",
+      nomePopular: "vespa-do-mar",
       nomeCientifico: "Chiropsalmus quadrumanus",
       wikipedia: "Chiropsalmus quadrumanus",
       categoria: "AGUA_VIVA" as const,
@@ -1014,7 +1014,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "agua-viva-prato-exemplo",
-      nomePopular: "água-viva-prato (exemplo)",
+      nomePopular: "água-viva-prato",
       nomeCientifico: "Lychnorhiza lucerna",
       wikipedia: "Lychnorhiza lucerna",
       categoria: "AGUA_VIVA" as const,
@@ -1037,7 +1037,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "agua-viva-tamoya-exemplo",
-      nomePopular: "água-viva-cubo (exemplo)",
+      nomePopular: "água-viva-cubo",
       nomeCientifico: "Tamoya haplonema",
       wikipedia: "Tamoya haplonema",
       categoria: "AGUA_VIVA" as const,
@@ -1066,7 +1066,7 @@ async function seedAnimais(userId: string) {
     },
     {
       slug: "anemona-do-mar-exemplo",
-      nomePopular: "anêmona-do-mar (exemplo)",
+      nomePopular: "anêmona-do-mar",
       nomeCientifico: "Bunodosoma caissarum",
       wikipedia: "Bunodosoma caissarum",
       categoria: "AGUA_VIVA" as const,
@@ -1136,6 +1136,11 @@ async function seedPrevencao(userId: string) {
       ambiente: "CASA" as const,
       icone: "casa",
       dicas: [
+        "sacuda sapatos, roupas e roupas de cama antes de usar — escorpiões e aranhas se escondem neles",
+        "não mate os predadores naturais: gambás (saruês), corujas, lagartixas, sapos e galinhas ajudam a controlar escorpiões e aranhas",
+        "afaste camas e berços uns 10 cm da parede e não deixe roupa de cama encostando no chão",
+        "use telas nos ralos do banheiro, da pia e do tanque",
+        "mantenha o lixo fechado — ele atrai baratas, principal alimento dos escorpiões",
         "vede frestas embaixo de portas e ao redor de ralos",
         "evite acumular entulho, lenha ou lixo encostado na parede",
         "use luvas ao mexer em pilhas de material, caixas ou jardim",
@@ -1148,6 +1153,8 @@ async function seedPrevencao(userId: string) {
         "use botas fechadas e calças compridas",
         "evite colocar as mãos em buracos, troncos ou frestas sem olhar antes",
         "prefira trilhas conhecidas e caminhar à luz do dia",
+        "não coloque as mãos ou os pés em buracos, cupinzeiros, montes de pedra ou troncos podres",
+        "mantenha limpa uma faixa de 1 a 2 metros junto a muros, cercas e beiras de terreno",
       ],
     },
     {
@@ -1157,6 +1164,7 @@ async function seedPrevencao(userId: string) {
         "evite nadar em áreas com relatos recentes de acidentes",
         "não toque em animais aquáticos desconhecidos, mesmo parados",
         "pergunte a moradores ou guias locais sobre riscos conhecidos da região",
+        "use calçado fechado ao entrar na água e ao caminhar na margem",
       ],
     },
     {
@@ -1166,6 +1174,7 @@ async function seedPrevencao(userId: string) {
         "arraste os pés na areia rasa ao entrar no mar, em vez de pisar direto",
         "não toque em águas-vivas ou animais encalhados na areia, mesmo parecendo mortos",
         "observe bandeiras e avisos da guarda-vidas sobre presença de águas-vivas",
+        "não esfregue areia nem água doce sobre a queimadura de água-viva — piora a dor",
       ],
     },
   ];
@@ -1176,7 +1185,14 @@ async function seedPrevencao(userId: string) {
     });
 
     if (existente) {
-      console.log(`Dica de prevenção já existe: ${dados.ambiente.toLowerCase()}`);
+      const dica = await prisma.dicaPrevencao.update({
+        where: { id: existente.id },
+        data: {
+          dicas: dados.dicas,
+          icone: dados.icone,
+        },
+      });
+      console.log(`Dica de prevenção atualizada: ${dica.ambiente.toLowerCase()}`);
       continue;
     }
 
