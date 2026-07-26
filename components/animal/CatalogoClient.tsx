@@ -57,7 +57,7 @@ const ORDENACOES = [
   { valor: "gravidade", label: "Gravidade (mais grave primeiro)" },
 ];
 
-const ITENS_POR_PAGINA = 15;
+const ITENS_POR_PAGINA = 24;
 
 function irParaTopo() {
   window.scrollTo({ top: 0, left: 0, behavior: "instant" });
@@ -116,10 +116,10 @@ export default function CatalogoClient({ animais }: { animais: AnimalCatalogo[] 
   }
 
   return (
-    <PageShell maxW={{ base: "100%", md: "1040px" }}>
+    <PageShell maxW={{ base: "100%", md: "content" }}>
       <PageHeader title="Catálogo" href="/" />
 
-      <InputGroup mb={3}>
+      <InputGroup mb={3} maxW={{ base: "100%", md: "420px" }}>
         <InputLeftElement pointerEvents="none" color="text.muted">
           <TbSearch />
         </InputLeftElement>

@@ -46,7 +46,7 @@ export default async function FichaAnimalPage({ params }: Props) {
   const scheme = URGENCIA_SCHEME[animal.nivelUrgencia];
 
   return (
-    <PageShell maxW={{ base: "100%", lg: "1040px" }}>
+    <PageShell maxW={{ base: "100%", lg: "content" }}>
       <PageHeader href="/catalogo" />
 
       <Flex direction={{ base: "column", lg: "row" }} gap={{ base: 6, lg: 12 }} align="start">

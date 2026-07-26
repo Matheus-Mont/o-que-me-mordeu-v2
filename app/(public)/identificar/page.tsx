@@ -15,8 +15,6 @@ import {
   SimpleGrid,
   Stack,
   Text,
-  Wrap,
-  WrapItem,
 } from "@chakra-ui/react";
 import {
   CARACTERISTICAS,
@@ -152,7 +150,7 @@ export default function IdentificarPage() {
 
   if (etapa === passos.length) {
     return (
-      <PageShell maxW={{ base: "100%", md: "760px" }}>
+      <PageShell maxW={{ base: "100%", md: "content" }}>
         <PageHeader title="Sugestão de espécies" onBack={() => setEtapa(passos.length - 1)} />
 
         <Text color="text.secondary" fontSize="sm" mb={5}>
@@ -272,7 +270,7 @@ export default function IdentificarPage() {
   }
 
   return (
-    <PageShell maxW={{ base: "100%", md: "760px" }}>
+    <PageShell maxW={{ base: "100%", md: "content" }}>
       <Progress value={progresso} h="4px" borderRadius="2px" mb="18px" />
       <Text
         color="text.muted"
@@ -294,30 +292,36 @@ export default function IdentificarPage() {
               Sem pressa. Responda o que conseguir — cada detalhe ajuda.
             </Text>
           </Box>
-          <Wrap spacing={2} justify="center">
+          <Flex
+            direction={{ base: "row", md: "column" }}
+            wrap={{ base: "wrap", md: "nowrap" }}
+            justify="center"
+            align="center"
+            gap={2}
+          >
             {TIPOS.map((t) => {
               const ativo = tipoDefinido && categoria === t.valor;
               return (
-                <WrapItem key={t.label}>
-                  <Button
-                    size="sm"
-                    h="auto"
-                    py="10px"
-                    px="14px"
-                    borderRadius="20px"
-                    variant={ativo ? "solid" : "outline"}
-                    bg={ativo ? undefined : "bg.surface"}
-                    color={ativo ? undefined : "text.secondary"}
-                    fontWeight={500}
-                    fontSize="13px"
-                    onClick={() => escolherTipo(t.valor)}
-                  >
-                    {t.label}
-                  </Button>
-                </WrapItem>
+                <Button
+                  key={t.label}
+                  size="sm"
+                  h="auto"
+                  py="10px"
+                  px="14px"
+                  w={{ base: "auto", md: "320px" }}
+                  borderRadius="20px"
+                  variant={ativo ? "solid" : "outline"}
+                  bg={ativo ? undefined : "bg.surface"}
+                  color={ativo ? undefined : "text.secondary"}
+                  fontWeight={500}
+                  fontSize="13px"
+                  onClick={() => escolherTipo(t.valor)}
+                >
+                  {t.label}
+                </Button>
               );
             })}
-          </Wrap>
+          </Flex>
         </Stack>
       )}
 
@@ -326,27 +330,33 @@ export default function IdentificarPage() {
           <Text fontFamily="heading" fontWeight={700} fontSize="xl">
             Em que região ocorreu?
           </Text>
-          <Wrap spacing={2} justify="center">
+          <Flex
+            direction={{ base: "row", md: "column" }}
+            wrap={{ base: "wrap", md: "nowrap" }}
+            justify="center"
+            align="center"
+            gap={2}
+          >
             {REGIOES.map((r) => (
-              <WrapItem key={r}>
-                <Button
-                  size="sm"
-                  h="auto"
-                  py="10px"
-                  px="14px"
-                  borderRadius="20px"
-                  variant={regiao === r ? "solid" : "outline"}
-                  bg={regiao === r ? undefined : "bg.surface"}
-                  color={regiao === r ? undefined : "text.secondary"}
-                  fontWeight={500}
-                  fontSize="13px"
-                  onClick={() => setRegiao(r)}
-                >
-                  {capitalizar(r)}
-                </Button>
-              </WrapItem>
+              <Button
+                key={r}
+                size="sm"
+                h="auto"
+                py="10px"
+                px="14px"
+                w={{ base: "auto", md: "320px" }}
+                borderRadius="20px"
+                variant={regiao === r ? "solid" : "outline"}
+                bg={regiao === r ? undefined : "bg.surface"}
+                color={regiao === r ? undefined : "text.secondary"}
+                fontWeight={500}
+                fontSize="13px"
+                onClick={() => setRegiao(r)}
+              >
+                {capitalizar(r)}
+              </Button>
             ))}
-          </Wrap>
+          </Flex>
           <Button
             variant="ghost"
             size="sm"
@@ -367,27 +377,33 @@ export default function IdentificarPage() {
           <Text fontFamily="heading" fontWeight={700} fontSize="xl">
             Onde o acidente aconteceu?
           </Text>
-          <Wrap spacing={2} justify="center">
+          <Flex
+            direction={{ base: "row", md: "column" }}
+            wrap={{ base: "wrap", md: "nowrap" }}
+            justify="center"
+            align="center"
+            gap={2}
+          >
             {LOCAIS.map((l) => (
-              <WrapItem key={l.id}>
-                <Button
-                  size="sm"
-                  h="auto"
-                  py="10px"
-                  px="14px"
-                  borderRadius="20px"
-                  variant={local === l.id ? "solid" : "outline"}
-                  bg={local === l.id ? undefined : "bg.surface"}
-                  color={local === l.id ? undefined : "text.secondary"}
-                  fontWeight={500}
-                  fontSize="13px"
-                  onClick={() => setLocal(l.id)}
-                >
-                  {capitalizar(l.label)}
-                </Button>
-              </WrapItem>
+              <Button
+                key={l.id}
+                size="sm"
+                h="auto"
+                py="10px"
+                px="14px"
+                w={{ base: "auto", md: "320px" }}
+                borderRadius="20px"
+                variant={local === l.id ? "solid" : "outline"}
+                bg={local === l.id ? undefined : "bg.surface"}
+                color={local === l.id ? undefined : "text.secondary"}
+                fontWeight={500}
+                fontSize="13px"
+                onClick={() => setLocal(l.id)}
+              >
+                {capitalizar(l.label)}
+              </Button>
             ))}
-          </Wrap>
+          </Flex>
           <Button
             variant="ghost"
             size="sm"
