@@ -48,7 +48,7 @@ export default function CarrosselImagens({ imagens, alt }: Props) {
             src={imagens[indice]}
             alt={imagens.length > 1 ? `${alt} — foto ${indice + 1} de ${imagens.length}` : alt}
             fill
-            sizes="(max-width: 768px) 100vw, 500px"
+            sizes="(max-width: 992px) 100vw, 560px"
             style={{ objectFit: "cover" }}
             priority={indice === 0}
           />

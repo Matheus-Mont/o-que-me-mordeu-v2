@@ -31,7 +31,7 @@ export default async function PrevencaoPage() {
   const porAmbiente = new Map(dicas.map((d) => [d.ambiente, d]));
 
   return (
-    <PageShell maxW={{ base: "100%", md: "900px" }}>
+    <PageShell maxW={{ base: "100%", md: "content" }}>
       <PageHeader title="Prevenção" href="/" />
 
       <Text color="text.secondary" fontSize="sm" mb={5}>

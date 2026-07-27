@@ -69,7 +69,7 @@ function TituloColuna({ children }: { children: React.ReactNode }) {
 export default function Footer() {
   return (
     <Box as="footer" borderTop="1px solid" borderColor="border">
-      <Box maxW="1040px" mx="auto" px={{ base: 5, md: 6 }} py={{ base: 8, md: 10 }}>
+      <Box maxW="content" mx="auto" px={{ base: 5, md: 6 }} py={{ base: 8, md: 10 }}>
         <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 8, md: 10 }} mb={8}>
           <Box>
             <Text fontFamily="heading" fontWeight={700} fontSize="md" mb={2}>
@@ -83,7 +83,7 @@ export default function Footer() {
 
           <Box>
             <TituloColuna>contato</TituloColuna>
-            <VStack align="start" spacing={2}>
+            <VStack align="start" spacing={2} maxW="340px">
               <ContatoLink icon={TbBrandGithub} href={GITHUB_URL} externo>
                 github.com/Matheus-Mont
               </ContatoLink>
@@ -100,7 +100,7 @@ export default function Footer() {
 
           <Box>
             <TituloColuna>em emergência, ligue</TituloColuna>
-            <VStack align="stretch" spacing={2}>
+            <VStack align="stretch" spacing={2} maxW="340px">
               {TELEFONES.map((t) => (
                 <Flex
                   key={t.numero}

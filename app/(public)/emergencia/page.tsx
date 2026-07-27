@@ -15,7 +15,7 @@ const TELEFONES = [
 
 export default function EmergenciaPage() {
   return (
-    <PageShell maxW={{ base: "100%", md: "860px" }}>
+    <PageShell maxW={{ base: "100%", md: "content" }}>
       <PageHeader href="/" />
 
       <Heading as="h1" fontSize="22px" fontWeight={800} color="danger.text" mb={2}>

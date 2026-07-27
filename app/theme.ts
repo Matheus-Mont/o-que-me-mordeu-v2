@@ -69,20 +69,26 @@ const theme = extendTheme({
     card: "14px",
     control: "10px",
   },
+  sizes: {
+    content: "1040px",
+  },
   styles: {
     global: {
       body: {
-        bg: "bg.page",
+        bg: "bg.canvas",
         color: "text.primary",
       },
       ".app-frame": {
-        maxWidth: "1040px",
-        marginInline: "auto",
+        width: "100%",
         minHeight: "100dvh",
         display: "flex",
         flexDirection: "column",
         bg: "bg.canvas",
-        boxShadow: "0 0 60px rgba(0,0,0,0.4)",
+      },
+      "@keyframes pulso-destaque": {
+        "0%": { boxShadow: "0 0 0 0 rgba(232,178,61,0.45)" },
+        "70%": { boxShadow: "0 0 0 10px rgba(232,178,61,0)" },
+        "100%": { boxShadow: "0 0 0 0 rgba(232,178,61,0)" },
       },
       "*::placeholder": {
         color: "text.muted",
