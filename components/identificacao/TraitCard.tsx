@@ -34,9 +34,9 @@ export default function TraitCard({ label, descricao, imagem, selecionado, onTog
       transition="border-color 0.15s ease, background 0.15s ease"
       _hover={{ bg: "bg.surfaceHover", borderColor: selecionado ? "accent.solid" : "borderStrong" }}
       h="full"
-      minH="220px"
+      minH={{ base: "220px", md: "270px" }}
     >
-      <Box height="100px" position="relative" bg="bg.canvas">
+      <Box height={{ base: "100px", md: "140px" }} position="relative" bg="bg.canvas">
         {imagem ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -68,11 +68,11 @@ export default function TraitCard({ label, descricao, imagem, selecionado, onTog
         )}
       </Box>
 
-      <Box p="10px">
-        <Text fontFamily="heading" fontWeight={700} fontSize="13px" mb={1}>
+      <Box p={{ base: "10px", md: "14px" }}>
+        <Text fontFamily="heading" fontWeight={700} fontSize={{ base: "13px", md: "15px" }} mb={1}>
           {capitalizar(label)}
         </Text>
-        <Text fontSize="11.5px" color="text.secondary" lineHeight={1.35}>
+        <Text fontSize={{ base: "11.5px", md: "13px" }} color="text.secondary" lineHeight={1.35}>
           {capitalizar(descricao)}
         </Text>
       </Box>

@@ -4,7 +4,6 @@ export type LocalId = "casa" | "terreno" | "trilha" | "floresta" | "mar";
 
 export interface TracoAnimal {
   categoria: CategoriaId;
-  regioes: string[];
   visuais: string[];
   feridas: string[];
   sintomas: string[];
@@ -120,21 +119,18 @@ export function locaisDoAnimal(slug: string): string[] {
 export const TRACOS: Record<string, TracoAnimal> = {
   "jararaca-exemplo": {
     categoria: "COBRA",
-    regioes: ["nordeste", "sudeste", "sul"],
     visuais: ["cobra_cabeca_triangular", "cobra_losango_v"],
     feridas: ["fer_dois_furos"],
     sintomas: ["s_dor_forte", "s_inchaco", "s_sangramento", "s_mancha_roxa"],
   },
   "cascavel-exemplo": {
     categoria: "COBRA",
-    regioes: ["norte", "centro-oeste", "sudeste", "sul", "nordeste"],
     visuais: ["cobra_cabeca_triangular", "cobra_losango_v", "cobra_chocalho"],
     feridas: ["fer_dois_furos"],
     sintomas: ["s_dor_leve", "s_neuro", "s_sistemico"],
   },
   "surucucu-exemplo": {
     categoria: "COBRA",
-    regioes: ["norte", "nordeste", "sudeste"],
     visuais: ["cobra_cabeca_triangular", "cobra_losango_v", "cobra_gigante", "cobra_cauda_abacaxi"],
     feridas: ["fer_dois_furos"],
     sintomas: ["s_dor_forte", "s_inchaco", "s_sistemico"],
@@ -142,35 +138,30 @@ export const TRACOS: Record<string, TracoAnimal> = {
   },
   "coral-verdadeira-exemplo": {
     categoria: "COBRA",
-    regioes: ["sudeste", "sul", "nordeste"],
     visuais: ["cobra_aneis_coral", "cobra_capuz_preto"],
     feridas: ["fer_marcas_discretas"],
     sintomas: ["s_dor_leve", "s_neuro"],
   },
   "jararacucu-exemplo": {
     categoria: "COBRA",
-    regioes: ["nordeste", "sudeste", "sul"],
     visuais: ["cobra_cabeca_triangular", "cobra_losango_v", "cobra_gigante"],
     feridas: ["fer_dois_furos"],
     sintomas: ["s_dor_forte", "s_inchaco", "s_sangramento", "s_mancha_roxa"],
   },
   "jiboia-exemplo": {
     categoria: "COBRA",
-    regioes: ["norte", "nordeste", "centro-oeste", "sudeste"],
     visuais: ["cobra_corpo_grosso_sela", "cobra_gigante"],
     feridas: ["fer_fileira_dentes"],
     sintomas: ["s_so_marca"],
   },
   "caninana-exemplo": {
     categoria: "COBRA",
-    regioes: ["norte", "nordeste", "centro-oeste", "sudeste", "sul"],
     visuais: ["cobra_xadrez"],
     feridas: ["fer_fileira_dentes"],
     sintomas: ["s_so_marca"],
   },
   "falsa-coral-exemplo": {
     categoria: "COBRA",
-    regioes: ["sudeste", "sul", "nordeste", "centro-oeste"],
     visuais: ["cobra_aneis_coral"],
     feridas: ["fer_fileira_dentes"],
     sintomas: ["s_so_marca"],
@@ -178,7 +169,6 @@ export const TRACOS: Record<string, TracoAnimal> = {
 
   "armadeira-exemplo": {
     categoria: "ARANHA",
-    regioes: ["norte", "centro-oeste", "sudeste", "sul"],
     visuais: ["aranha_postura_armada"],
     feridas: ["fer_dois_pontos"],
     sintomas: ["s_dor_forte", "s_sistemico"],
@@ -186,28 +176,24 @@ export const TRACOS: Record<string, TracoAnimal> = {
   },
   "aranha-marrom-exemplo": {
     categoria: "ARANHA",
-    regioes: ["nordeste", "sudeste", "sul"],
     visuais: ["aranha_violino_marrom", "aranha_pequena"],
     feridas: ["fer_necrose_evolui"],
     sintomas: ["s_dor_leve", "s_ferida_progressiva", "s_mancha_roxa"],
   },
   "viuva-negra-exemplo": {
     categoria: "ARANHA",
-    regioes: ["centro-oeste", "nordeste", "sudeste", "sul"],
     visuais: ["aranha_preta_ampulheta", "aranha_pequena"],
     feridas: ["fer_dois_pontos"],
     sintomas: ["s_caimbra", "s_dor_forte", "s_sistemico"],
   },
   "viuva-marrom-exemplo": {
     categoria: "ARANHA",
-    regioes: ["norte", "nordeste", "centro-oeste", "sudeste", "sul"],
     visuais: ["aranha_marrom_geometrica", "aranha_pequena"],
     feridas: ["fer_dois_pontos"],
     sintomas: ["s_caimbra", "s_dor_leve"],
   },
   "caranguejeira-exemplo": {
     categoria: "ARANHA",
-    regioes: ["nordeste", "norte", "sudeste"],
     visuais: ["aranha_grande_peluda"],
     feridas: [],
     sintomas: ["s_dor_leve", "s_coceira"],
@@ -215,14 +201,12 @@ export const TRACOS: Record<string, TracoAnimal> = {
   },
   "aranha-de-jardim-exemplo": {
     categoria: "ARANHA",
-    regioes: ["sudeste", "sul", "centro-oeste", "nordeste"],
     visuais: ["aranha_prateada_teia"],
     feridas: ["fer_dois_pontos"],
     sintomas: ["s_dor_leve"],
   },
   "aranha-lobo-exemplo": {
     categoria: "ARANHA",
-    regioes: ["sul", "sudeste", "centro-oeste"],
     visuais: ["aranha_robusta_chao"],
     feridas: ["fer_dois_pontos"],
     sintomas: ["s_dor_leve", "s_inchaco"],
@@ -230,7 +214,6 @@ export const TRACOS: Record<string, TracoAnimal> = {
 
   "escorpiao-amarelo-exemplo": {
     categoria: "ESCORPIAO",
-    regioes: ["sudeste", "nordeste", "centro-oeste"],
     visuais: ["esc_amarelo", "esc_serrilha", "esc_espinho_ferrao"],
     feridas: ["fer_ferroada_unica"],
     sintomas: ["s_dor_forte", "s_sistemico"],
@@ -238,42 +221,36 @@ export const TRACOS: Record<string, TracoAnimal> = {
   },
   "escorpiao-marrom-exemplo": {
     categoria: "ESCORPIAO",
-    regioes: ["sudeste", "sul", "centro-oeste"],
     visuais: ["esc_marrom", "esc_espinho_ferrao"],
     feridas: ["fer_ferroada_unica"],
     sintomas: ["s_dor_forte"],
   },
   "escorpiao-do-nordeste-exemplo": {
     categoria: "ESCORPIAO",
-    regioes: ["nordeste"],
     visuais: ["esc_amarelo", "esc_triangulo_dorso", "esc_espinho_ferrao"],
     feridas: ["fer_ferroada_unica"],
     sintomas: ["s_dor_forte", "s_sistemico"],
   },
   "escorpiao-preto-amazonia-exemplo": {
     categoria: "ESCORPIAO",
-    regioes: ["norte"],
     visuais: ["esc_preto", "esc_grande", "esc_espinho_ferrao"],
     feridas: ["fer_ferroada_unica"],
     sintomas: ["s_dor_forte", "s_neuro", "s_sistemico"],
   },
   "escorpiao-preto-exemplo": {
     categoria: "ESCORPIAO",
-    regioes: ["sul", "sudeste"],
     visuais: ["esc_preto", "esc_pequeno", "esc_sem_espinho"],
     feridas: ["fer_ferroada_unica"],
     sintomas: ["s_dor_leve"],
   },
   "escorpiao-amarelo-amazonia-exemplo": {
     categoria: "ESCORPIAO",
-    regioes: ["norte"],
     visuais: ["esc_preto", "esc_grande", "esc_espinho_ferrao"],
     feridas: ["fer_ferroada_unica"],
     sintomas: ["s_dor_forte", "s_sistemico"],
   },
   "escorpiao-ananteris-exemplo": {
     categoria: "ESCORPIAO",
-    regioes: ["centro-oeste", "sudeste", "norte"],
     visuais: ["esc_marrom", "esc_pequeno", "esc_espinho_ferrao"],
     feridas: ["fer_ferroada_unica"],
     sintomas: ["s_dor_leve"],
@@ -281,49 +258,42 @@ export const TRACOS: Record<string, TracoAnimal> = {
 
   "taturana-lonomia-exemplo": {
     categoria: "TATURANA",
-    regioes: ["sul", "sudeste"],
     visuais: ["tat_cerdas_verdes_tronco"],
     feridas: ["fer_pontos_ardencia"],
     sintomas: ["s_queimadura", "s_sangramento"],
   },
   "lonomia-achelous-exemplo": {
     categoria: "TATURANA",
-    regioes: ["norte"],
     visuais: ["tat_cerdas_verdes_tronco"],
     feridas: ["fer_pontos_ardencia"],
     sintomas: ["s_queimadura", "s_sangramento"],
   },
   "taturana-de-fogo-exemplo": {
     categoria: "TATURANA",
-    regioes: ["sudeste", "sul", "nordeste"],
     visuais: ["tat_pelos_algodao"],
     feridas: ["fer_pontos_ardencia"],
     sintomas: ["s_queimadura", "s_inchaco"],
   },
   "taturana-coruja-exemplo": {
     categoria: "TATURANA",
-    regioes: ["sudeste", "sul", "centro-oeste"],
     visuais: ["tat_verde_espinhos_ramif"],
     feridas: ["fer_pontos_ardencia"],
     sintomas: ["s_queimadura", "s_coceira"],
   },
   "taturana-da-seringueira-exemplo": {
     categoria: "TATURANA",
-    regioes: ["norte"],
     visuais: ["tat_seringal"],
     feridas: ["fer_pontos_ardencia"],
     sintomas: ["s_dor_articular"],
   },
   "taturana-hylesia-exemplo": {
     categoria: "TATURANA",
-    regioes: ["norte", "nordeste"],
     visuais: ["tat_pelos_finos_tufos"],
     feridas: ["fer_pontos_ardencia"],
     sintomas: ["s_coceira"],
   },
   "taturana-dirphia-exemplo": {
     categoria: "TATURANA",
-    regioes: ["sudeste", "sul", "centro-oeste"],
     visuais: ["tat_escura_espinhos_rigidos"],
     feridas: ["fer_pontos_ardencia"],
     sintomas: ["s_queimadura", "s_inchaco"],
@@ -331,49 +301,42 @@ export const TRACOS: Record<string, TracoAnimal> = {
 
   "caravela-exemplo": {
     categoria: "AGUA_VIVA",
-    regioes: ["norte", "nordeste", "sudeste", "sul"],
     visuais: ["av_flutuador_azul"],
     feridas: ["fer_linhas_chicote"],
     sintomas: ["s_queimadura", "s_dor_forte", "s_sistemico"],
   },
   "agua-viva-chrysaora-exemplo": {
     categoria: "AGUA_VIVA",
-    regioes: ["sudeste", "sul", "nordeste"],
     visuais: ["av_sino_listrado"],
     feridas: ["fer_linhas_chicote"],
     sintomas: ["s_queimadura", "s_inchaco"],
   },
   "agua-viva-olindias-exemplo": {
     categoria: "AGUA_VIVA",
-    regioes: ["sul", "sudeste"],
     visuais: ["av_pequena_pontas_vermelhas"],
     feridas: ["fer_linhas_chicote"],
     sintomas: ["s_dor_forte", "s_inchaco"],
   },
   "agua-viva-vespa-do-mar-exemplo": {
     categoria: "AGUA_VIVA",
-    regioes: ["nordeste", "norte"],
     visuais: ["av_cubo"],
     feridas: ["fer_linhas_chicote"],
     sintomas: ["s_dor_forte", "s_queimadura", "s_sistemico"],
   },
   "agua-viva-prato-exemplo": {
     categoria: "AGUA_VIVA",
-    regioes: ["sudeste", "sul"],
     visuais: ["av_prato_branco"],
     feridas: ["fer_area_irritada"],
     sintomas: ["s_inchaco"],
   },
   "agua-viva-tamoya-exemplo": {
     categoria: "AGUA_VIVA",
-    regioes: ["sudeste", "sul", "nordeste"],
     visuais: ["av_cubo", "av_pequena_pontas_vermelhas"],
     feridas: ["fer_linhas_chicote"],
     sintomas: ["s_dor_forte", "s_queimadura", "s_sistemico"],
   },
   "anemona-do-mar-exemplo": {
     categoria: "AGUA_VIVA",
-    regioes: ["sudeste", "sul", "nordeste"],
     visuais: ["av_fixa_rocha"],
     feridas: ["fer_area_irritada"],
     sintomas: ["s_inchaco"],

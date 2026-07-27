@@ -179,7 +179,7 @@ async function seedAnimais(userId: string) {
       sintomas:
         "no local da picada os sintomas costumam ser discretos (pouca dor ou inchaço); o risco está nos sintomas neurológicos que podem aparecer depois — pálpebra caída, visão dupla, dificuldade para engolir, fraqueza muscular e, em casos graves, dificuldade para respirar.",
       tempoSintomas:
-        "pode levar de 1 a várias horas para os sintomas neurológicos aparecerem — não espere sentir dor forte para procurar ajuda",
+        "pode começar em menos de 1 hora, mas às vezes demora — a orientação médica é observar por até 24 horas mesmo sem sintomas, sem esperar sentir dor forte para procurar ajuda",
       primeirosSocorrosFazer: [
         "lavar o local com água e sabão",
         "manter a pessoa calma e em repouso",
@@ -244,7 +244,7 @@ async function seedAnimais(userId: string) {
       tempoSintomas: "horas após a picada",
       primeirosSocorrosFazer: [
         "lavar o local com água e sabão",
-        "aplicar compressa fria",
+        "aplicar compressa morna",
         "procurar atendimento médico o quanto antes",
       ],
       primeirosSocorrosNaoFazer: [
@@ -253,7 +253,8 @@ async function seedAnimais(userId: string) {
         "não aplicar pomadas ou remédios caseiros",
         "não fazer curativo ou atadura apertada no local",
       ],
-      soroIndicado: "soro antiloxoscélico",
+      soroIndicado:
+        "soro antiloxoscélico, quando disponível — o soro antiaracnídico trivalente do Butantan (o mesmo usado para a armadeira) também neutraliza veneno de Loxosceles e costuma ser mais disponível na rede.",
     },
     {
       slug: "viuva-negra-exemplo",
@@ -262,7 +263,7 @@ async function seedAnimais(userId: string) {
       wikipedia: "Latrodectus",
       categoria: "ARANHA" as const,
       nivelUrgencia: "MEDIA" as const,
-      regioes: ["centro-oeste", "nordeste", "sudeste", "sul"],
+      regioes: ["norte", "centro-oeste", "nordeste", "sudeste", "sul"],
       identificacao: [
         "corpo pequeno e globoso, cor preta brilhante — fêmeas atingem cerca de 3 cm com as pernas esticadas",
         "muitas vezes com mancha avermelhada em formato de ampulheta na parte de baixo do abdômen",
@@ -282,7 +283,7 @@ async function seedAnimais(userId: string) {
         "não esperar os sintomas piorarem para procurar ajuda",
       ],
       soroIndicado:
-        "no brasil os acidentes são raros e o tratamento costuma ser de suporte (analgesia e observação clínica) — não há soro específico amplamente disponível no país.",
+        "existe soro específico — soro antilatrodético, produzido no Brasil desde 2001 pelo Instituto Vital Brazil (RJ) — indicado em casos moderados/graves; como os acidentes são raros, o cuidado inicial costuma ser de suporte (analgesia e observação clínica) até a avaliação médica decidir pelo soro.",
     },
     {
       slug: "escorpiao-amarelo-exemplo",
@@ -294,7 +295,7 @@ async function seedAnimais(userId: string) {
       regioes: ["sudeste", "nordeste", "centro-oeste"],
       identificacao: [
         "de 5 a 7 cm de comprimento",
-        "cor amarela, incluindo o tronco, sem manchas nas pernas e palpos",
+        "cor amarela, mas com o tronco (dorso) escuro e sem manchas nas pernas e palpos",
         "serrilha (fileira de grânulos) no terceiro e quarto segmentos da cauda",
         "espinho bem visível sob o ferrão",
       ],
@@ -362,7 +363,8 @@ async function seedAnimais(userId: string) {
       ],
       sintomas:
         "sensação de queimação e vermelhidão no contato; horas depois pode surgir dor de cabeça, náusea e sinais de sangramento (gengivas, urina, pele) por alteração na coagulação do sangue.",
-      tempoSintomas: "ardor imediato; sinais de sangramento podem aparecer horas depois",
+      tempoSintomas:
+        "ardor imediato; a alteração na coagulação costuma se instalar entre 1 e 48 horas, e sinais de sangramento costumam aparecer entre 8 e 72 horas após o contato",
       primeirosSocorrosFazer: [
         "lavar o local com água fria ou gelada, sem esfregar (para não fixar mais cerdas na pele)",
         "retirar cerdas visíveis com fita adesiva",
@@ -439,11 +441,11 @@ async function seedAnimais(userId: string) {
       regioes: ["sudeste", "sul", "nordeste", "centro-oeste"],
       identificacao: [
         "anéis coloridos parecidos com os da coral-verdadeira, mas geralmente incompletos na barriga",
-        "cabeça um pouco mais distinta do corpo que a coral-verdadeira",
+        "cabeça bem mais destacada do corpo do que a da coral-verdadeira",
         "difícil de diferenciar da coral-verdadeira só pela cor — na dúvida, trate como se fosse peçonhenta",
       ],
       sintomas:
-        "não é peçonhenta para humanos; a mordida costuma causar só um arranhão superficial, sem os sintomas neurológicos da coral-verdadeira.",
+        "tem baixa importância médica — a mordida costuma causar só um arranhão superficial, sem os sintomas neurológicos da coral-verdadeira.",
       tempoSintomas: "imediato, sem evolução",
       primeirosSocorrosFazer: [
         "lavar o local com água e sabão",
@@ -486,7 +488,8 @@ async function seedAnimais(userId: string) {
         "não perder tempo com remédios caseiros",
         "não fazer curativo ou atadura apertada no local",
       ],
-      soroIndicado: "soro antibotrópico (em maior quantidade, pela gravidade típica do acidente)",
+      soroIndicado:
+        "soro antibotrópico — acidentes por jararacuçu costumam ser classificados como graves (serpente maior, mais veneno inoculado), o que já leva ao patamar mais alto de ampolas na tabela por gravidade",
     },
     {
       slug: "caranguejeira-exemplo",
@@ -534,7 +537,7 @@ async function seedAnimais(userId: string) {
       tempoSintomas: "imediato, leve e passageiro",
       primeirosSocorrosFazer: [
         "lavar o local com água e sabão, se houver picada",
-        "aplicar compressa fria se doer",
+        "aplicar compressa morna se doer",
       ],
       primeirosSocorrosNaoFazer: [
         "não é preciso soro",
@@ -551,7 +554,7 @@ async function seedAnimais(userId: string) {
       nivelUrgencia: "MEDIA" as const,
       regioes: ["norte", "nordeste", "centro-oeste", "sudeste", "sul"],
       identificacao: [
-        "corpo pequeno, cor marrom a bege com manchas geométricas claras no abdômen",
+        "corpo pequeno, cor marrom a bege com manchas geométricas mais escuras no abdômen",
         "menos escura que a viúva-negra, mas do mesmo gênero",
         "distribuída por todo o brasil, inclusive dentro de casas — o ambiente urbano favorece grandes populações",
         "costuma armar teia irregular perto de muros, garagens e jardins",
@@ -569,7 +572,7 @@ async function seedAnimais(userId: string) {
         "não subestimar os sintomas achando que é \"só uma aranha pequena\"",
       ],
       soroIndicado:
-        "tratamento geralmente de suporte (analgesia); soro antiaracnídico pode ser considerado em casos mais intensos, a critério médico.",
+        "o soro antiaracnídico do Butantan não é indicado para esse gênero (Latrodectus), só para Loxosceles, Phoneutria e Tityus; existe um soro específico para o gênero — soro antilatrodético, produzido no Brasil pelo Instituto Vital Brazil (RJ) — descrito oficialmente para a viúva-negra, cabendo à avaliação médica decidir seu uso também na picada de viúva-marrom; tratamento inicial geralmente de suporte (analgesia e observação clínica).",
     },
     {
       slug: "aranha-lobo-exemplo",
@@ -589,7 +592,7 @@ async function seedAnimais(userId: string) {
       tempoSintomas: "imediato, melhora em poucas horas a 1-2 dias",
       primeirosSocorrosFazer: [
         "lavar o local com água e sabão",
-        "aplicar compressa fria para aliviar a dor",
+        "aplicar compressa morna para aliviar a dor",
         "procurar atendimento se a dor for muito intensa ou não melhorar",
       ],
       primeirosSocorrosNaoFazer: [
@@ -610,6 +613,7 @@ async function seedAnimais(userId: string) {
         "de 5 a 7 cm de comprimento",
         "cor amarela, inclusive o tronco, com um triângulo escuro na face dorsal do cefalotórax",
         "faixa escura central e duas faixas laterais discretas no dorso do tronco",
+        "discreta serrilha no terceiro e quarto segmentos da cauda",
         "muito comum em áreas urbanas do nordeste, inclusive dentro de casas",
         "se prolifera com facilidade em entulho e esgoto",
       ],
@@ -636,7 +640,7 @@ async function seedAnimais(userId: string) {
       wikipedia: "Tityus obscurus",
       categoria: "ESCORPIAO" as const,
       nivelUrgencia: "ALTA" as const,
-      regioes: ["norte"],
+      regioes: ["norte", "centro-oeste"],
       identificacao: [
         "de 8 a 10 cm de comprimento — um dos maiores escorpiões de importância médica no brasil",
         "cor castanho-avermelhada bem escura, quase preta",
@@ -738,7 +742,7 @@ async function seedAnimais(userId: string) {
       tempoSintomas: "imediato, leve e passageiro",
       primeirosSocorrosFazer: [
         "lavar o local com água e sabão",
-        "aplicar compressa fria se doer",
+        "aplicar compressa morna se doer",
       ],
       primeirosSocorrosNaoFazer: ["não é preciso soro"],
       soroIndicado: "não se aplica — sem importância médica.",
@@ -750,7 +754,7 @@ async function seedAnimais(userId: string) {
       wikipedia: "Lonomia achelous",
       categoria: "TATURANA" as const,
       nivelUrgencia: "ALTA" as const,
-      regioes: ["norte"],
+      regioes: ["norte", "sudeste"],
       identificacao: [
         "lagarta com cerdas esverdeadas, muito parecida com a Lonomia obliqua",
         "também costuma ficar agrupada em troncos de árvores",
@@ -758,7 +762,8 @@ async function seedAnimais(userId: string) {
       ],
       sintomas:
         "assim como a lonomia obliqua, o contato pode causar alteração grave na coagulação do sangue, com sangramentos horas depois (gengivas, urina, pele).",
-      tempoSintomas: "ardor imediato; sinais de sangramento podem aparecer horas depois",
+      tempoSintomas:
+        "ardor imediato; a alteração na coagulação costuma se instalar entre 1 e 48 horas, e sinais de sangramento costumam aparecer entre 8 e 72 horas após o contato",
       primeirosSocorrosFazer: [
         "lavar o local com água fria ou gelada, sem esfregar",
         "retirar cerdas visíveis com fita adesiva",
@@ -768,7 +773,8 @@ async function seedAnimais(userId: string) {
         "não esfregar o local do contato",
         "não menosprezar o contato só porque não doeu muito",
       ],
-      soroIndicado: "soro antilonômico",
+      soroIndicado:
+        "soro antilonômico (o mesmo usado para a Lonomia obliqua) — a bula do Butantan documenta eficácia comprovada só contra L. obliqua, sem mencionar L. achelous; procure atendimento médico com urgência de qualquer forma.",
     },
     {
       slug: "taturana-de-fogo-exemplo",
@@ -832,11 +838,11 @@ async function seedAnimais(userId: string) {
       regioes: ["norte"],
       identificacao: [
         "encontrada principalmente em seringais (plantações de árvores de borracha) na região amazônica",
-        "cerdas finas que penetram facilmente na pele",
+        "cerdas finas que se soltam facilmente e penetram na pele",
         "contato repetido ao longo do tempo é mais preocupante do que um contato isolado",
       ],
       sintomas:
-        "contatos repetidos podem causar inflamação crônica nas articulações (pararamose), com dor e inchaço nas juntas que pode se tornar duradoura.",
+        "contatos repetidos podem causar uma doença ocupacional chamada pararamose — inflamação crônica e progressiva nas articulações que pode evoluir para deformações nas mãos e dedos.",
       tempoSintomas: "efeito cumulativo — sintomas articulares podem aparecer após contatos repetidos ao longo de meses",
       primeirosSocorrosFazer: [
         "retirar cerdas visíveis com fita adesiva após cada contato",
@@ -857,7 +863,7 @@ async function seedAnimais(userId: string) {
       wikipedia: "Hylesia metabus",
       categoria: "TATURANA" as const,
       nivelUrgencia: "MEDIA" as const,
-      regioes: ["norte", "nordeste"],
+      regioes: ["norte", "sudeste", "sul"],
       identificacao: [
         "corpo coberto por pelos finos e escuros dispostos em tufos",
         "a mariposa adulta também solta pelos urticantes do abdômen, mesmo sem ser tocada",
@@ -865,7 +871,8 @@ async function seedAnimais(userId: string) {
       ],
       sintomas:
         "contato com os pelos causa coceira intensa e erupção na pele, podendo durar dias; contato com os olhos pode causar irritação importante.",
-      tempoSintomas: "minutos a horas após o contato, podendo persistir por dias",
+      tempoSintomas:
+        "minutos a horas após o contato; a coceira e a erupção costumam durar de 7 a 14 dias",
       primeirosSocorrosFazer: [
         "retirar pelos visíveis com fita adesiva",
         "lavar bem o local com água fria ou gelada e sabão",
@@ -938,11 +945,11 @@ async function seedAnimais(userId: string) {
       wikipedia: "Chrysaora lactea",
       categoria: "AGUA_VIVA" as const,
       nivelUrgencia: "MEDIA" as const,
-      regioes: ["sudeste", "sul", "nordeste"],
+      regioes: ["sudeste", "sul"],
       identificacao: [
         "guarda-chuva (sino) translúcido com listras ou pontos escuros",
         "tentáculos longos e finos, mais numerosos que os braços orais",
-        "uma das águas-vivas mais comuns no litoral brasileiro",
+        "provoca surtos de picadas na região sul, principalmente durante o veraneio",
       ],
       sintomas:
         "queimação e vermelhidão no local do contato com os tentáculos, podendo formar pequenas marcas na pele.",
@@ -965,11 +972,11 @@ async function seedAnimais(userId: string) {
       wikipedia: "Olindias sambaquiensis",
       categoria: "AGUA_VIVA" as const,
       nivelUrgencia: "MEDIA" as const,
-      regioes: ["sul", "sudeste"],
+      regioes: ["sul"],
       identificacao: [
         "corpo pequeno e quase transparente, difícil de ver na água",
         "tentáculos finos com pontas avermelhadas",
-        "picadas costumam aumentar em certas épocas do ano no litoral sul e sudeste",
+        "picadas costumam aumentar em certas épocas do ano no litoral sul",
       ],
       sintomas:
         "dor intensa e imediata, desproporcional ao tamanho pequeno do animal, com vermelhidão marcante no local.",
@@ -992,7 +999,7 @@ async function seedAnimais(userId: string) {
       wikipedia: "Chiropsalmus quadrumanus",
       categoria: "AGUA_VIVA" as const,
       nivelUrgencia: "ALTA" as const,
-      regioes: ["nordeste", "norte"],
+      regioes: ["nordeste", "norte", "sudeste"],
       identificacao: [
         "corpo em formato de cubo (água-viva-caixa), quase transparente",
         "quatro grupos de tentáculos, um em cada canto do corpo",
@@ -1004,6 +1011,7 @@ async function seedAnimais(userId: string) {
       primeirosSocorrosFazer: [
         "sair da água e lavar o local com água do mar",
         "remover tentáculos com pinça ou cartão",
+        "aplicar vinagre sobre a área atingida",
         "procurar atendimento médico com urgência, principalmente se a dor for muito intensa",
       ],
       primeirosSocorrosNaoFazer: [
