@@ -94,7 +94,12 @@ export default function TopBar() {
           </Link>
         </Flex>
 
-        <HStack spacing="18px" flexWrap="wrap" justifySelf={{ md: "end" }}>
+        <HStack
+          spacing="18px"
+          flexWrap="wrap"
+          justify={{ base: "center", md: "flex-start" }}
+          justifySelf={{ md: "end" }}
+        >
           <Link
             as={NextLink}
             href="/identificar"

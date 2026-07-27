@@ -8,6 +8,13 @@ import PageShell from "@/components/layout/PageShell";
 export default function PaginaInicial() {
   return (
     <PageShell maxW={{ base: "100%", md: "content" }}>
+      <Box mb={{ base: 4, md: 5 }}>
+        <HomeBanner
+          titulo="Respire. Vamos descobrir juntos o que aconteceu."
+          descricao="Cobras, aranhas, escorpiões, lagartas e águas-vivas — triagem rápida, com orientação segura."
+          href="/identificar"
+        />
+      </Box>
       <Box
         bg="danger.bg"
         border="1px solid"
@@ -40,12 +47,8 @@ export default function PaginaInicial() {
         </Flex>
       </Box>
 
-      <HomeBanner
-        titulo="Respire. Vamos descobrir juntos o que aconteceu."
-        descricao="Cobras, aranhas, escorpiões, lagartas e águas-vivas — triagem rápida, com orientação segura."
-      />
 
-      <Box mt={{ base: 5, md: 6 }}>
+      <Box mt={{ base: 5, md: 6 }} display={{ base: "block", md: "none" }}>
         <NavCard
           href="/identificar"
           title="Fazer triagem guiada"

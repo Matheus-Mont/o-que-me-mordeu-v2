@@ -30,7 +30,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR" suppressHydrationWarning className={`${sora.variable} ${plex.variable}`}>
-      <body>
+      <body suppressHydrationWarning>
         <Providers>
           <ScrollToTop />
           <div className="app-frame">{children}</div>
