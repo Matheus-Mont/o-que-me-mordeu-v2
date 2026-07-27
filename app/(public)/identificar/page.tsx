@@ -67,6 +67,48 @@ type PassoId = "tipo" | "regiao" | "local" | "visuais" | "feridas" | "sintomas";
 
 const TOTAL_PERGUNTAS = 5;
 
+// Empilhado e em largura cheia no mobile (toque maior, uma opção por linha);
+// em duas colunas no desktop pra aproveitar o espaço e sobrar menos vazio.
+// Com número ímpar de opções, o Flex+wrap centraliza sozinho a última linha
+// incompleta (mesma solução já usada no catálogo pra não deixar card orfão).
+function GrupoBotoes({
+  itens,
+  ehSelecionado,
+  onSelecionar,
+}: {
+  itens: { valor: string | null; label: string }[];
+  ehSelecionado: (valor: string | null) => boolean;
+  onSelecionar: (valor: string | null) => void;
+}) {
+  return (
+    <Flex wrap="wrap" justify="center" gap="10px">
+      {itens.map((item) => {
+        const ativo = ehSelecionado(item.valor);
+        return (
+          <Button
+            key={item.label}
+            h="auto"
+            flexBasis={{ base: "100%", md: "calc(50% - 5px)" }}
+            flexGrow={0}
+            flexShrink={0}
+            py={{ base: "14px", md: "18px" }}
+            px="18px"
+            borderRadius="16px"
+            variant={ativo ? "solid" : "outline"}
+            bg={ativo ? undefined : "bg.surface"}
+            color={ativo ? undefined : "text.secondary"}
+            fontWeight={500}
+            fontSize={{ base: "14px", md: "15px" }}
+            onClick={() => onSelecionar(item.valor)}
+          >
+            {item.label}
+          </Button>
+        );
+      })}
+    </Flex>
+  );
+}
+
 export default function IdentificarPage() {
   const router = useRouter();
   const [etapa, setEtapa] = useState(0);
@@ -292,36 +334,11 @@ export default function IdentificarPage() {
               Sem pressa. Responda o que conseguir — cada detalhe ajuda.
             </Text>
           </Box>
-          <Flex
-            direction={{ base: "row", md: "column" }}
-            wrap={{ base: "wrap", md: "nowrap" }}
-            justify="center"
-            align="center"
-            gap={2}
-          >
-            {TIPOS.map((t) => {
-              const ativo = tipoDefinido && categoria === t.valor;
-              return (
-                <Button
-                  key={t.label}
-                  size="sm"
-                  h="auto"
-                  py="10px"
-                  px="14px"
-                  w={{ base: "auto", md: "320px" }}
-                  borderRadius="20px"
-                  variant={ativo ? "solid" : "outline"}
-                  bg={ativo ? undefined : "bg.surface"}
-                  color={ativo ? undefined : "text.secondary"}
-                  fontWeight={500}
-                  fontSize="13px"
-                  onClick={() => escolherTipo(t.valor)}
-                >
-                  {t.label}
-                </Button>
-              );
-            })}
-          </Flex>
+          <GrupoBotoes
+            itens={TIPOS}
+            ehSelecionado={(valor) => tipoDefinido && categoria === valor}
+            onSelecionar={(valor) => escolherTipo(valor as CategoriaId | null)}
+          />
         </Stack>
       )}
 
@@ -330,33 +347,11 @@ export default function IdentificarPage() {
           <Text fontFamily="heading" fontWeight={700} fontSize="xl">
             Em que região ocorreu?
           </Text>
-          <Flex
-            direction={{ base: "row", md: "column" }}
-            wrap={{ base: "wrap", md: "nowrap" }}
-            justify="center"
-            align="center"
-            gap={2}
-          >
-            {REGIOES.map((r) => (
-              <Button
-                key={r}
-                size="sm"
-                h="auto"
-                py="10px"
-                px="14px"
-                w={{ base: "auto", md: "320px" }}
-                borderRadius="20px"
-                variant={regiao === r ? "solid" : "outline"}
-                bg={regiao === r ? undefined : "bg.surface"}
-                color={regiao === r ? undefined : "text.secondary"}
-                fontWeight={500}
-                fontSize="13px"
-                onClick={() => setRegiao(r)}
-              >
-                {capitalizar(r)}
-              </Button>
-            ))}
-          </Flex>
+          <GrupoBotoes
+            itens={REGIOES.map((r) => ({ valor: r, label: capitalizar(r) }))}
+            ehSelecionado={(valor) => regiao === valor}
+            onSelecionar={(valor) => setRegiao(valor)}
+          />
           <Button
             variant="ghost"
             size="sm"
@@ -377,33 +372,11 @@ export default function IdentificarPage() {
           <Text fontFamily="heading" fontWeight={700} fontSize="xl">
             Onde o acidente aconteceu?
           </Text>
-          <Flex
-            direction={{ base: "row", md: "column" }}
-            wrap={{ base: "wrap", md: "nowrap" }}
-            justify="center"
-            align="center"
-            gap={2}
-          >
-            {LOCAIS.map((l) => (
-              <Button
-                key={l.id}
-                size="sm"
-                h="auto"
-                py="10px"
-                px="14px"
-                w={{ base: "auto", md: "320px" }}
-                borderRadius="20px"
-                variant={local === l.id ? "solid" : "outline"}
-                bg={local === l.id ? undefined : "bg.surface"}
-                color={local === l.id ? undefined : "text.secondary"}
-                fontWeight={500}
-                fontSize="13px"
-                onClick={() => setLocal(l.id)}
-              >
-                {capitalizar(l.label)}
-              </Button>
-            ))}
-          </Flex>
+          <GrupoBotoes
+            itens={LOCAIS.map((l) => ({ valor: l.id, label: capitalizar(l.label) }))}
+            ehSelecionado={(valor) => local === valor}
+            onSelecionar={(valor) => setLocal(valor)}
+          />
           <Button
             variant="ghost"
             size="sm"
@@ -429,9 +402,9 @@ export default function IdentificarPage() {
               Toque em todas as características que se aplicarem.
             </Text>
           </Box>
-          <Flex wrap="wrap" justify="center" gap={3}>
+          <Flex wrap="wrap" justify="center" gap={{ base: 3, md: 4 }}>
             {cardsCaracteristicas.map((card) => (
-              <Box key={card.id} flex="0 0 150px" maxW="150px">
+              <Box key={card.id} flex={{ base: "0 0 150px", md: "0 0 210px" }} maxW={{ base: "150px", md: "210px" }}>
                 <TraitCard
                   label={card.label}
                   descricao={card.descricao}
@@ -456,9 +429,9 @@ export default function IdentificarPage() {
               conseguiu ver bem, pode pular.
             </Text>
           </Box>
-          <Flex wrap="wrap" justify="center" gap={3}>
+          <Flex wrap="wrap" justify="center" gap={{ base: 3, md: 4 }}>
             {cardsFeridas.map((card) => (
-              <Box key={card.id} flex="0 0 150px" maxW="150px">
+              <Box key={card.id} flex={{ base: "0 0 150px", md: "0 0 210px" }} maxW={{ base: "150px", md: "210px" }}>
                 <TraitCard
                   label={card.label}
                   descricao={card.descricao}
