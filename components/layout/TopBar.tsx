@@ -1,8 +1,10 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import NextLink from "next/link";
-import { Box, Flex, Grid, HStack, Link, Text } from "@chakra-ui/react";
-import { TbHelpCircle } from "react-icons/tb";
+import { usePathname } from "next/navigation";
+import { Box, Collapse, Flex, Grid, HStack, Link, Text } from "@chakra-ui/react";
+import { TbHelpCircle, TbMenu2, TbX } from "react-icons/tb";
 import ColorModeToggle from "./ColorModeToggle";
 import LogoMark from "./LogoMark";
 
@@ -13,6 +15,14 @@ const LINKS = [
 ];
 
 export default function TopBar() {
+  const [menuAberto, setMenuAberto] = useState(false);
+  const pathname = usePathname();
+
+  // Fecha o menu mobile sozinho quando o usuário navega pra outra página.
+  useEffect(() => {
+    setMenuAberto(false);
+  }, [pathname]);
+
   return (
     <Box
       as="header"
@@ -95,23 +105,13 @@ export default function TopBar() {
           </Link>
         </Flex>
 
+        {/* Desktop: todos os links soltos lado a lado. */}
         <HStack
+          display={{ base: "none", md: "flex" }}
           spacing="18px"
-          flexWrap="wrap"
-          justify={{ base: "center", md: "flex-start" }}
-          justifySelf={{ md: "end" }}
+          justify="flex-start"
+          justifySelf="end"
         >
-          <Link
-            as={NextLink}
-            href="/identificar"
-            display={{ base: "inline-flex", md: "none" }}
-            fontSize="13px"
-            color="accent.text"
-            fontWeight={600}
-            _hover={{ color: "accent.solidHover", textDecoration: "none" }}
-          >
-            Identificar
-          </Link>
           {LINKS.map((link) => (
             <Link
               key={link.href}
@@ -133,8 +133,78 @@ export default function TopBar() {
           >
             Emergência
           </Link>
-          <ColorModeToggle display={{ base: "none", md: "inline-flex" }} />
+          <ColorModeToggle />
         </HStack>
+
+        {/* Mobile: só Identificar e Emergência à mostra; o resto fica atrás do menu. */}
+        <Flex display={{ base: "flex", md: "none" }} align="center" justify="space-between" w="full">
+          <Link
+            as={NextLink}
+            href="/identificar"
+            fontSize="13px"
+            color="accent.text"
+            fontWeight={600}
+            _hover={{ color: "accent.solidHover", textDecoration: "none" }}
+          >
+            Identificar
+          </Link>
+
+          <Flex
+            as="button"
+            type="button"
+            align="center"
+            gap={1}
+            fontSize="13px"
+            color="text.secondary"
+            fontWeight={600}
+            aria-expanded={menuAberto}
+            aria-controls="menu-mobile"
+            onClick={() => setMenuAberto((v) => !v)}
+          >
+            <Box as={menuAberto ? TbX : TbMenu2} fontSize="1.05rem" aria-hidden />
+            Menu
+          </Flex>
+
+          <Link
+            as={NextLink}
+            href="/emergencia"
+            fontSize="13px"
+            color="danger.text"
+            fontWeight={600}
+            _hover={{ color: "danger.solid", textDecoration: "none" }}
+          >
+            Emergência
+          </Link>
+        </Flex>
+
+        <Box display={{ base: "block", md: "none" }} gridColumn="1 / -1" w="full">
+          <Collapse in={menuAberto} animateOpacity>
+            <Flex
+              id="menu-mobile"
+              direction="column"
+              align="stretch"
+              gap="2px"
+              mt="4px"
+              pt="10px"
+              borderTop="1px solid"
+              borderColor="border"
+            >
+              {LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  as={NextLink}
+                  href={link.href}
+                  py="10px"
+                  fontSize="14px"
+                  color="text.secondary"
+                  _hover={{ color: "text.primary", textDecoration: "none" }}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </Flex>
+          </Collapse>
+        </Box>
       </Grid>
     </Box>
   );

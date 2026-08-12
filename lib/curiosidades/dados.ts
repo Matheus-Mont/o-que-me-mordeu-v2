@@ -62,7 +62,7 @@ export const CURIOSIDADES: Curiosidade[] = [
     opcoes: ["Cascavel", "Jararaca", "Coral-verdadeira", "Surucucu"],
     respostaCorreta: 1,
     explicacao:
-      "A jararaca e suas parentes (jararacuçu, urutu...) respondem pela maioria das picadas de cobra no país — a cascavel vem em segundo lugar.",
+      "A jararaca e suas parentes próximas, como a jararacuçu e a urutu, respondem pela maioria das picadas de cobra no país — a cascavel vem em segundo lugar.",
     fonte: "Guia de Animais Peçonhentos do Brasil, MS 2024",
   },
   {
