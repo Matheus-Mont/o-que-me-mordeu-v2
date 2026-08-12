@@ -1,6 +1,6 @@
 import NextLink from "next/link";
 import { Box, Button, Flex, SimpleGrid, Text } from "@chakra-ui/react";
-import { TbBook2, TbHelpCircle, TbShieldCheck } from "react-icons/tb";
+import { TbBook2, TbBulb, TbHelpCircle, TbShieldCheck } from "react-icons/tb";
 import HomeBanner from "@/components/layout/HomeBanner";
 import NavCard from "@/components/layout/NavCard";
 import PageShell from "@/components/layout/PageShell";
@@ -60,7 +60,7 @@ export default function PaginaInicial() {
         />
       </Box>
 
-      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={{ base: 3, md: 4 }} mt={{ base: 3, md: 4 }}>
+      <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 3, md: 4 }} mt={{ base: 3, md: 4 }}>
         <NavCard
           href="/catalogo"
           title="Explorar o catálogo"
@@ -72,6 +72,12 @@ export default function PaginaInicial() {
           title="Cuidados de prevenção"
           subtitle="Como evitar acidentes em cada ambiente."
           icon={TbShieldCheck}
+        />
+        <NavCard
+          href="/curiosidades"
+          title="Curiosidades"
+          subtitle="Fatos verificados sobre os animais, num quiz ou pra ler com calma."
+          icon={TbBulb}
         />
       </SimpleGrid>
 
