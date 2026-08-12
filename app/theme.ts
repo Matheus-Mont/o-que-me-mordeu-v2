@@ -90,6 +90,10 @@ const theme = extendTheme({
         "70%": { boxShadow: "0 0 0 10px rgba(232,178,61,0)" },
         "100%": { boxShadow: "0 0 0 0 rgba(232,178,61,0)" },
       },
+      "@keyframes surge-opcao": {
+        "0%": { opacity: 0, transform: "translateY(10px)" },
+        "100%": { opacity: 1, transform: "translateY(0)" },
+      },
       "*::placeholder": {
         color: "text.muted",
       },

@@ -35,6 +35,7 @@ import { URGENCIA_LABEL, URGENCIA_SCHEME } from "@/lib/urgencia";
 import PageHeader from "@/components/layout/PageHeader";
 import PageShell from "@/components/layout/PageShell";
 import TraitCard from "@/components/identificacao/TraitCard";
+import GrupoBotoes from "@/components/ui/GrupoBotoes";
 
 const TIPOS: { valor: CategoriaId | null; label: string }[] = [
   { valor: "COBRA", label: "Cobra" },
@@ -66,48 +67,6 @@ const CONFIANCA_LABEL: Record<Resultado["confianca"], string> = {
 type PassoId = "tipo" | "regiao" | "local" | "visuais" | "feridas" | "sintomas";
 
 const TOTAL_PERGUNTAS = 5;
-
-// Empilhado e em largura cheia no mobile (toque maior, uma opção por linha);
-// em duas colunas no desktop pra aproveitar o espaço e sobrar menos vazio.
-// Com número ímpar de opções, o Flex+wrap centraliza sozinho a última linha
-// incompleta (mesma solução já usada no catálogo pra não deixar card orfão).
-function GrupoBotoes({
-  itens,
-  ehSelecionado,
-  onSelecionar,
-}: {
-  itens: { valor: string | null; label: string }[];
-  ehSelecionado: (valor: string | null) => boolean;
-  onSelecionar: (valor: string | null) => void;
-}) {
-  return (
-    <Flex wrap="wrap" justify="center" gap="10px">
-      {itens.map((item) => {
-        const ativo = ehSelecionado(item.valor);
-        return (
-          <Button
-            key={item.label}
-            h="auto"
-            flexBasis={{ base: "100%", md: "calc(50% - 5px)" }}
-            flexGrow={0}
-            flexShrink={0}
-            py={{ base: "14px", md: "18px" }}
-            px="18px"
-            borderRadius="16px"
-            variant={ativo ? "solid" : "outline"}
-            bg={ativo ? undefined : "bg.surface"}
-            color={ativo ? undefined : "text.secondary"}
-            fontWeight={500}
-            fontSize={{ base: "14px", md: "15px" }}
-            onClick={() => onSelecionar(item.valor)}
-          >
-            {item.label}
-          </Button>
-        );
-      })}
-    </Flex>
-  );
-}
 
 export default function IdentificarPage() {
   const router = useRouter();
@@ -193,6 +152,11 @@ export default function IdentificarPage() {
   if (etapa === passos.length) {
     return (
       <PageShell maxW={{ base: "100%", md: "content" }}>
+        <Flex
+          direction="column"
+          justify={{ md: "center" }}
+          minH={{ base: "auto", md: "60vh" }}
+        >
         <PageHeader title="Sugestão de espécies" onBack={() => setEtapa(passos.length - 1)} />
 
         <Text color="text.secondary" fontSize="sm" mb={5}>
@@ -293,6 +257,7 @@ export default function IdentificarPage() {
             );
           })}
         </Flex>
+        </Flex>
       </PageShell>
     );
   }
@@ -314,6 +279,11 @@ export default function IdentificarPage() {
   return (
     <PageShell maxW={{ base: "100%", md: "content" }}>
       <Progress value={progresso} h="4px" borderRadius="2px" mb="18px" />
+      <Flex
+        direction="column"
+        justify={{ md: "center" }}
+        minH={{ base: "auto", md: "60vh" }}
+      >
       <Text
         color="text.muted"
         fontSize="11px"
@@ -484,6 +454,7 @@ export default function IdentificarPage() {
         >
           {ehUltimaEtapa ? "Ver sugestões" : "Próximo"}
         </Button>
+      </Flex>
       </Flex>
     </PageShell>
   );

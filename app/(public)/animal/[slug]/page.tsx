@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
 import { StatusConteudo } from "@prisma/client";
 import { Badge, Box, Button, Flex, Heading, Text, VStack } from "@chakra-ui/react";
+import { TbCircleCheck, TbBan } from "react-icons/tb";
 import CarrosselImagens from "@/components/animal/CarrosselImagens";
 import AvisoFotografar from "@/components/animal/AvisoFotografar";
 import AvisoLeiCobra from "@/components/animal/AvisoLeiCobra";
@@ -136,9 +137,10 @@ export default async function FichaAnimalPage({ params }: Props) {
               borderRadius="card"
               p={4}
             >
-              <Text fontWeight={700} fontSize="13.5px" color="safe.text" mb={2.5}>
-                ✓ O que fazer
-              </Text>
+              <Flex align="center" gap={1.5} fontWeight={700} fontSize="13.5px" color="safe.text" mb={2.5}>
+                <TbCircleCheck aria-hidden size={16} />
+                <Text as="span">O que fazer</Text>
+              </Flex>
               <VStack align="stretch" spacing={1.5}>
                 {animal.primeirosSocorrosFazer.map((item) => (
                   <Flex key={item} gap={2} fontSize="13px">
@@ -160,9 +162,10 @@ export default async function FichaAnimalPage({ params }: Props) {
               borderRadius="card"
               p={4}
             >
-              <Text fontWeight={700} fontSize="13.5px" color="danger.text" mb={2.5}>
-                ⛔ O que não fazer
-              </Text>
+              <Flex align="center" gap={1.5} fontWeight={700} fontSize="13.5px" color="danger.text" mb={2.5}>
+                <TbBan aria-hidden size={16} />
+                <Text as="span">O que não fazer</Text>
+              </Flex>
               <VStack align="stretch" spacing={1.5}>
                 {animal.primeirosSocorrosNaoFazer.map((item) => (
                   <Flex key={item} gap={2} fontSize="13px">
