@@ -17,13 +17,17 @@ export default function GrupoBotoes({
   itens,
   ehSelecionado,
   onSelecionar,
+  size = "lg",
 }: {
   itens: ItemGrupoBotoes[];
   ehSelecionado: (valor: string | null) => boolean;
   onSelecionar: (valor: string | null) => void;
+  size?: "lg" | "sm";
 }) {
+  const compacto = size === "sm";
+
   return (
-    <Flex wrap="wrap" justify="center" gap="10px">
+    <Flex wrap="wrap" justify="center" gap={compacto ? "8px" : "10px"}>
       {itens.map((item) => {
         const ativo = ehSelecionado(item.valor);
         const Icon = item.icon;
@@ -32,21 +36,25 @@ export default function GrupoBotoes({
             key={item.label}
             aria-pressed={ativo}
             h="auto"
-            flexBasis={{ base: "100%", md: "calc(50% - 5px)" }}
+            flexBasis={
+              compacto
+                ? { base: "calc(50% - 4px)", sm: "calc(33.333% - 6px)" }
+                : { base: "100%", md: "calc(50% - 5px)" }
+            }
             flexGrow={0}
             flexShrink={0}
-            py={{ base: "14px", md: "18px" }}
-            px="18px"
-            borderRadius="16px"
+            py={compacto ? "10px" : { base: "14px", md: "18px" }}
+            px={compacto ? "12px" : "18px"}
+            borderRadius={compacto ? "12px" : "16px"}
             variant={ativo ? "solid" : "outline"}
             bg={ativo ? undefined : "bg.surface"}
             color={ativo ? undefined : "text.secondary"}
             fontWeight={500}
-            fontSize={{ base: "14px", md: "15px" }}
+            fontSize={compacto ? "13px" : { base: "14px", md: "15px" }}
             onClick={() => onSelecionar(item.valor)}
           >
             {Icon ? (
-              <Flex align="center" gap={2}>
+              <Flex align="center" gap={compacto ? 1.5 : 2}>
                 <Icon aria-hidden />
                 <Text as="span">{item.label}</Text>
               </Flex>

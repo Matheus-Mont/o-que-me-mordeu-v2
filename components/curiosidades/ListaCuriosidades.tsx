@@ -29,6 +29,7 @@ export default function ListaCuriosidades() {
         }))}
         ehSelecionado={(valor) => valor === categoria}
         onSelecionar={(valor) => setCategoria(valor as CategoriaCuriosidade)}
+        size="sm"
       />
 
       <Flex align="center" gap={2} mt="18px" mb={3}>
@@ -40,25 +41,25 @@ export default function ListaCuriosidades() {
         </Text>
       </Flex>
 
-      <SimpleGrid columns={{ base: 1, sm: 2 }} spacing="14px">
+      <SimpleGrid columns={{ base: 1, lg: 2 }} spacing="18px">
         {itens.map((item, i) => {
           const numero = i + 1;
 
           return (
             <Flex
               key={item.id}
-              gap={3}
+              gap={4}
               bg="bg.surface"
               border="1px solid"
               borderColor="border"
               borderRadius="card"
-              p={3}
+              p={4}
             >
               <Box
-                w="72px"
-                h="72px"
+                w="112px"
+                h="112px"
                 flexShrink={0}
-                borderRadius="10px"
+                borderRadius="12px"
                 overflow="hidden"
                 position="relative"
                 bg="bg.canvas"
@@ -67,18 +68,18 @@ export default function ListaCuriosidades() {
                   src={item.imagem}
                   alt={item.alt}
                   fill
-                  sizes="72px"
-                  style={{ objectFit: "contain", padding: "4px" }}
+                  sizes="112px"
+                  style={{ objectFit: "contain", padding: "6px" }}
                 />
               </Box>
               <Box flex="1" minW={0}>
-                <Text fontSize="13.5px" mb={1.5}>
+                <Text fontSize="15.5px" lineHeight={1.5} mb={2}>
                   <Text as="span" fontWeight={700} color="accent.text">
                     {numero}.{" "}
                   </Text>
                   {item.explicacao}
                 </Text>
-                <Text fontSize="11px" color="text.muted">
+                <Text fontSize="12px" color="text.muted">
                   Fonte: {item.fonte}
                 </Text>
               </Box>

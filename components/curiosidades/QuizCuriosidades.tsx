@@ -54,6 +54,7 @@ export default function QuizCuriosidades() {
     setFase("revelando");
     setSelecionada(null);
     setTempoRestante(TEMPO_RESPOSTA_S);
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
 
     const timer = setTimeout(() => setFase("respondendo"), TEMPO_REVELACAO_MS);
     return () => clearTimeout(timer);
@@ -123,27 +124,30 @@ export default function QuizCuriosidades() {
         {CATEGORIA_LABEL[pergunta.categoria]}
       </Badge>
 
-      <Box
-        borderRadius="card"
-        overflow="hidden"
-        bg="bg.canvas"
-        h={{ base: "180px", md: "240px" }}
-        position="relative"
-        mb={4}
-      >
-        <NextImage
-          src={pergunta.imagem}
-          alt={pergunta.alt}
-          fill
-          sizes="(max-width: 768px) 100vw, 640px"
-          priority
-          style={{ objectFit: "contain", padding: "12px" }}
-        />
-      </Box>
+      <Flex gap={4} align="center" mb={4} direction={{ base: "column", md: "row" }}>
+        <Box
+          borderRadius="card"
+          overflow="hidden"
+          bg="bg.canvas"
+          w={{ base: "full", md: "220px" }}
+          h={{ base: "180px", md: "160px" }}
+          flexShrink={0}
+          position="relative"
+        >
+          <NextImage
+            src={pergunta.imagem}
+            alt={pergunta.alt}
+            fill
+            sizes="(max-width: 768px) 100vw, 220px"
+            priority
+            style={{ objectFit: "contain", padding: "12px" }}
+          />
+        </Box>
 
-      <Text fontFamily="heading" fontWeight={700} fontSize="xl" mb={4}>
-        {pergunta.pergunta}
-      </Text>
+        <Text fontFamily="heading" fontWeight={700} fontSize="xl" flex={1}>
+          {pergunta.pergunta}
+        </Text>
+      </Flex>
 
       {fase === "respondendo" && (
         <Flex
