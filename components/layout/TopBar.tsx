@@ -9,6 +9,7 @@ import LogoMark from "./LogoMark";
 const LINKS = [
   { href: "/catalogo", label: "Catálogo" },
   { href: "/prevencao", label: "Prevenção" },
+  { href: "/curiosidades", label: "Curiosidades" },
 ];
 
 export default function TopBar() {

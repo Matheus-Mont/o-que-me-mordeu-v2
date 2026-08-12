@@ -29,15 +29,23 @@ function AnimalCard({ animal }: { animal: AnimalCardData }) {
       transition="background 0.15s ease, border-color 0.15s ease"
       _hover={{ textDecoration: "none", bg: "bg.surfaceHover", borderColor: "borderStrong" }}
     >
-      <Box height="128px" position="relative" bg="bg.canvas">
+      <Box height="128px" position="relative" bg="bg.canvas" overflow="hidden">
         {animal.imagens[0] ? (
-          <NextImage
-            src={animal.imagens[0]}
-            alt={capitalizar(animal.nomePopular)}
-            fill
-            sizes="(max-width: 768px) 50vw, 200px"
-            style={{ objectFit: "contain", padding: "8px" }}
-          />
+          <>
+            <NextImage
+              src={animal.imagens[0]}
+              alt={capitalizar(animal.nomePopular)}
+              fill
+              sizes="(max-width: 768px) 50vw, 200px"
+              style={{ objectFit: "contain", padding: "8px" }}
+            />
+            <Box
+              position="absolute"
+              inset={0}
+              pointerEvents="none"
+              boxShadow="inset 0 0 22px 8px var(--chakra-colors-bg-canvas)"
+            />
+          </>
         ) : (
           <Box
             position="absolute"

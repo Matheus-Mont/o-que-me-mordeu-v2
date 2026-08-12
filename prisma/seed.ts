@@ -322,7 +322,7 @@ async function seedAnimais(userId: string) {
       nomeCientifico: "Tityus bahiensis",
       wikipedia: "Tityus bahiensis",
       categoria: "ESCORPIAO" as const,
-      nivelUrgencia: "MEDIA" as const,
+      nivelUrgencia: "ALTA" as const,
       regioes: ["sudeste", "sul", "centro-oeste"],
       identificacao: [
         "de 5 a 7 cm de comprimento",
@@ -782,7 +782,7 @@ async function seedAnimais(userId: string) {
       nomeCientifico: "Megalopyge sp.",
       wikipedia: "Megalopyge opercularis",
       categoria: "TATURANA" as const,
-      nivelUrgencia: "MEDIA" as const,
+      nivelUrgencia: "BAIXA" as const,
       regioes: ["sudeste", "sul", "nordeste"],
       identificacao: [
         "coberta por pelos longos e macios, parece um pequeno chumaço de algodão ou pelúcia",
@@ -810,7 +810,7 @@ async function seedAnimais(userId: string) {
       nomeCientifico: "Automeris sp.",
       wikipedia: "Automeris io",
       categoria: "TATURANA" as const,
-      nivelUrgencia: "MEDIA" as const,
+      nivelUrgencia: "BAIXA" as const,
       regioes: ["sudeste", "sul", "centro-oeste"],
       identificacao: [
         "corpo verde com tufos de espinhos ramificados nas laterais",
@@ -862,7 +862,7 @@ async function seedAnimais(userId: string) {
       nomeCientifico: "Hylesia sp.",
       wikipedia: "Hylesia metabus",
       categoria: "TATURANA" as const,
-      nivelUrgencia: "MEDIA" as const,
+      nivelUrgencia: "BAIXA" as const,
       regioes: ["norte", "sudeste", "sul"],
       identificacao: [
         "corpo coberto por pelos finos e escuros dispostos em tufos",
@@ -890,7 +890,7 @@ async function seedAnimais(userId: string) {
       nomeCientifico: "Dirphia sp.",
       wikipedia: "Dirphia",
       categoria: "TATURANA" as const,
-      nivelUrgencia: "MEDIA" as const,
+      nivelUrgencia: "BAIXA" as const,
       regioes: ["sudeste", "sul", "centro-oeste"],
       identificacao: [
         "corpo escuro com fileiras de espinhos ramificados bem visíveis",
