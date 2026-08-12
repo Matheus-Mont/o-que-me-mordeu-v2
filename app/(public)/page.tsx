@@ -69,7 +69,7 @@ export default function PaginaInicial() {
         />
         <NavCard
           href="/prevencao"
-          title="Cuidados de prevenção"
+          title="Cuidados e prevenção"
           subtitle="Como evitar acidentes em cada ambiente."
           icon={TbShieldCheck}
         />
