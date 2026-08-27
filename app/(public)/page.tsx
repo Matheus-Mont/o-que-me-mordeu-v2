@@ -1,9 +1,11 @@
 import NextLink from "next/link";
 import { Box, Button, Flex, SimpleGrid, Text } from "@chakra-ui/react";
-import { TbBook2, TbBulb, TbHelpCircle, TbShieldCheck } from "react-icons/tb";
+import { TbAlertTriangle, TbBook2, TbBulb, TbHelpCircle, TbPhoneCall, TbShieldCheck } from "react-icons/tb";
 import HomeBanner from "@/components/layout/HomeBanner";
 import NavCard from "@/components/layout/NavCard";
 import PageShell from "@/components/layout/PageShell";
+import BlocoTriagem from "@/components/ui/BlocoTriagem";
+import Etiqueta from "@/components/ui/Etiqueta";
 
 export default function PaginaInicial() {
   return (
@@ -15,38 +17,38 @@ export default function PaginaInicial() {
           href="/identificar"
         />
       </Box>
-      <Box
-        bg="danger.bg"
-        border="1px solid"
-        borderColor="danger.border"
-        borderRadius="card"
-        p={{ base: "14px 16px", md: "16px 20px" }}
-        mb={{ base: 4, md: 5 }}
-      >
-        <Flex
-          direction={{ base: "column", sm: "row" }}
-          align={{ base: "stretch", sm: "center" }}
-          justify="space-between"
-          gap={3}
-        >
-          <Text fontWeight={600} fontSize="13px" color="danger.text">
-            Sintomas graves agora? Falta de ar, desmaio ou sangramento intenso.
-          </Text>
-          <Button
-            as={NextLink}
-            href="/emergencia"
-            size="sm"
-            flexShrink={0}
-            bg="danger.solid"
-            color="white"
-            _hover={{ bg: "danger.solidHover" }}
-            borderRadius="8px"
-          >
-            Ver primeiros socorros e ligar 192 →
-          </Button>
-        </Flex>
-      </Box>
 
+      <Box mb={{ base: 4, md: 5 }}>
+        <BlocoTriagem escala="danger" titulo="Sinais de gravidade" icone={<TbAlertTriangle size={16} />}>
+          <Flex
+            direction={{ base: "column", sm: "row" }}
+            align={{ base: "stretch", sm: "center" }}
+            justify="space-between"
+            gap={3}
+          >
+            <Box>
+              <Text fontFamily="heading" fontWeight={700} fontSize="15px" lineHeight={1.25} mb={1}>
+                Falta de ar, desmaio ou sangramento intenso?
+              </Text>
+              <Text fontSize="13px" color="text.secondary">
+                Não use a triagem. Ligue para o SAMU agora.
+              </Text>
+            </Box>
+            <Button
+              as={NextLink}
+              href="/emergencia"
+              leftIcon={<TbPhoneCall size={16} />}
+              flexShrink={0}
+              bg="danger.solid"
+              color="white"
+              _hover={{ bg: "danger.solidHover" }}
+              borderRadius="10px"
+            >
+              Ligar 192
+            </Button>
+          </Flex>
+        </BlocoTriagem>
+      </Box>
 
       <Box mt={{ base: 5, md: 6 }} display={{ base: "block", md: "none" }}>
         <NavCard
@@ -60,7 +62,11 @@ export default function PaginaInicial() {
         />
       </Box>
 
-      <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 3, md: 4 }} mt={{ base: 3, md: 4 }}>
+      <Box mt={{ base: 6, md: 7 }} mb={3}>
+        <Etiqueta>Consultar sem pressa</Etiqueta>
+      </Box>
+
+      <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 3, md: 4 }}>
         <NavCard
           href="/catalogo"
           title="Explorar o catálogo"

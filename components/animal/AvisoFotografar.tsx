@@ -3,19 +3,21 @@ import { TbCamera } from "react-icons/tb";
 
 export default function AvisoFotografar() {
   return (
+    // Neutro de propósito: laranja passou a significar urgência média, e "tire
+    // uma foto" é orientação de apoio, não nível de gravidade.
     <Box
-      bg="warning.bg"
+      bg="bg.surface"
       border="1px solid"
-      borderColor="warning.border"
+      borderColor="border"
       borderRadius="card"
       p={4}
     >
       <Flex gap={2.5} align="flex-start">
-        <Box color="warning.text" fontSize="1.1rem" mt="1px" flexShrink={0}>
+        <Box color="accent.text" fontSize="1.1rem" mt="1px" flexShrink={0}>
           <TbCamera aria-hidden />
         </Box>
         <Box>
-          <Text fontWeight={700} fontSize="13.5px" color="warning.text" mb={1}>
+          <Text fontFamily="heading" fontWeight={700} fontSize="13.5px" color="accent.text" mb={1}>
             Fotografe o animal, se for seguro
           </Text>
           <Text fontSize="13px" color="text.secondary" lineHeight={1.5}>

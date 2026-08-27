@@ -3,19 +3,21 @@ import { TbScale } from "react-icons/tb";
 
 export default function AvisoLeiCobra() {
   return (
+    // Neutro de propósito: verde/laranja/vermelho ficaram reservados para
+    // urgência, e aviso legal não é nível de gravidade.
     <Box
-      bg="safe.bg"
+      bg="bg.surface"
       border="1px solid"
-      borderColor="safe.border"
+      borderColor="border"
       borderRadius="card"
       p={4}
     >
       <Flex gap={2.5} align="flex-start">
-        <Box color="safe.text" fontSize="1.1rem" mt="1px" flexShrink={0}>
+        <Box color="accent.text" fontSize="1.1rem" mt="1px" flexShrink={0}>
           <TbScale aria-hidden />
         </Box>
         <Box>
-          <Text fontWeight={700} fontSize="13.5px" color="safe.text" mb={1}>
+          <Text fontFamily="heading" fontWeight={700} fontSize="13.5px" color="accent.text" mb={1}>
             Não mate a cobra
           </Text>
           <Text fontSize="13px" color="text.secondary" lineHeight={1.5}>

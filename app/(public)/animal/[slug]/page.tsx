@@ -1,13 +1,15 @@
 import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
 import { StatusConteudo } from "@prisma/client";
-import { Badge, Box, Button, Flex, Heading, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, SimpleGrid, Text, VStack } from "@chakra-ui/react";
 import { TbCircleCheck, TbBan } from "react-icons/tb";
 import CarrosselImagens from "@/components/animal/CarrosselImagens";
 import AvisoFotografar from "@/components/animal/AvisoFotografar";
 import AvisoLeiCobra from "@/components/animal/AvisoLeiCobra";
 import PageHeader from "@/components/layout/PageHeader";
 import PageShell from "@/components/layout/PageShell";
+import BlocoTriagem from "@/components/ui/BlocoTriagem";
+import Etiqueta from "@/components/ui/Etiqueta";
 import { capitalizar } from "@/lib/texto";
 import { URGENCIA_LABEL, URGENCIA_SCHEME } from "@/lib/urgencia";
 
@@ -54,49 +56,67 @@ export default async function FichaAnimalPage({ params }: Props) {
         <Box flex={{ lg: "1.15" }} minW={0} w="full">
           <CarrosselImagens imagens={animal.imagens} alt={capitalizar(animal.nomePopular)} />
 
-          <Flex justify="space-between" align="flex-start" gap={2.5} mt={5} mb={1}>
-            <Heading as="h1" fontSize={{ base: "22px", md: "26px" }} fontWeight={800}>
+          <Box mt={5} mb={5}>
+            <Etiqueta cor={`${scheme}.text`}>{URGENCIA_LABEL[animal.nivelUrgencia]}</Etiqueta>
+            <Heading
+              as="h1"
+              fontSize={{ base: "26px", md: "30px" }}
+              fontWeight={800}
+              lineHeight={1.06}
+              mt={1.5}
+            >
               {capitalizar(animal.nomePopular)}
             </Heading>
-            <Badge
-              bg={`${scheme}.bg`}
-              color={`${scheme}.text`}
-              fontSize="11.5px"
-              px="12px"
-              py="5px"
-              whiteSpace="nowrap"
-              flexShrink={0}
-            >
-              {URGENCIA_LABEL[animal.nivelUrgencia]}
-            </Badge>
-          </Flex>
-          <Text fontSize="13px" fontStyle="italic" color="text.muted" mb={5}>
-            {animal.nomeCientifico}
-          </Text>
+            <Text fontSize="13px" fontStyle="italic" color="text.muted" mt={1}>
+              {animal.nomeCientifico}
+            </Text>
+          </Box>
 
-          <VStack align="stretch" spacing={5}>
-            <Box>
-              <Heading as="h2" fontSize="13.5px" fontWeight={700} color="accent.text" mb={2}>
-                Onde é mais comum
-              </Heading>
-              <Text fontSize="sm">
+          {/* Ficha de dados: lê-se como registro, não como parágrafo */}
+          <SimpleGrid
+            columns={2}
+            spacing="1px"
+            bg="border"
+            border="1px solid"
+            borderColor="border"
+            borderRadius="12px"
+            overflow="hidden"
+            mb={5}
+          >
+            <Box bg="bg.surface" p="13px 14px">
+              <Etiqueta>Onde ocorre</Etiqueta>
+              <Text fontSize="12.5px" lineHeight={1.35} mt={1}>
                 {animal.regioes.length > 0
                   ? animal.regioes.map(capitalizar).join(", ")
                   : "Não informado"}
               </Text>
             </Box>
+            <Box bg="bg.surface" p="13px 14px">
+              <Etiqueta>Sintomas em</Etiqueta>
+              <Text fontSize="12.5px" lineHeight={1.35} mt={1}>
+                {capitalizar(animal.tempoSintomas)}
+              </Text>
+            </Box>
+          </SimpleGrid>
 
+          <VStack align="stretch" spacing={5}>
             <Box>
-              <Heading as="h2" fontSize="13.5px" fontWeight={700} color="accent.text" mb={2}>
-                Como identificar
-              </Heading>
+              <Box mb={2.5}>
+                <Etiqueta>Como identificar</Etiqueta>
+              </Box>
               {animal.identificacao.length > 0 ? (
                 <VStack align="stretch" spacing={2}>
                   {animal.identificacao.map((item) => (
-                    <Flex key={item} gap={2} fontSize="13.5px">
-                      <Text as="span" color="accent.text" flexShrink={0}>
-                        •
-                      </Text>
+                    <Flex key={item} gap={2.5} fontSize="13.5px" lineHeight={1.45}>
+                      <Box
+                        w="5px"
+                        h="5px"
+                        borderRadius="full"
+                        bg="accent.solid"
+                        flexShrink={0}
+                        mt="7px"
+                        aria-hidden
+                      />
                       <Text as="span" flex={1} minW={0}>
                         {capitalizar(item)}
                       </Text>
@@ -111,84 +131,51 @@ export default async function FichaAnimalPage({ params }: Props) {
             </Box>
 
             <Box>
-              <Heading as="h2" fontSize="13.5px" fontWeight={700} color="accent.text" mb={2}>
-                Sintomas do acidente
-              </Heading>
-              <Text fontSize="sm">{capitalizar(animal.sintomas)}</Text>
-              <Text fontSize="xs" color="text.secondary" mt={1}>
-                Tempo até os sintomas: {animal.tempoSintomas}
+              <Box mb={2.5}>
+                <Etiqueta>Sintomas do acidente</Etiqueta>
+              </Box>
+              <Text fontSize="13.5px" lineHeight={1.5}>
+                {capitalizar(animal.sintomas)}
               </Text>
             </Box>
           </VStack>
         </Box>
 
-        <Box
-          flex="1"
-          minW={0}
-          w="full"
-          position={{ lg: "sticky" }}
-          top={{ lg: "96px" }}
-        >
+        <Box flex="1" minW={0} w="full" position={{ lg: "sticky" }} top={{ lg: "96px" }}>
           <VStack align="stretch" spacing="14px">
-            <Box
-              bg="safe.bg"
-              border="1px solid"
-              borderColor="safe.border"
-              borderRadius="card"
-              p={4}
-            >
-              <Flex align="center" gap={1.5} fontWeight={700} fontSize="13.5px" color="safe.text" mb={2.5}>
-                <TbCircleCheck aria-hidden size={16} />
-                <Text as="span">O que fazer</Text>
-              </Flex>
+            <BlocoTriagem escala="safe" titulo="O que fazer" icone={<TbCircleCheck size={16} />}>
               <VStack align="stretch" spacing={1.5}>
                 {animal.primeirosSocorrosFazer.map((item) => (
-                  <Flex key={item} gap={2} fontSize="13px">
-                    <Text as="span" color="safe.text" flexShrink={0}>
-                      ✓
-                    </Text>
-                    <Text as="span" flex={1} minW={0}>
-                      {capitalizar(item)}
-                    </Text>
-                  </Flex>
+                  <Text key={item} fontSize="13px" lineHeight={1.45}>
+                    {capitalizar(item)}
+                  </Text>
                 ))}
               </VStack>
-            </Box>
+            </BlocoTriagem>
+
+            <BlocoTriagem escala="danger" titulo="O que não fazer" icone={<TbBan size={16} />}>
+              <VStack align="stretch" spacing={1.5}>
+                {animal.primeirosSocorrosNaoFazer.map((item) => (
+                  <Text key={item} fontSize="13px" lineHeight={1.45}>
+                    {capitalizar(item)}
+                  </Text>
+                ))}
+              </VStack>
+            </BlocoTriagem>
 
             <Box
-              bg="danger.bg"
+              bg="bg.surface"
               border="1px solid"
-              borderColor="danger.border"
+              borderColor="accent.border"
               borderRadius="card"
               p={4}
             >
-              <Flex align="center" gap={1.5} fontWeight={700} fontSize="13.5px" color="danger.text" mb={2.5}>
-                <TbBan aria-hidden size={16} />
-                <Text as="span">O que não fazer</Text>
-              </Flex>
-              <VStack align="stretch" spacing={1.5}>
-                {animal.primeirosSocorrosNaoFazer.map((item) => (
-                  <Flex key={item} gap={2} fontSize="13px">
-                    <Text as="span" color="danger.text" flexShrink={0}>
-                      ✕
-                    </Text>
-                    <Text as="span" flex={1} minW={0}>
-                      {capitalizar(item)}
-                    </Text>
-                  </Flex>
-                ))}
-              </VStack>
-            </Box>
-
-            <Box bg="bg.surface" border="1px solid" borderColor="border" borderRadius="card" p={4}>
-              <Text fontWeight={700} fontSize="13.5px" color="accent.text" mb={2}>
-                Soro indicado
-              </Text>
-              <Text fontSize="13px" lineHeight={1.5}>
+              <Etiqueta cor="accent.text">Soro indicado</Etiqueta>
+              <Text fontFamily="heading" fontWeight={700} fontSize="17px" mt={1.5} mb={1.5}>
                 {capitalizar(animal.soroIndicado)}
               </Text>
-              <Text fontSize="xs" color="text.secondary" mt={2}>
-                A aplicação do soro é exclusiva de profissional de saúde, em ambiente hospitalar.
+              <Text fontSize="12px" color="text.secondary" lineHeight={1.45}>
+                Aplicação exclusiva de profissional de saúde, em ambiente hospitalar.
               </Text>
             </Box>
 

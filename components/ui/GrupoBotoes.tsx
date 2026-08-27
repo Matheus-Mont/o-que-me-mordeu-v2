@@ -43,6 +43,12 @@ export default function GrupoBotoes({
             }
             flexGrow={0}
             flexShrink={0}
+            minW={0}
+            // Button do Chakra vem com white-space: nowrap embutido; sem isso,
+            // label longo vaza pra fora do botão em vez de quebrar linha.
+            whiteSpace="normal"
+            textAlign="center"
+            lineHeight={1.35}
             py={compacto ? "10px" : { base: "14px", md: "18px" }}
             px={compacto ? "12px" : "18px"}
             borderRadius={compacto ? "12px" : "16px"}
