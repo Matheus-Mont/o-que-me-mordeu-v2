@@ -3,13 +3,15 @@
 import { useEffect, useState } from "react";
 import NextLink from "next/link";
 import NextImage from "next/image";
-import { Badge, Box, Button, Flex, Progress, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import { TbCheck, TbClock, TbX } from "react-icons/tb";
 import { CATEGORIA_LABEL, CURIOSIDADES, type Curiosidade } from "@/lib/curiosidades/dados";
 import { embaralhar } from "@/lib/curiosidades/utils";
+import BlocoTriagem from "@/components/ui/BlocoTriagem";
+import Etiqueta from "@/components/ui/Etiqueta";
 
 const TOTAL_PERGUNTAS = 10;
-const TEMPO_REVELACAO_MS = 3000;
+const TEMPO_REVELACAO_MS = 1000;
 const TEMPO_RESPOSTA_S = 20;
 
 type Fase = "revelando" | "respondendo" | "resultado";
@@ -111,18 +113,26 @@ export default function QuizCuriosidades() {
   return (
     <Box>
       <Flex justify="space-between" align="center" mb={2}>
-        <Text fontSize="11px" color="text.muted" textTransform="uppercase" letterSpacing="0.05em">
+        <Etiqueta cor="accent.text">
           Pergunta {indice + 1} de {perguntas.length}
-        </Text>
-        <Text fontSize="11px" color="text.muted">
-          Pontuação: {pontuacao}
-        </Text>
+        </Etiqueta>
+        <Etiqueta>Acertos {pontuacao}</Etiqueta>
       </Flex>
-      <Progress value={((indice + 1) / perguntas.length) * 100} h="4px" borderRadius="2px" mb="18px" />
+      <Flex gap="3px" mb="18px" aria-hidden>
+        {perguntas.map((p, i) => (
+          <Box
+            key={p.id}
+            flex="1"
+            h="4px"
+            borderRadius="2px"
+            bg={i <= indice ? "accent.solid" : "border"}
+          />
+        ))}
+      </Flex>
 
-      <Badge mb={3} bg="accent.bg" color="accent.text" fontSize="10.5px">
-        {CATEGORIA_LABEL[pergunta.categoria]}
-      </Badge>
+      <Box mb={3}>
+        <Etiqueta cor="accent.text">{CATEGORIA_LABEL[pergunta.categoria]}</Etiqueta>
+      </Box>
 
       <Flex gap={4} align="center" mb={4} direction={{ base: "column", md: "row" }}>
         <Box
@@ -191,9 +201,17 @@ export default function QuizCuriosidades() {
                 aria-pressed={ehSelecionada}
                 h="auto"
                 flexBasis={{ base: "100%", md: "calc(50% - 5px)" }}
+                flexGrow={0}
+                flexShrink={0}
+                minW={0}
+                // O Button do Chakra vem com white-space: nowrap embutido, então
+                // alternativa longa vazava pra fora do card em vez de quebrar linha.
+                whiteSpace="normal"
+                textAlign="center"
+                lineHeight={1.35}
                 py={{ base: "14px", md: "16px" }}
                 px="18px"
-                borderRadius="16px"
+                borderRadius="12px"
                 variant="outline"
                 bg={bg ?? "bg.surface"}
                 borderColor={borderColor}
@@ -219,24 +237,26 @@ export default function QuizCuriosidades() {
       )}
 
       {fase === "resultado" && (
-        <Box
-          role="status"
-          bg={acertou ? "safe.bg" : "danger.bg"}
-          border="1px solid"
-          borderColor={acertou ? "safe.border" : "danger.border"}
-          borderRadius="card"
-          p={4}
-          mb={4}
-        >
-          <Text fontWeight={700} fontSize="14px" color={acertou ? "safe.text" : "danger.text"} mb={1.5}>
-            {tempoEsgotado ? "Tempo esgotado!" : acertou ? "Acertou! 🎉" : "Não foi dessa vez."}
-          </Text>
-          <Text fontSize="13.5px" mb={1}>
-            {pergunta.explicacao}
-          </Text>
-          <Text fontSize="11.5px" color="text.muted">
-            Fonte: {pergunta.fonte}
-          </Text>
+        <Box role="status" mb={4}>
+          <BlocoTriagem
+            escala={acertou ? "safe" : "danger"}
+            titulo={tempoEsgotado ? "Tempo esgotado!" : acertou ? "Acertou! 🎉" : "Não foi dessa vez."}
+            icone={acertou ? <TbCheck size={16} /> : <TbX size={16} />}
+          >
+            <Text fontSize="13.5px" lineHeight={1.5} mb={1.5}>
+              {pergunta.explicacao}
+            </Text>
+            <Text
+              fontFamily="mono"
+              fontSize="9.5px"
+              fontWeight={500}
+              letterSpacing="0.06em"
+              color="text.muted"
+              lineHeight={1.5}
+            >
+              Fonte: {pergunta.fonte}
+            </Text>
+          </BlocoTriagem>
         </Box>
       )}
 

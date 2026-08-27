@@ -33,20 +33,25 @@ const semanticTokens = {
     "text.secondary": { default: "rgba(28,42,34,0.64)", _dark: "rgba(244,241,232,0.60)" },
     "text.muted": { default: "rgba(28,42,34,0.45)", _dark: "rgba(244,241,232,0.42)" },
 
-    "safe.bg": { default: "rgba(111,174,124,0.16)", _dark: "rgba(93,214,130,0.20)" },
-    "safe.border": { default: "rgba(111,174,124,0.40)", _dark: "rgba(120,224,150,0.55)" },
+    // Escala de gravidade. É funcional, não decorativa: verde/laranja/vermelho
+    // só aparecem para comunicar urgência, nunca como enfeite.
+    "safe.bg": { default: "rgba(111,174,124,0.16)", _dark: "rgba(79,209,130,0.14)" },
+    "safe.border": { default: "rgba(111,174,124,0.40)", _dark: "rgba(79,209,130,0.42)" },
     "safe.text": { default: "#2f5e3c", _dark: "#7ff0a0" },
-    "safe.solid": { default: "#3a6b47", _dark: "#57d47f" },
+    "safe.solid": { default: "#3a6b47", _dark: "#4fd182" },
 
-    "danger.bg": { default: "rgba(226,83,61,0.08)", _dark: "rgba(255,99,71,0.22)" },
-    "danger.border": { default: "rgba(226,83,61,0.30)", _dark: "rgba(255,120,96,0.62)" },
+    "danger.bg": { default: "rgba(226,83,61,0.08)", _dark: "rgba(255,74,43,0.13)" },
+    "danger.border": { default: "rgba(226,83,61,0.30)", _dark: "rgba(255,74,43,0.45)" },
     "danger.text": { default: "#8a3226", _dark: "#ff9580" },
-    "danger.solid": { default: "#c8432f", _dark: "#f2543c" },
+    "danger.solid": { default: "#c8432f", _dark: "#ff4a2b" },
     "danger.solidHover": { default: "#b03a28", _dark: "#ff6a4f" },
 
-    "warning.bg": { default: "rgba(232,178,61,0.16)", _dark: "rgba(245,190,70,0.22)" },
-    "warning.border": { default: "rgba(200,150,40,0.45)", _dark: "rgba(245,196,80,0.62)" },
-    "warning.text": { default: "#8a6410", _dark: "#f7c948" },
+    // Laranja, e não amarelo: no tema antigo "urgência média" era quase o mesmo
+    // tom do dourado da marca, então gravidade e identidade brigavam pelo mesmo sinal.
+    "warning.bg": { default: "rgba(214,106,26,0.12)", _dark: "rgba(255,138,61,0.14)" },
+    "warning.border": { default: "rgba(214,106,26,0.40)", _dark: "rgba(255,138,61,0.46)" },
+    "warning.text": { default: "#9c4a12", _dark: "#ff9d5c" },
+    "warning.solid": { default: "#d66a1a", _dark: "#ff8a3d" },
 
     "accent.bg": { default: "rgba(232,178,61,0.18)", _dark: "rgba(232,178,61,0.14)" },
     "accent.border": { default: "rgba(200,150,40,0.45)", _dark: "rgba(232,178,61,0.40)" },
@@ -62,8 +67,9 @@ const theme = extendTheme({
   colors,
   semanticTokens,
   fonts: {
-    heading: "var(--font-sora), 'Sora', system-ui, sans-serif",
+    heading: "var(--font-archivo), 'Archivo', system-ui, sans-serif",
     body: "var(--font-plex), 'IBM Plex Sans', system-ui, sans-serif",
+    mono: "var(--font-plex-mono), 'IBM Plex Mono', ui-monospace, monospace",
   },
   radii: {
     card: "14px",
@@ -110,7 +116,7 @@ const theme = extendTheme({
     Heading: {
       baseStyle: {
         fontWeight: 700,
-        letterSpacing: "-0.01em",
+        letterSpacing: "-0.02em",
       },
     },
     Button: {

@@ -18,7 +18,7 @@ afterEach(() => {
 });
 
 describe("QuizCuriosidades", () => {
-  it("mostra a pergunta na hora, mas as opções só depois de 3s", () => {
+  it("mostra a pergunta na hora, mas as opções só depois de 1s", () => {
     render(<QuizCuriosidades />);
 
     expect(
@@ -26,8 +26,15 @@ describe("QuizCuriosidades", () => {
     ).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "4" })).not.toBeInTheDocument();
 
+    // Um passo antes do prazo as opções ainda não podem estar na tela, senão o
+    // teste passaria com qualquer valor menor que o avanço do relógio.
     act(() => {
-      vi.advanceTimersByTime(3000);
+      vi.advanceTimersByTime(999);
+    });
+    expect(screen.queryByRole("button", { name: "4" })).not.toBeInTheDocument();
+
+    act(() => {
+      vi.advanceTimersByTime(1);
     });
 
     expect(screen.getByRole("button", { name: "4" })).toBeInTheDocument();
@@ -36,20 +43,20 @@ describe("QuizCuriosidades", () => {
   it("acertar mostra feedback verde com a explicação e a fonte", () => {
     render(<QuizCuriosidades />);
     act(() => {
-      vi.advanceTimersByTime(3000);
+      vi.advanceTimersByTime(1000);
     });
 
     fireEvent.click(screen.getByRole("button", { name: "4" }));
 
     expect(screen.getByText("Acertou! 🎉")).toBeInTheDocument();
-    expect(screen.getByText(/são 4 grupos/i)).toBeInTheDocument();
+    expect(screen.getByText(/separadas em 4 grupos/i)).toBeInTheDocument();
     expect(screen.getByText(/Guia de Animais Peçonhentos do Brasil/)).toBeInTheDocument();
   });
 
   it("errar mostra a opção escolhida em vermelho e destaca a certa", () => {
     render(<QuizCuriosidades />);
     act(() => {
-      vi.advanceTimersByTime(3000);
+      vi.advanceTimersByTime(1000);
     });
 
     fireEvent.click(screen.getByRole("button", { name: "2" }));
@@ -60,7 +67,7 @@ describe("QuizCuriosidades", () => {
   it("esgotar os 20s sem clicar conta como errado, sem travar", () => {
     render(<QuizCuriosidades />);
     act(() => {
-      vi.advanceTimersByTime(3000);
+      vi.advanceTimersByTime(1000);
     });
     act(() => {
       vi.advanceTimersByTime(20000);
@@ -74,7 +81,7 @@ describe("QuizCuriosidades", () => {
 
     for (let i = 0; i < 10; i++) {
       act(() => {
-        vi.advanceTimersByTime(3000);
+        vi.advanceTimersByTime(1000);
       });
       // deixa o tempo esgotar em todas — sempre errado, pontuação final = 0
       act(() => {

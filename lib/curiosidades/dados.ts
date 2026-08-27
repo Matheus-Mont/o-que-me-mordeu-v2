@@ -49,7 +49,7 @@ export const CURIOSIDADES: Curiosidade[] = [
     opcoes: ["2", "4", "6", "10"],
     respostaCorreta: 1,
     explicacao:
-      "São 4 grupos: picada de jararaca, de cascavel, de surucucu e de coral. Cada um tem um veneno diferente e um soro específico.",
+      "As picadas de cobra no Brasil são separadas em 4 grupos: jararaca, cascavel, surucucu e coral. Cada grupo tem um veneno diferente e pede um soro específico.",
     fonte: "Guia de Animais Peçonhentos do Brasil, MS 2024",
   },
   {
@@ -62,7 +62,7 @@ export const CURIOSIDADES: Curiosidade[] = [
     opcoes: ["Cascavel", "Jararaca", "Coral-verdadeira", "Surucucu"],
     respostaCorreta: 1,
     explicacao:
-      "A jararaca e suas parentes próximas, como a jararacuçu e a urutu, respondem pela maioria das picadas de cobra no país — a cascavel vem em segundo lugar.",
+      "A jararaca e suas parentes próximas, como a jararacuçu e a urutu, respondem pela maioria das picadas de cobra no país. A cascavel vem em segundo lugar.",
     fonte: "Guia de Animais Peçonhentos do Brasil, MS 2024",
   },
   {
@@ -75,7 +75,7 @@ export const CURIOSIDADES: Curiosidade[] = [
     opcoes: ["Cascavel", "Surucucu", "Jararacuçu", "Coral-verdadeira"],
     respostaCorreta: 1,
     explicacao:
-      "A surucucu-pico-de-jaca é a maior cobra peçonhenta das Américas — pode passar de 3,5 metros de comprimento!",
+      "A surucucu-pico-de-jaca é a maior cobra peçonhenta das Américas e pode passar de 3,5 metros de comprimento.",
     fonte: "Guia de Animais Peçonhentos do Brasil, MS 2024",
   },
   {
@@ -88,7 +88,7 @@ export const CURIOSIDADES: Curiosidade[] = [
     opcoes: VF,
     respostaCorreta: 1,
     explicacao:
-      "De mais de 400 espécies de cobra no Brasil, só cerca de 17% (1 em cada 6) tem veneno perigoso pra gente.",
+      "De mais de 400 espécies de cobra que vivem no Brasil, só cerca de 17% têm veneno perigoso pra gente, mais ou menos uma em cada seis.",
     fonte: "Guia de Animais Peçonhentos do Brasil, MS 2024",
   },
   {
@@ -114,7 +114,7 @@ export const CURIOSIDADES: Curiosidade[] = [
     opcoes: ["Cascavel", "Jararaca", "Surucucu", "Coral-verdadeira"],
     respostaCorreta: 0,
     explicacao:
-      "A cascavel tem a maior taxa de mortes entre as picadas de cobra no Brasil — quase o dobro da segunda colocada (surucucu).",
+      "Entre as picadas de cobra no Brasil, a da cascavel é a que tem a maior taxa de mortes, quase o dobro da surucucu, que vem em segundo lugar.",
     fonte: "Manual de Diagnóstico e Tratamento de Acidentes por Animais Peçonhentos, FUNASA 2001",
   },
   {
@@ -127,7 +127,7 @@ export const CURIOSIDADES: Curiosidade[] = [
     opcoes: VF,
     respostaCorreta: 1,
     explicacao:
-      "A cobra que mais mata gente no mundo nem vive no Brasil: é a víbora-de-escamas-serrilhadas, da África e da Ásia. Sozinha, ela mata mais gente por ano do que todas as outras cobras do mundo somadas.",
+      "A cobra que mais mata gente no mundo nem vive no Brasil: é a víbora-de-escamas-serrilhadas, da África e da Ásia. Sozinha, ela mata mais gente por ano do que todas as outras cobras somadas.",
     fonte: "National Geographic Brasil",
   },
   {
@@ -140,7 +140,7 @@ export const CURIOSIDADES: Curiosidade[] = [
     opcoes: ["Cerca de 100", "Cerca de 600", "Cerca de 1.700", "Cerca de 3.000"],
     respostaCorreta: 1,
     explicacao:
-      "Das mais de 3.400 espécies de cobra conhecidas no mundo, cerca de 600 são peçonhentas — menos de 1 em cada 5.",
+      "No mundo todo já são mais de 3.400 espécies de cobra conhecidas, e cerca de 600 delas têm veneno capaz de machucar uma pessoa.",
     fonte: "Guia de Animais Peçonhentos do Brasil, MS 2024",
   },
 
@@ -154,7 +154,8 @@ export const CURIOSIDADES: Curiosidade[] = [
     pergunta: "Hoje em dia, escorpião causa mais acidente no Brasil do que cobra.",
     opcoes: VF,
     respostaCorreta: 0,
-    explicacao: "Desde meados dos anos 2000, o escorpião é o animal peçonhento que mais causa acidente no país.",
+    explicacao:
+      "Desde meados dos anos 2000, o escorpião passou a ser o animal peçonhento que mais causa acidente no Brasil, à frente das cobras e das aranhas.",
     fonte: "Guia de Animais Peçonhentos do Brasil, MS 2024",
   },
   {
@@ -172,7 +173,7 @@ export const CURIOSIDADES: Curiosidade[] = [
     ],
     respostaCorreta: 0,
     explicacao:
-      "Escorpionismo é considerado um acidente urbano e doméstico — a maior parte das picadas acontece ao vestir roupa ou calçado, ou durante a faxina.",
+      "A maior parte das picadas de escorpião acontece dentro de casa, na hora de vestir uma roupa, calçar um sapato ou mexer em entulho durante a faxina.",
     fonte: "Guia de Animais Peçonhentos do Brasil, MS 2024",
   },
   {
@@ -185,7 +186,7 @@ export const CURIOSIDADES: Curiosidade[] = [
     opcoes: ["1", "3", "5", "10"],
     respostaCorreta: 0,
     explicacao:
-      "Só o gênero Tityus tem espécies de importância médica no Brasil — os outros escorpiões brasileiros picam menos que uma abelha.",
+      "De todos os gêneros de escorpião que existem no Brasil, só um preocupa a medicina: o Tityus, que reúne o escorpião-amarelo, o marrom e outros parentes.",
     fonte: "Manual de Diagnóstico e Tratamento de Acidentes por Animais Peçonhentos, FUNASA 2001",
   },
   {
@@ -198,7 +199,7 @@ export const CURIOSIDADES: Curiosidade[] = [
     opcoes: VF,
     respostaCorreta: 1,
     explicacao:
-      "A maioria das espécies de escorpião no Brasil não tem importância médica — só as do gênero Tityus (amarelo, marrom, etc.) merecem atenção redobrada.",
+      "Fora as espécies do gênero Tityus, a picada da maioria dos escorpiões brasileiros provoca só uma dor local, parecida com a de uma ferroada de abelha.",
     fonte: "Manual de Diagnóstico e Tratamento de Acidentes por Animais Peçonhentos, FUNASA 2001",
   },
   {
@@ -211,7 +212,7 @@ export const CURIOSIDADES: Curiosidade[] = [
     opcoes: ["Escorpião-amarelo", "Escorpião-preto", "Escorpião-de-jardim", "O risco é igual em todos"],
     respostaCorreta: 0,
     explicacao:
-      "Casos graves e mortes por escorpião no Brasil estão mais associados ao escorpião-amarelo (Tityus serrulatus), principalmente em crianças.",
+      "Os casos graves e as mortes por picada de escorpião no Brasil estão ligados principalmente ao escorpião-amarelo (Tityus serrulatus), e as crianças são quem corre mais risco.",
     fonte: "Guia de Animais Peçonhentos do Brasil, MS 2024",
   },
 
@@ -226,7 +227,7 @@ export const CURIOSIDADES: Curiosidade[] = [
     opcoes: ["Aranha-marrom", "Armadeira", "Viúva-negra", "Caranguejeira"],
     respostaCorreta: 0,
     explicacao:
-      "Apesar da armadeira ter fama de mais assustadora, é a discreta aranha-marrom que mais pica gente no país.",
+      "A armadeira tem a fama de mais assustadora, mas quem mais pica gente no Brasil é a discreta aranha-marrom.",
     fonte: "Guia de Animais Peçonhentos do Brasil, MS 2024",
   },
   {
@@ -238,7 +239,8 @@ export const CURIOSIDADES: Curiosidade[] = [
     pergunta: "Qual cidade brasileira mais registra picada de aranha-marrom?",
     opcoes: ["Curitiba", "São Paulo", "Rio de Janeiro", "Salvador"],
     respostaCorreta: 0,
-    explicacao: "Curitiba é a cidade brasileira que mais notifica picada de aranha-marrom.",
+    explicacao:
+      "Curitiba é a cidade que mais registra picada de aranha-marrom no Brasil, o que faz sentido: a espécie se concentra na região Sul.",
     fonte: "Guia de Animais Peçonhentos do Brasil, MS 2024",
   },
   {
@@ -251,7 +253,7 @@ export const CURIOSIDADES: Curiosidade[] = [
     opcoes: VF,
     respostaCorreta: 0,
     explicacao:
-      "A maior aranha do mundo em peso vive na Amazônia brasileira: é a caranguejeira-golias, que pode ter até 30 cm de envergadura e pesar cerca de 200 gramas — quase o peso de um filhote de cachorro pequeno.",
+      "A maior aranha do mundo em peso vive na Amazônia: é a caranguejeira-golias, que chega a 30 cm de envergadura e pode passar de 170 gramas.",
     fonte: "National Geographic Brasil",
   },
   {
@@ -264,7 +266,7 @@ export const CURIOSIDADES: Curiosidade[] = [
     opcoes: VF,
     respostaCorreta: 1,
     explicacao:
-      "O Brasil tem mais de 400 espécies de caranguejeira, e nenhuma delas é considerada de importância médica — apesar do tamanho e da aparência assustadora.",
+      "O Brasil tem mais de 400 espécies de caranguejeira e nenhuma delas é considerada de importância médica, por mais assustador que seja o tamanho.",
     fonte: "Guia de Animais Peçonhentos do Brasil, MS 2024",
   },
   {
@@ -277,7 +279,7 @@ export const CURIOSIDADES: Curiosidade[] = [
     opcoes: VF,
     respostaCorreta: 1,
     explicacao:
-      "Os acidentes com viúva-negra são raros no Brasil — bem menos comuns que os de aranha-marrom ou armadeira.",
+      "Acidente com viúva-negra é raro no Brasil, bem menos comum que os de aranha-marrom e de armadeira.",
     fonte: "Guia de Animais Peçonhentos do Brasil, MS 2024",
   },
   {
@@ -295,7 +297,7 @@ export const CURIOSIDADES: Curiosidade[] = [
     ],
     respostaCorreta: 0,
     explicacao:
-      "A armadeira ganhou esse nome por causa da postura de defesa: quando se sente ameaçada, ela se apoia nas pernas de trás e ergue as pernas da frente esticadas, como se estivesse \"se armando\" pra atacar.",
+      "A armadeira ganhou esse nome por causa da postura de defesa: quando se sente ameaçada, ela se apoia nas pernas de trás e levanta as da frente, como se estivesse se armando pra atacar.",
     fonte: "Guia de Animais Peçonhentos do Brasil, MS 2024",
   },
   {
@@ -313,7 +315,7 @@ export const CURIOSIDADES: Curiosidade[] = [
     ],
     respostaCorreta: 0,
     explicacao:
-      "Viúva-negra e viúva-marrom são do mesmo gênero (Latrodectus), mas a viúva-marrom tem cor mais clara e os sintomas costumam ser mais brandos.",
+      "Viúva-negra e viúva-marrom são do mesmo gênero, o Latrodectus. A viúva-marrom tem cor mais clara e os sintomas da picada costumam ser mais brandos.",
     fonte: "Conteúdo revisado do app com base no Guia MS 2024",
   },
 
@@ -328,7 +330,7 @@ export const CURIOSIDADES: Curiosidade[] = [
     opcoes: ["Lonomia obliqua", "Taturana-de-fogo", "Taturana-coruja", "Taturana-de-espinho"],
     respostaCorreta: 0,
     explicacao:
-      "A Lonomia obliqua vive no Sul e Sudeste do Brasil e é reconhecida pelo Guinness World Records como a lagarta mais venenosa do mundo.",
+      "A Lonomia obliqua vive no Sul e no Sudeste do Brasil e é reconhecida pelo Guinness World Records como a lagarta mais venenosa do mundo.",
     fonte: "Guinness World Records, via Wikipédia",
   },
   {
@@ -341,7 +343,7 @@ export const CURIOSIDADES: Curiosidade[] = [
     opcoes: VF,
     respostaCorreta: 0,
     explicacao:
-      "O veneno da Lonomia obliqua interfere na coagulação do sangue e pode causar sangramentos sérios — por isso é a única taturana do Brasil com soro específico.",
+      "O veneno da Lonomia obliqua mexe com a coagulação do sangue e pode provocar sangramentos graves. É a única taturana do Brasil que tem soro específico.",
     fonte: "Manual de Diagnóstico e Tratamento de Acidentes por Animais Peçonhentos, FUNASA 2001",
   },
   {
@@ -359,7 +361,7 @@ export const CURIOSIDADES: Curiosidade[] = [
     ],
     respostaCorreta: 0,
     explicacao:
-      "A taturana-de-fogo parece um chumaço de algodão fofinho, mas debaixo dos pelos macios existem cerdas que soltam veneno ao toque — a dor pode surpreender quem espera algo inofensivo.",
+      "A taturana-de-fogo parece um chumaço de algodão, mas embaixo dos pelos macios existem cerdas que soltam veneno ao toque. A dor pega de surpresa quem achou que era inofensiva.",
     fonte: "Conteúdo revisado do app com base no Guia MS 2024",
   },
   {
@@ -372,7 +374,7 @@ export const CURIOSIDADES: Curiosidade[] = [
     opcoes: VF,
     respostaCorreta: 0,
     explicacao:
-      "O contato repetido com a taturana-da-seringueira pode causar, com o tempo, deformidade nas mãos — é a chamada \"pararamose\", uma doença que afeta principalmente seringueiros.",
+      "O contato repetido com a taturana-da-seringueira pode deformar as articulações das mãos com o tempo. É a pararamose, uma doença que afeta principalmente seringueiros.",
     fonte: "Manual de Diagnóstico e Tratamento de Acidentes por Animais Peçonhentos, FUNASA 2001",
   },
 
@@ -387,7 +389,7 @@ export const CURIOSIDADES: Curiosidade[] = [
     opcoes: VF,
     respostaCorreta: 1,
     explicacao:
-      "Anêmona-do-mar não é água-viva. Apesar do nome parecido e do risco de queimadura, ela é fixa em rochas — é um tipo diferente de cnidário.",
+      "Anêmona-do-mar não é água-viva. Ela também queima, mas fica presa nas rochas e pertence a outro grupo dentro dos cnidários.",
     fonte: "Manual de Diagnóstico e Tratamento de Acidentes por Animais Peçonhentos, FUNASA 2001",
   },
   {
@@ -400,7 +402,7 @@ export const CURIOSIDADES: Curiosidade[] = [
     opcoes: ["Formato de cubo", "Formato de guarda-chuva", "Formato de estrela", "Formato de disco"],
     respostaCorreta: 0,
     explicacao:
-      "As águas-vivas-caixa (cubomedusas), como a vespa-do-mar, causam os acidentes mais sérios entre os cnidários do litoral brasileiro.",
+      "As águas-vivas-caixa, também chamadas de cubomedusas, são as que causam os acidentes mais sérios no litoral brasileiro. A vespa-do-mar é uma delas.",
     fonte: "Manual de Diagnóstico e Tratamento de Acidentes por Animais Peçonhentos, FUNASA 2001",
   },
   {
@@ -413,7 +415,7 @@ export const CURIOSIDADES: Curiosidade[] = [
     opcoes: VF,
     respostaCorreta: 1,
     explicacao:
-      "Água doce não alivia a queimadura de água-viva — pode fazer as células urticantes que ainda estão na pele soltarem mais veneno. O certo é lavar com água do mar.",
+      "Água doce não alivia a queimadura de água-viva e ainda pode piorar: ela faz as células urticantes que continuam grudadas na pele soltarem mais veneno. O certo é lavar com água do mar.",
     fonte: "Manual de Diagnóstico e Tratamento de Acidentes por Animais Peçonhentos, FUNASA 2001",
   },
   {
@@ -423,10 +425,10 @@ export const CURIOSIDADES: Curiosidade[] = [
     imagem: "/guia/tamoya-1.jpg",
     alt: "Água-viva-cubo",
     pergunta: "Uma caravela pode picar mesmo depois de...",
-    opcoes: ["Encalhar morta na areia", "Ser fervida", "Ficar 1 semana fora da água", "Nunca — só pica viva"],
+    opcoes: ["Encalhar morta na areia", "Ser fervida", "Ficar 1 semana fora da água", "Nunca, só pica viva"],
     respostaCorreta: 0,
     explicacao:
-      "Os tentáculos da caravela continuam ativos mesmo depois que ela morre ou encalha — por isso nunca se deve tocar numa, mesmo parecendo sem vida.",
+      "Os tentáculos da caravela continuam ativos mesmo depois que ela morre ou encalha na areia. Por isso não se toca numa caravela nem quando ela parece sem vida.",
     fonte: "Conteúdo revisado do app com base no Guia MS 2024",
   },
 
@@ -441,7 +443,7 @@ export const CURIOSIDADES: Curiosidade[] = [
     opcoes: ["Norte e Nordeste", "Sul", "Sudeste", "Centro-Oeste"],
     respostaCorreta: 0,
     explicacao:
-      "Norte e Nordeste têm as maiores taxas de acidente com cobra do país, provavelmente por causa da atividade agropecuária e extrativista intensa.",
+      "Norte e Nordeste são as regiões com as maiores taxas de acidente com cobra do país, provavelmente pelo peso que a atividade agropecuária e extrativista tem por lá.",
     fonte: "Guia de Animais Peçonhentos do Brasil, MS 2024",
   },
   {
@@ -455,7 +457,7 @@ export const CURIOSIDADES: Curiosidade[] = [
     opcoes: VF,
     respostaCorreta: 0,
     explicacao:
-      "Homem, entre 40 e 64 anos, morador de zona rural: esse é o perfil mais comum de vítima de picada de cobra no Brasil, segundo o Ministério da Saúde — geralmente ligado a trabalho rural (agricultura, pesca, extrativismo).",
+      "O perfil mais comum de vítima de picada de cobra no Brasil, segundo o Ministério da Saúde, é homem de 40 a 64 anos morando em zona rural, quase sempre ligado a trabalho no campo.",
     fonte: "Guia de Animais Peçonhentos do Brasil, MS 2024",
   },
 ];

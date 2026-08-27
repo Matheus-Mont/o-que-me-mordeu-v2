@@ -79,7 +79,14 @@ export default function ListaCuriosidades() {
                   </Text>
                   {item.explicacao}
                 </Text>
-                <Text fontSize="12px" color="text.muted">
+                <Text
+                  fontFamily="mono"
+                  fontSize="9.5px"
+                  fontWeight={500}
+                  letterSpacing="0.06em"
+                  lineHeight={1.5}
+                  color="text.muted"
+                >
                   Fonte: {item.fonte}
                 </Text>
               </Box>

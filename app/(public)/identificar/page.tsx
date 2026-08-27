@@ -6,12 +6,10 @@ import NextLink from "next/link";
 import NextImage from "next/image";
 import { TbPhoto } from "react-icons/tb";
 import {
-  Badge,
   Box,
   Button,
   Checkbox,
   Flex,
-  Progress,
   SimpleGrid,
   Stack,
   Text,
@@ -36,6 +34,7 @@ import PageHeader from "@/components/layout/PageHeader";
 import PageShell from "@/components/layout/PageShell";
 import TraitCard from "@/components/identificacao/TraitCard";
 import GrupoBotoes from "@/components/ui/GrupoBotoes";
+import Etiqueta from "@/components/ui/Etiqueta";
 
 const TIPOS: { valor: CategoriaId | null; label: string }[] = [
   { valor: "COBRA", label: "Cobra" },
@@ -52,10 +51,18 @@ function capitalizar(texto: string) {
 
 const REGIOES = ["norte", "nordeste", "centro-oeste", "sudeste", "sul"];
 
-const CONFIANCA_SCHEME: Record<Resultado["confianca"], "safe" | "warning" | "danger"> = {
-  alta: "safe",
-  media: "warning",
-  baixa: "danger",
+// Confiança não usa vermelho: nessa interface vermelho quer dizer gravidade, e
+// "correspondência baixa" não é perigo, é só menos certeza.
+const CONFIANCA_COR: Record<Resultado["confianca"], string> = {
+  alta: "safe.solid",
+  media: "warning.solid",
+  baixa: "text.muted",
+};
+
+const CONFIANCA_NIVEL: Record<Resultado["confianca"], number> = {
+  alta: 3,
+  media: 2,
+  baixa: 1,
 };
 
 const CONFIANCA_LABEL: Record<Resultado["confianca"], string> = {
@@ -144,10 +151,6 @@ export default function IdentificarPage() {
   }
 
   const perguntaAtual = Math.min(etapa, TOTAL_PERGUNTAS - 1) + 1;
-  const progresso = useMemo(
-    () => (perguntaAtual / TOTAL_PERGUNTAS) * 100,
-    [perguntaAtual]
-  );
 
   if (etapa === passos.length) {
     return (
@@ -183,7 +186,6 @@ export default function IdentificarPage() {
                 as={NextLink}
                 href={`/animal/${animal.slug}`}
                 display="flex"
-                gap={3}
                 h="full"
                 flex={{ base: "0 0 100%", md: "0 0 calc((100% - 14px) / 2)" }}
                 minW={0}
@@ -191,37 +193,39 @@ export default function IdentificarPage() {
                 border="1px solid"
                 borderColor="border"
                 borderRadius="card"
-                p={3}
+                overflow="hidden"
                 transition="background 0.15s ease, border-color 0.15s ease"
                 _hover={{ textDecoration: "none", bg: "bg.surfaceHover", borderColor: "borderStrong" }}
               >
-                <Box
-                  w="80px"
-                  h="80px"
-                  flexShrink={0}
-                  borderRadius="10px"
-                  overflow="hidden"
-                  position="relative"
-                  bg="bg.canvas"
-                >
-                  {animal.imagens[0] ? (
-                    <NextImage
-                      src={animal.imagens[0]}
-                      alt={capitalizar(animal.nomePopular)}
-                      fill
-                      sizes="80px"
-                      style={{ objectFit: "contain", padding: "4px" }}
-                    />
-                  ) : (
-                    <Flex position="absolute" inset={0} align="center" justify="center" color="text.muted">
-                      <TbPhoto aria-hidden />
-                    </Flex>
-                  )}
-                </Box>
+                <Box w="5px" flexShrink={0} bg={`${scheme}.solid`} aria-hidden />
 
-                <Flex direction="column" flex={1} minW={0}>
-                  <Flex justify="space-between" align="flex-start" gap={2} mb={1}>
-                    <Box minW={0}>
+                <Flex gap={3} p={3} flex="1" minW={0}>
+                  <Box
+                    w="80px"
+                    h="80px"
+                    flexShrink={0}
+                    borderRadius="10px"
+                    overflow="hidden"
+                    position="relative"
+                    bg="bg.canvas"
+                  >
+                    {animal.imagens[0] ? (
+                      <NextImage
+                        src={animal.imagens[0]}
+                        alt={capitalizar(animal.nomePopular)}
+                        fill
+                        sizes="80px"
+                        style={{ objectFit: "contain", padding: "4px" }}
+                      />
+                    ) : (
+                      <Flex position="absolute" inset={0} align="center" justify="center" color="text.muted">
+                        <TbPhoto aria-hidden />
+                      </Flex>
+                    )}
+                  </Box>
+
+                  <Flex direction="column" flex={1} minW={0}>
+                    <Box minW={0} mb={1}>
                       <Text fontFamily="heading" fontWeight={700} fontSize="15px" noOfLines={1}>
                         {capitalizar(animal.nomePopular)}
                       </Text>
@@ -229,28 +233,49 @@ export default function IdentificarPage() {
                         {animal.nomeCientifico}
                       </Text>
                     </Box>
-                    <Badge
-                      bg={`${scheme}.bg`}
+
+                    <Text
+                      fontFamily="mono"
+                      fontSize="9.5px"
+                      fontWeight={600}
+                      letterSpacing="0.10em"
+                      textTransform="uppercase"
                       color={`${scheme}.text`}
-                      fontSize="10.5px"
-                      whiteSpace="nowrap"
-                      flexShrink={0}
                     >
                       {URGENCIA_LABEL[animal.nivelUrgencia]}
-                    </Badge>
-                  </Flex>
-
-                  <Flex justify="space-between" align="center" gap={2} mt="auto" pt={2}>
-                    <Badge
-                      bg={`${CONFIANCA_SCHEME[confianca]}.bg`}
-                      color={`${CONFIANCA_SCHEME[confianca]}.text`}
-                      fontSize="0.65rem"
-                    >
-                      Correspondência {CONFIANCA_LABEL[confianca]}
-                    </Badge>
-                    <Text fontSize="12.5px" fontWeight={600} color="accent.text" whiteSpace="nowrap">
-                      Ver ficha →
                     </Text>
+
+                    <Flex justify="space-between" align="center" gap={2} mt="auto" pt={2}>
+                      <Flex align="center" gap={1.5} minW={0}>
+                        {/* Nível, não porcentagem: o motor devolve uma faixa de
+                            confiança, então mostrar "82%" seria precisão inventada. */}
+                        <Flex gap="2px" flexShrink={0} aria-hidden>
+                          {[1, 2, 3].map((n) => (
+                            <Box
+                              key={n}
+                              w="10px"
+                              h="3px"
+                              borderRadius="2px"
+                              bg={n <= CONFIANCA_NIVEL[confianca] ? CONFIANCA_COR[confianca] : "border"}
+                            />
+                          ))}
+                        </Flex>
+                        <Text
+                          fontFamily="mono"
+                          fontSize="9px"
+                          fontWeight={600}
+                          letterSpacing="0.08em"
+                          textTransform="uppercase"
+                          color="text.muted"
+                          noOfLines={1}
+                        >
+                          Correspondência {CONFIANCA_LABEL[confianca]}
+                        </Text>
+                      </Flex>
+                      <Text fontSize="12.5px" fontWeight={600} color="accent.text" whiteSpace="nowrap">
+                        Ver ficha →
+                      </Text>
+                    </Flex>
                   </Flex>
                 </Flex>
               </Box>
@@ -278,21 +303,29 @@ export default function IdentificarPage() {
 
   return (
     <PageShell maxW={{ base: "100%", md: "content" }}>
-      <Progress value={progresso} h="4px" borderRadius="2px" mb="18px" />
+      {/* Progresso segmentado: mostra de relance quantas perguntas faltam,
+          o que uma barra contínua não deixa claro. */}
+      <Flex gap="5px" mb="18px" aria-hidden>
+        {Array.from({ length: TOTAL_PERGUNTAS }).map((_, i) => (
+          <Box
+            key={i}
+            flex="1"
+            h="4px"
+            borderRadius="2px"
+            bg={i < perguntaAtual ? "accent.solid" : "border"}
+          />
+        ))}
+      </Flex>
       <Flex
         direction="column"
         justify={{ md: "center" }}
         minH={{ base: "auto", md: "60vh" }}
       >
-      <Text
-        color="text.muted"
-        fontSize="11px"
-        textTransform="uppercase"
-        letterSpacing="0.05em"
-        mb={1}
-      >
-        Pergunta {perguntaAtual} de {TOTAL_PERGUNTAS}
-      </Text>
+      <Box mb={1}>
+        <Etiqueta cor="accent.text">
+          Pergunta {perguntaAtual} de {TOTAL_PERGUNTAS}
+        </Etiqueta>
+      </Box>
 
       {passo === "tipo" && (
         <Stack spacing="18px">
@@ -309,6 +342,10 @@ export default function IdentificarPage() {
             ehSelecionado={(valor) => tipoDefinido && categoria === valor}
             onSelecionar={(valor) => escolherTipo(valor as CategoriaId | null)}
           />
+          <Text color="text.muted" fontSize="12.5px" lineHeight={1.45} textAlign="center">
+            Não saber não atrapalha: resposta em branco só reduz a confiança do
+            resultado, nunca elimina um animal da lista.
+          </Text>
         </Stack>
       )}
 
