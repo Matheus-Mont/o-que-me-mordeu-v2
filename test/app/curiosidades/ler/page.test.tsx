@@ -22,8 +22,8 @@ describe("LerCuriosidadesPage", () => {
   it("mostra só as curiosidades da categoria selecionada (padrão: cobras)", () => {
     render(<LerCuriosidadesPage />);
 
-    expect(screen.getByText(/são 4 grupos: picada de jararaca/i)).toBeInTheDocument();
-    expect(screen.queryByText(/curitiba é a cidade brasileira/i)).not.toBeInTheDocument();
+    expect(screen.getByText(/separadas em 4 grupos/i)).toBeInTheDocument();
+    expect(screen.queryByText(/curitiba é a cidade que mais registra/i)).not.toBeInTheDocument();
   });
 
   it("troca a lista ao selecionar outra categoria", () => {
@@ -31,7 +31,7 @@ describe("LerCuriosidadesPage", () => {
 
     fireEvent.click(screen.getByRole("button", { name: /aranhas/i }));
 
-    expect(screen.getByText(/curitiba é a cidade brasileira/i)).toBeInTheDocument();
-    expect(screen.queryByText(/são 4 grupos: picada de jararaca/i)).not.toBeInTheDocument();
+    expect(screen.getByText(/curitiba é a cidade que mais registra/i)).toBeInTheDocument();
+    expect(screen.queryByText(/separadas em 4 grupos/i)).not.toBeInTheDocument();
   });
 });

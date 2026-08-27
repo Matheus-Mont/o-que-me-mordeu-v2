@@ -11,7 +11,7 @@ import BlocoTriagem from "@/components/ui/BlocoTriagem";
 import Etiqueta from "@/components/ui/Etiqueta";
 
 const TOTAL_PERGUNTAS = 10;
-const TEMPO_REVELACAO_MS = 3000;
+const TEMPO_REVELACAO_MS = 1000;
 const TEMPO_RESPOSTA_S = 20;
 
 type Fase = "revelando" | "respondendo" | "resultado";
